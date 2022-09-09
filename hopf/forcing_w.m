@@ -8,9 +8,9 @@ rss=[];
 r0=0.3;
 th0=0;
 %controler
-w0=0.001;
+w0=0.00;
 k=20;
-lamc=0.05;
+lamc=0.01;
 t0=0;
 tM=[t0];
 yM=[r0;th0;w0];

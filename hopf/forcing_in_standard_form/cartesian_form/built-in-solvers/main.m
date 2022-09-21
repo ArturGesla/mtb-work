@@ -2,12 +2,42 @@ clc; clear;
 mu=-0.02;
 om=1;
 b=-10; % aka gamma
+rex=real(sqrt((-1+sqrt(1+4*mu))/-2));
+T=2*pi/(1+b*sqrt((-1+sqrt(1+4*mu))/-2)^2);
+
+lags=[T T];
+k=0.0;
+beta=pi/4;
+
+tspan = [0 5*T];
+tic
+sol = dde23(@(t,y,Z)ddefun(t,y,Z,mu,b,om,k,beta), lags, @history, tspan);
+toc
+t=sol.x;
+x=sol.y(1,:);
+y=sol.y(2,:);
+
+r0=0;
+
+hold on;
+plot(t/T,x,"-");
+plot(t/T,y,"-");
+xlabel("time in periods"); ylabel("r"); title("UPO stab | K="+num2str(k)+" mu="+num2str(mu)+" x0 = "+num2str(r0)); legend("x","y"); grid on;
+
+
+
+
+
+
+%%
+
+
 rss=[];
 
 %
 % r0=0.3;%0.335710687019729+1e-3;
 
-rex=real(sqrt((-1+sqrt(1+4*mu))/-2));
+
 
 r0=0.1*rex; %0.142887535036224
 th0=0;
@@ -38,8 +68,8 @@ GM=yM*0;
 % plot(sqrt(yM(1,:).^2+yM(2,:).^2))
 
 G=-K*[cos(beta), -sin(beta); sin(beta), cos(beta)];
-tic
-for i=1:1681
+
+for i=1:30000
 [t,y]=rk4(@subhopfp,1,dt,mu,b,om,t0,[x0;y0],vG);
 
 t0=t(end);
@@ -58,7 +88,6 @@ vG=G*[yM(1,end)-yM(1,end-100); yM(2,end)-yM(2,end-100)];
 
 GM=[GM,vG];
 end
-toc
 %
 hold on;
 plot(tM/T,yM(1,:),"-");

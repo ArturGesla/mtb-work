@@ -32,36 +32,44 @@ clc; clear;
 hold on;
 grid on; grid minor;
 
-phi=0:0.01:10; beta=pi/4; gamma=-1;%kc;
+phi=0:0.01:10; beta=pi/4; gamma=-10;%kc;
 kc=-1/(2*pi*(gamma*sin(beta)+cos(beta)));
-b0=0.075;
+b0=0.02;
 
-l1=b0*(cos(beta)-cos(beta-phi));
-l2=phi./(1+b0*(sin(beta-phi)-sin(beta)));
+
+l1=b0*(cos(beta)-cos(beta-phi)); %lam
+l2=phi./(1+b0*(sin(beta-phi)-sin(beta))); %tau_hopf
+l3=pi*2./(1-gamma*l1); %tau_pyr
+l4=pi*2./(1+gamma*sqrt((-1+sqrt(1+4*l1))/-2).^2);
+
+
+
 crit=1+b0*l2.*(cos(beta-phi)+gamma*sin(beta-phi));
+crit2=1+b0*l3.*(cos(beta)+gamma*sin(beta));
 
 
 
-plot(l1,l2/pi.*(1./(crit>0)))
-plot(l1,l2/pi.*(1./(crit<0)),'--')
+plot(l1,l2/pi.*(1./(crit>0)),"LineWidth",2)
+plot(l1,l2/pi.*(1./(crit<0)),'--',"LineWidth",2)
+plot(l1,l3/pi.*(1./(crit2>0)),".")
+plot(l1,l3/pi.*(1./(crit2<0)),'.')
 
-phi=0:0.01:10; beta=pi/2; gamma=-1;%kc;
-kc=-1/(2*pi*(gamma*sin(beta)+cos(beta)));
-b0=0.3;
+legend("sub","super","tc unst","tc st")
 
-l1=b0*(cos(beta)-cos(beta-phi));
-l2=phi./(1+b0*(sin(beta-phi)-sin(beta)));
-crit=1+b0*l2.*(cos(beta-phi)+gamma*sin(beta-phi));
+% phi=0:0.01:10; beta=pi/2; gamma=-1;%kc;
+% kc=-1/(2*pi*(gamma*sin(beta)+cos(beta)));
+% b0=0.3;
+% 
+% l1=b0*(cos(beta)-cos(beta-phi));
+% l2=phi./(1+b0*(sin(beta-phi)-sin(beta)));
+% crit=1+b0*l2.*(cos(beta-phi)+gamma*sin(beta-phi));
+% 
+% l3=2./(1-gamma*l1);
+% l4=2./(1+gamma*sqrt((-1+sqrt(1+4*l1))/-2).^2);
+% 
+% plot(l1,l2/pi.*(1./(crit>0)))
+% plot(l1,l2/pi.*(1./(crit<0)),'--')
 
-l3=2./(1-gamma*l1);
-l4=2./(1+gamma*sqrt((-1+sqrt(1+4*l1))/-2).^2);
-
-plot(l1,l2/pi.*(1./(crit>0)))
-plot(l1,l2/pi.*(1./(crit<0)),'--')
-
-l3=2./(1-gamma*l1);
-l4=2./(1+gamma*sqrt((-1+sqrt(1+4*l1))/-2).^2);
-plot(l1,l3)
 % plot(l1,l4)
 
 

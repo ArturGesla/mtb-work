@@ -2,9 +2,11 @@ neq=2; mu=-0.015; b=-10;omega=1;
 
 g=zeros(2,1);
 J=zeros(2);
-u=zeros(2,1)+0.1;
+u=zeros(2,1)+3;
+r=sqrt(-mu)
 
-%% calc J and g
+uM=[u];
+% calc J and g
 for i=1:40
     x=u(1); y=u(2); r=sqrt(x^2+y^2);
     g(1)=(mu+r^2-r^4)*x-y*(omega+b*r^2);
@@ -19,4 +21,9 @@ for i=1:40
     du=-J\g;
     norm(du)
     u=u+du;
+    uM=[uM,u];
 end
+
+hold on;
+plot(uM')
+plot(sqrt(sum(uM.^2,1))')

@@ -12,16 +12,17 @@ omEff=om+b*r^2;
 f=omEff/2/pi;
 T=1/f;
 %
-np=300;
+np=100;
 dt=T/np;
 g=zeros(2*np,1);
 J=zeros(2*np);
+J2=zeros(2*np);
 u=zeros(2*np,1)+3;
 % r=sqrt(-mu)
 % r=0.05
 
-x=r*cos(linspace(0,2*pi,np+1)); x=x+rand(1,length(x)).*x*0.1;
-y=r*sin(linspace(0,2*pi,np+1)); y=y+rand(1,length(y)).*y*0.1;
+x=r*cos(linspace(0,2*pi,np+1)); %x=x+rand(1,length(x)).*x*0.1;
+y=r*sin(linspace(0,2*pi,np+1)); %y=y+rand(1,length(y)).*y*0.1;
 u(1:2:end)=x(1:end-1); u(2:2:end)=y(1:end-1);
 % plot(x,y); axis equal;
 
@@ -29,7 +30,7 @@ uM=[];
 uM=[uM,u];
 %%
 % calc J and g
- for i=1:100
+ for i=1:10
     for ip=1:np
     x=u(ip*2-1); y=u(ip*2); r=sqrt(x^2+y^2);
     xNext=u(mod(ip*2-1+neq-1,neq*np)+1); yNext=u(mod(ip*2+neq-1,neq*np)+1);
@@ -46,20 +47,44 @@ uM=[uM,u];
     J(ip*2,ip*2)=(mu+r^2-r^4)+y*(2*y-2*r^2*2*y)+x*b*2*y;
     J(ip*2,mod(ip*2+neq-1,neq*np)+1)=-1/dt/2;
     J(ip*2,mod(ip*2-neq-1,neq*np)+1)=1/dt/2;
+
+    J2(ip*2-1,mod(ip*2-1+neq-1,neq*np)+1)=-1/dt/2;
+    J2(ip*2-1,mod(ip*2-1-neq-1,neq*np)+1)=1/dt/2;
+  
+    J2(ip*2,mod(ip*2+neq-1,neq*np)+1)=-1/dt/2;
+    J2(ip*2,mod(ip*2-neq-1,neq*np)+1)=1/dt/2;
+  
     end
     %
     du=-J\g;
-    norm(du)
-    u=u+du;
+    utang=J2*u; 
+
+    du=reshape(du,[2,np]);
+    utang=reshape(utang,[2,np]);
+    utang=utang./vecnorm(utang);
+    dutang=sum(utang.*du,1).*utang;
+    du2=du-dutang;
+    du2=reshape(du2,[2*np,1]);
+
+    norm(du2)
+    u=u+du2;
     uM=[uM,u];
  end
 %%
 hold on;
+% u=u-du2;
 plot(u(1:2:end),u(2:2:end))
+% plot(u(1:2:end)+utang(1:2:end),u(2:2:end)+utang(2:2:end))
+% plot([u(1:2:end), u(1:2:end)+utang(1:2:end)]',[u(2:2:end),u(2:2:end)+utang(2:2:end)]'); axis equal
+plot([u(1:2:end), u(1:2:end)+du2(1:2:end)]',[u(2:2:end),u(2:2:end)+du2(2:2:end)]','-o'); axis equal
+% plot([u(1:2:end), u(1:2:end)+du(1:2:end)]',[u(2:2:end),u(2:2:end)+du(2:2:end)]','-x'); 
+
 %%
 plot(uM(1:2:end,:),uM(2:2:end,:))
 %%
+hold on;
 plot(uM(1,:)',uM(2,:)'); axis equal;
+plot(u(1:2:end),u(2:2:end))
 %%
 plot(sqrt(u(1:2:end).^2+u(2:2:end).^2))
 %%

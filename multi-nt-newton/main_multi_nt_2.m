@@ -29,20 +29,23 @@ uM=[];
 uM=[uM,u];
 %%
 % calc J and g
- for i=1:10
+ for i=1:100
     for ip=1:np
     x=u(ip*2-1); y=u(ip*2); r=sqrt(x^2+y^2);
     xNext=u(mod(ip*2-1+neq-1,neq*np)+1); yNext=u(mod(ip*2+neq-1,neq*np)+1);
-    g(ip*2-1)=(mu+r^2-r^4)*x-y*(omega+b*r^2)+(x-xNext)/dt;
-    g(ip*2)=(mu+r^2-r^4)*y+x*(omega+b*r^2)+(y-yNext)/dt;
+    xPrev=u(mod(ip*2-1-neq-1,neq*np)+1); yPrev=u(mod(ip*2-neq-1,neq*np)+1);
+    g(ip*2-1)=(mu+r^2-r^4)*x-y*(omega+b*r^2)+(xPrev-xNext)/dt/2;
+    g(ip*2)=(mu+r^2-r^4)*y+x*(omega+b*r^2)+(yPrev-yNext)/dt/2;
     
-    J(ip*2-1,ip*2-1)=(mu+r^2-r^4)+x*(2*x-2*r^2*2*x)-y*b*2*x+1/dt;
+    J(ip*2-1,ip*2-1)=(mu+r^2-r^4)+x*(2*x-2*r^2*2*x)-y*b*2*x;
     J(ip*2-1,ip*2)=x*(2*y-2*r^2*2*y)-(omega+b*r^2)-y*(2*b*y);
-    J(ip*2-1,mod(ip*2-1+neq-1,neq*np)+1)=-1/dt;
+    J(ip*2-1,mod(ip*2-1+neq-1,neq*np)+1)=-1/dt/2;
+    J(ip*2-1,mod(ip*2-1-neq-1,neq*np)+1)=1/dt/2;
   
     J(ip*2,ip*2-1)=y*(2*x-2*r^2*2*x)+(omega+b*r^2)+x*(2*b*x);
-    J(ip*2,ip*2)=(mu+r^2-r^4)+y*(2*y-2*r^2*2*y)+x*b*2*y+1/dt;
-    J(ip*2,mod(ip*2+neq-1,neq*np)+1)=-1/dt;
+    J(ip*2,ip*2)=(mu+r^2-r^4)+y*(2*y-2*r^2*2*y)+x*b*2*y;
+    J(ip*2,mod(ip*2+neq-1,neq*np)+1)=-1/dt/2;
+    J(ip*2,mod(ip*2-neq-1,neq*np)+1)=1/dt/2;
     end
     %
     du=-J\g;

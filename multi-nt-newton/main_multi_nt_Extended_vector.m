@@ -1,5 +1,6 @@
 clc; clear; close all;
-neq=2; mu=-0.015; b=-10;omega=1;
+%%
+neq=2; mu=-0.15; b=-10;omega=1;
 
 % sub
 % mu=-0.1;
@@ -12,12 +13,12 @@ omEff=om+b*r^2;
 f=omEff/2/pi;
 T=1/f;
 %
-np=100;
+np=400;
 dt=T/np;
 g=zeros(2*np+1,1);
 J=zeros(2*np+1);
 % J2=zeros(2*np);
-u=zeros(2*np+1,1)+3;
+u=zeros(2*np+1,1)+T;
 % r=sqrt(-mu)
 % r=0.05
 
@@ -109,7 +110,7 @@ plot(u(1:2:end-1),u(2:2:end-1))
 % plot([u(1:2:end), u(1:2:end)+du(1:2:end)]',[u(2:2:end),u(2:2:end)+du(2:2:end)]','-x'); 
 
 %%
-plot(uM(1:2:end,:),uM(2:2:end,:))
+plot(uM(1:2:end-1,:),uM(2:2:end-1,:))
 %%
 close all;
 f=figure(Position=[2200 202 911 598]); fnts=14;

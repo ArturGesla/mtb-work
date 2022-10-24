@@ -9,9 +9,9 @@ rss=[];
 
 rex=real(sqrt((-1+sqrt(1+4*mu))/-2));
 
-r0=rex; %0.142887535036224
+r0=1.2; %0.142887535036224
 th0=0;
-K=0.1;%sqrt(0.5^2+0.1^2);%0.04;
+% K=0.1;%sqrt(0.5^2+0.1^2);%0.04;
 t0=0;
 tM=[t0];
 yM=[r0;th0];
@@ -20,46 +20,48 @@ r00=r0;
 % T=2*pi/(1-b*mu);
 T=2*pi/(1+b*sqrt((-1+sqrt(1+4*mu))/-2)^2);
 % dt=5.646783412549308/100;
-dt=T/24;
-beta=pi/2;
+dt=0.1;
+% beta=pi/2;
 
 x0=r0;
 y0=0;
-%
-vG=zeros(2,1);
-[t,y]=rk4(@subhopfp,100,dt,mu,b,om,t0,[x0;y0],vG);
+%%
+vG=zeros(1,1);
+[t,y]=rk4(@monsel,40,dt,mu,b,om,t0,[x0],vG);
 t0=t(end);
 x0=y(1,end);
-y0=y(2,end);
+% y0=y(2,end);
 tM=[t];
 yM=[y];
 GM=yM*0;
-
+%%
 % plot(sqrt(yM(1,:).^2+yM(2,:).^2))
 
-G=-K*[cos(beta), -sin(beta); sin(beta), cos(beta)];
+% G=-K*[cos(beta), -sin(beta); sin(beta), cos(beta)];
+G=[yM(end-40)];
 tic
-for i=1:1141
-[t,y]=rk4(@subhopfp,1,dt,mu,b,om,t0,[x0;y0],vG);
+for i=1:20
+[t,y]=rk4(@monsel,1,dt,mu,b,om,t0,[x0],vG);
 
 t0=t(end);
 x0=y(1,end);
-y0=y(2,end);
+% y0=y(2,end);
 
 tM=[tM,t0];
-yM=[yM,[x0;y0]];
+yM=[yM,[x0]];
 
 %forcing
 % G(1,1)=-K*(yM(1,end)-yM(1,end-100));
 % G(2,2)=-K*(yM(2,end)-yM(2,end-100));
 
 %forcing
-vG=G*[yM(1,end)-yM(1,end-24); yM(2,end)-yM(2,end-24)];
+G=[yM(end-40)];
+vG=G;
 
 GM=[GM,vG];
 end
 toc
-%
+%%
 hold on;
 plot(tM/T,yM(1,:),"-");
 plot(tM/T,yM(2,:),"-");

@@ -1,7 +1,12 @@
-mu=-0.067;
+mu=0.005;
 omega=1;
+gamma=-10;
+tau=0.20; %2*pi/((omega-gamma*mu));
+%
 J=[mu, -omega; omega,mu];
-k=0.1; tau=1; beta=pi/4;
+k=0.045;
+% tau=1; 
+beta=0;
 B=[1+k*tau*cos(beta),-k*tau*sin(beta);k*tau*sin(beta),1+k*tau*cos(beta)];
 eig(J,B)
 

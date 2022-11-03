@@ -1,5 +1,5 @@
 clc; clear;
-mu=-0.015;
+mu=0.015;
 om=1;
 b=-10; % aka gamma
 rss=[];
@@ -9,9 +9,9 @@ rss=[];
 
 rex=real(sqrt((-1+sqrt(1+4*mu))/-2));
 
-r0=rex; %0.142887535036224
+r0=0.01; %rex*0.1; %0.142887535036224
 th0=0;
-K=0.1;%sqrt(0.5^2+0.1^2);%0.04;
+K=0.045;%sqrt(0.5^2+0.1^2);%0.04;
 t0=0;
 tM=[t0];
 yM=[r0;th0];
@@ -21,7 +21,7 @@ r00=r0;
 T=2*pi/(1+b*sqrt((-1+sqrt(1+4*mu))/-2)^2);
 % dt=5.646783412549308/100;
 dt=T/24;
-beta=pi/2;
+beta=0;
 
 x0=r0;
 y0=0;
@@ -34,12 +34,13 @@ y0=y(2,end);
 tM=[t];
 yM=[y];
 GM=yM*0;
-
+delay=24;
+display(num2str(delay*dt/pi))
 % plot(sqrt(yM(1,:).^2+yM(2,:).^2))
 
 G=-K*[cos(beta), -sin(beta); sin(beta), cos(beta)];
 tic
-for i=1:1141
+for i=1:2141
 [t,y]=rk4(@subhopfp,1,dt,mu,b,om,t0,[x0;y0],vG);
 
 t0=t(end);
@@ -54,12 +55,14 @@ yM=[yM,[x0;y0]];
 % G(2,2)=-K*(yM(2,end)-yM(2,end-100));
 
 %forcing
-vG=G*[yM(1,end)-yM(1,end-24); yM(2,end)-yM(2,end-24)];
+vG=G*[yM(1,end)-yM(1,end-delay); yM(2,end)-yM(2,end-delay)];
 
 GM=[GM,vG];
 end
 toc
 %
+close all;
+f=figure("Position",[2000 200 800 600]);
 hold on;
 plot(tM/T,yM(1,:),"-");
 plot(tM/T,yM(2,:),"-");

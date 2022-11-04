@@ -1,7 +1,7 @@
 clc; clear; close all;
 %
 neq=3; r=28; b=8/3; sigma=10;
-
+% r=15;
 T=1.5586;
 %
 np=400; %valid points, no repeats
@@ -20,8 +20,11 @@ u(1:neq:end-1)=x(1:end-1); u(2:neq:end-1)=y(1:end-1); u(3:neq:end-1)=z(1:end-1);
 
 uM=[];
 uM=[uM,u];
+uMC=[];
+% r=15;
 %%
 % calc J and g
+% r=r*1.1
  for i=1:8
     for ip=1:np
         ix=ip*neq-2;
@@ -79,12 +82,13 @@ uM=[uM,u];
     J(iz+1,ixpp)=-1/ds/2;
 
     %
-    du=-J\g;
+    du=-sparse(J)\g;
    
     fprintf('%s\n',"iter: "+num2str(i)+" res: "+num2str(norm(du)))
     u=u+du;
     uM=[uM,u];
  end
+ uMC=[uMC,u];
 %%
 hold on;
 % u=u-du2;
@@ -97,8 +101,17 @@ grid on; grid minor;
 
 %%
 hold on;
-plot3(uM(1:neq:end-1,:),uM(2:neq:end-1,:),uM(3:neq:end-1,:))
+% plot3(uM(1:neq:end-1,:),uM(2:neq:end-1,:),uM(3:neq:end-1,:))
+plot3(uM(1:neq:end-1,1),uM(2:neq:end-1,1),uM(3:neq:end-1,1))
+plot3(uM(1:neq:end-1,end),uM(2:neq:end-1,end),uM(3:neq:end-1,end))
 % plot3([uM(1:neq:end-1,end-1), uM(1:neq:end-1,end-1)+du(1:neq:end-1)]',[uM(2:neq:end-1,end-1),uM(2:neq:end-1,end-1)+du(2:neq:end-1)]',[uM(3:neq:end-1,end-1), uM(3:neq:end-1,end-1)+du(3:neq:end-1)]','-o'); 
+%%
+hold on;
+% plot3(uM(1:neq:end-1,:),uM(2:neq:end-1,:),uM(3:neq:end-1,:))
+plot3(uMC(1:neq:end-1,:),uMC(2:neq:end-1,:),uMC(3:neq:end-1,:))
+% plot3(uM(1:neq:end-1,end),uM(2:neq:end-1,end),uM(3:neq:end-1,end))
+grid on;
+%dla r=15 najmniejsza , 92 najwieksza 
 %%
 spy(J); grid on; grid minor;
 %%
@@ -108,7 +121,7 @@ close all;
 plot(uM(1:neq:end-1,:),uM(2:neq:end-1,:))
 %%
 close all;
-f=figure(Position=[2200 202 911 598]); fnts=14;
+% f=figure(Position=[2200 202 911 598]); fnts=14;
 % f=figure(Position=[2200 202 300 300]); fnts=14;
 % hold on;
 set(f,'defaulttextinterpreter','latex')
@@ -125,7 +138,7 @@ plot(u(1:2:end-1),u(2:2:end-1),'-x')
 axis equal;
 % grid on;
 
-h1=legend("iteration=0","iteration=5, resid=1e-16","analytical solution",Location="best");
+% h1=legend("iteration=0","iteration=5, resid=1e-16","analytical solution",Location="best");
 set(h1, 'Interpreter','latex')
 grid on; grid minor; 
 set(gca,"FontSize",fnts,"FontName","Latin Modern Math");

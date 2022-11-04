@@ -10,6 +10,17 @@ gelfgatsr=[22000 0.1; 18000, 0.12; 15000, 0.14; 13000, 0.16; 11500, 0.18; 10000,
 
 tean=[55 128 128]./256;
 red=[255 15 0]./256;
+
+%%mix
+gauthiercr=[gauthiercr(:,1).*gauthiercr(:,2), gauthiercr(:,2)];
+gauthiersr=[gauthiersr(:,1).*gauthiersr(:,2), gauthiersr(:,2)];
+schouvcr=[schouvcr(:,1).*schouvcr(:,2), schouvcr(:,2)];
+schouvsr=[schouvsr(:,1).*schouvsr(:,2), schouvsr(:,2)];
+poncetcr=[poncetcr(:,1).*poncetcr(:,2), poncetcr(:,2)];
+poncetsr=[poncetsr(:,1).*poncetsr(:,2), poncetsr(:,2)];
+serresr=[serresr(:,1).*serresr(:,2), serresr(:,2)];
+rubiosr=[rubiosr(:,1).*rubiosr(:,2), rubiosr(:,2)];
+gelfgatsr=[gelfgatsr(:,1).*gelfgatsr(:,2), gelfgatsr(:,2)];
 %
 close all;
 f=figure(Position=[2200,200,800,600]); fnts=14;
@@ -35,10 +46,10 @@ plot(gelfgatsr(:,1),gelfgatsr(:,2),'--',Color=red,LineWidth=2)
 legend("shroud fixed","shroud rotating", "Location",    "best",'Interpreter', 'latex');
 
 % ylim([0.03, 0.22]); xlim([0 350000]); grid on; grid minor;
-ylim([0.03, 0.22]); xlim([0 80000]); grid on; grid minor;
+ylim([0.03, 0.22]); xlim([0 15000]); grid on; grid minor;
 
 % xlabel("$Re_R=\frac{R^2\Omega}{\nu}$", 'Interpreter', 'latex')
-xlabel("$Re_R=\frac{R^2\Omega}{\nu}$")
+xlabel("$Re_{RH}=\frac{RH\Omega}{\nu}$")
 ylabel("$G=\frac{H}{R}$")
 
 % set(gca,'defaulttextinterpreter','latex')
@@ -53,42 +64,42 @@ set(gca,"FontSize",fnts,"FontName","Latin Modern Math");
 % Create textbox
 p=gca().InnerPosition; x0=p(1); y0=p(2); x1=p(3)+x0; y1=p(4)+y0;
 
-xp=60000; yp=0.048;
+ yp=0.048; xp=60000*yp;
 h=annotation(f,'textbox',...
      [(xp-gca().XLim(1))/diff(gca().XLim)*(x1-x0)+x0 ,(yp-gca().YLim(1))/diff(gca().YLim)*(y1-y0)+y0 , 0.1538, 0.0487],...
     'String',{'SR Gauthier'},'Interpreter','latex',"FitBoxToText","on","FontSize",fnts-2,"LineStyle","none","Rotation",   0);
 
-xp=28000; yp=0.035;
+ yp=0.035; xp=28000*yp;
 h=annotation(f,'textbox',...
      [(xp-gca().XLim(1))/diff(gca().XLim)*(x1-x0)+x0 ,(yp-gca().YLim(1))/diff(gca().YLim)*(y1-y0)+y0 , 0.1538, 0.0487],...
     'String',{'CR Gauthier'},'Interpreter','latex',"FitBoxToText","on","FontSize",fnts-2,"LineStyle","none","Rotation",   0);
 
-xp=26000; yp=0.1;
+ yp=0.1; xp=26000*yp;
 h=annotation(f,'textbox',...
      [(xp-gca().XLim(1))/diff(gca().XLim)*(x1-x0)+x0 ,(yp-gca().YLim(1))/diff(gca().YLim)*(y1-y0)+y0 , 0.1538, 0.0487],...
-    'String',{'SR Schouveiler'},'Interpreter','latex',"FitBoxToText","on","FontSize",fnts-2,"LineStyle","none","Rotation",   -45);
+    'String',{'SR Schouveiler'},'Interpreter','latex',"FitBoxToText","on","FontSize",fnts-2,"LineStyle","none","Rotation",   -100);
 
-% xp=13000; yp=0.08;
-% h=annotation(f,'textbox',...
-%      [(xp-gca().XLim(1))/diff(gca().XLim)*(x1-x0)+x0 ,(yp-gca().YLim(1))/diff(gca().YLim)*(y1-y0)+y0 , 0.1538, 0.0487],...
-%     'String',{'CR Schouveiler'},'Interpreter','latex',"FitBoxToText","on","FontSize",fnts-2,"LineStyle","none","Rotation",   -45);
-% 
-% xp=9000; yp=0.1;
-% h=annotation(f,'textbox',...
-%      [(xp-gca().XLim(1))/diff(gca().XLim)*(x1-x0)+x0 ,(yp-gca().YLim(1))/diff(gca().YLim)*(y1-y0)+y0 , 0.1538, 0.0487],...
-%     'String',{'CR \& SR Poncet'},'Interpreter','latex',"FitBoxToText","on","FontSize",fnts-2,"LineStyle",":","Rotation",   0,"BackgroundColor",[1,1,1]);
-
-xp=12000; yp=0.18;
+ yp=0.10; xp=5000*yp;
 h=annotation(f,'textbox',...
      [(xp-gca().XLim(1))/diff(gca().XLim)*(x1-x0)+x0 ,(yp-gca().YLim(1))/diff(gca().YLim)*(y1-y0)+y0 , 0.1538, 0.0487],...
-    'String',{'SR Gelfgat'},'Interpreter','latex',"FitBoxToText","on","FontSize",fnts-2,"LineStyle","none","Rotation",   -70);
+    'String',{'CR Schouveiler'},'Interpreter','latex',"FitBoxToText","on","FontSize",fnts-2,"LineStyle","none","Rotation",   -80);
 
-xp=11000; yp=0.2;
+ yp=0.1; xp=9000*yp;
+h=annotation(f,'textbox',...
+     [(xp-gca().XLim(1))/diff(gca().XLim)*(x1-x0)+x0 ,(yp-gca().YLim(1))/diff(gca().YLim)*(y1-y0)+y0 , 0.1538, 0.0487],...
+    'String',{'CR \& SR Poncet'},'Interpreter','latex',"FitBoxToText","on","FontSize",fnts-2,"LineStyle",":","Rotation",   0,"BackgroundColor",[1,1,1]);
+
+ yp=0.18; xp=12000*yp;
+h=annotation(f,'textbox',...
+     [(xp-gca().XLim(1))/diff(gca().XLim)*(x1-x0)+x0 ,(yp-gca().YLim(1))/diff(gca().YLim)*(y1-y0)+y0 , 0.1538, 0.0487],...
+    'String',{'SR Gelfgat'},'Interpreter','latex',"FitBoxToText","on","FontSize",fnts-2,"LineStyle","none","Rotation",   -87);
+
+ yp=0.2; xp=11000*yp;
 h=annotation(f,'textbox',...
      [(xp-gca().XLim(1))/diff(gca().XLim)*(x1-x0)+x0 ,(yp-gca().YLim(1))/diff(gca().YLim)*(y1-y0)+y0 , 0.1538, 0.0487],...
     'String',{'SR Serre'},'Interpreter','latex',"FitBoxToText","on","FontSize",fnts-2,"LineStyle","none","Rotation",   0);
 
-xp=51000; yp=0.2;
+ yp=0.2; xp=51000*yp;
 h=annotation(f,'textbox',...
      [(xp-gca().XLim(1))/diff(gca().XLim)*(x1-x0)+x0 ,(yp-gca().YLim(1))/diff(gca().YLim)*(y1-y0)+y0 , 0.1538, 0.0487],...
     'String',{'SR Lopez'},'Interpreter','latex',"FitBoxToText","on","FontSize",fnts-2,"LineStyle","none","Rotation",   0);
@@ -98,4 +109,4 @@ h=annotation(f,'textbox',...
 %      [(xp-gca().XLim(1))/diff(gca().XLim)*(x1-x0)+x0 ,(yp-gca().YLim(1))/diff(gca().YLim)*(y1-y0)+y0 , 0.1538, 0.0487],...
 %     'String',{'CR Daube'},'Interpreter','latex',"FitBoxToText","on","FontSize",fnts-2,"LineStyle","none","Rotation",   0);
 % 
-exportgraphics(gcf,'plot.png','Resolution',300)
+exportgraphics(gcf,'plot.png','Resolution',100)

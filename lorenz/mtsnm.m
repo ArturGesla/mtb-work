@@ -1,20 +1,25 @@
 clc; clear; close all;
 %
-neq=3; r=28; b=8/3; sigma=10;
+eigen_dir
+%%
+close all;
+
+neq=3; %r=28; b=8/3; sigma=10;
 % r=15;
-T=1.5586;
+% T=1.5586;
+T=per;
 %
-np=200; %valid points, no repeats
+np=size(X,1)-1; %valid points, no repeats
 dt=T/(np);
 g=zeros(neq*np+1,1);
 J=sparse(neq*np+1,neq*np+1);%zeros(neq*np+1);
 u=zeros(neq*np+1,1)+T;
 
-main_lorenz_ti
+% main_lorenz_ti
 
-x=X(:,1); x=x+rand(1,length(x))'.*x*0.1;
-y=X(:,2); y=y+rand(1,length(y))'.*y*0.1;
-z=X(:,3); y=y+rand(1,length(y))'.*y*0.1;
+x=X(:,1); %x=x+rand(1,length(x))'.*x*0.1;
+y=X(:,2); %y=y+rand(1,length(y))'.*y*0.1;
+z=X(:,3); %y=y+rand(1,length(y))'.*z*0.1;
 u(1:neq:end-1)=x(1:end-1); u(2:neq:end-1)=y(1:end-1); u(3:neq:end-1)=z(1:end-1);
 % plot(x,y); axis equal;
 

@@ -13,7 +13,7 @@ omEff=om+b*r^2;
 f=omEff/2/pi;
 T=1/f;
 %
-np=400;
+np=10;
 dt=T/np;
 g=zeros(2*np+1,1);
 J=zeros(2*np+1);
@@ -111,31 +111,31 @@ plot(u(1:2:end-1),u(2:2:end-1))
 
 %%
 plot(uM(1:2:end-1,:),uM(2:2:end-1,:))
-%%
-close all;
-f=figure(Position=[2200 202 911 598]); fnts=14;
-% f=figure(Position=[2200 202 300 300]); fnts=14;
+% %%
+% close all;
+% f=figure(Position=[2200 202 911 598]); fnts=14;
+% % f=figure(Position=[2200 202 300 300]); fnts=14;
+% % hold on;
+% set(f,'defaulttextinterpreter','latex')
+% 
+% 
 % hold on;
-set(f,'defaulttextinterpreter','latex')
-
-
-hold on;
-plot(uM(1:2:end-1,1),uM(2:2:end-1,1))
-plot(uM(1:2:end-1,end),uM(2:2:end-1,end),'-o')
-
-x=r*cos(linspace(0,2*pi,np+1));
-y=r*sin(linspace(0,2*pi,np+1));
-u(1:2:end-1)=x(1:end-1); u(2:2:end-1)=y(1:end-1);
-plot(u(1:2:end-1),u(2:2:end-1),'-x')
-axis equal;
-% grid on;
-
-h1=legend("iteration=0","iteration=5, resid=1e-16","analytical solution",Location="best");
-set(h1, 'Interpreter','latex')
-grid on; grid minor; 
-set(gca,"FontSize",fnts,"FontName","Latin Modern Math");
-xlabel("x"); ylabel("y"); title("Multi timestep newton method $ \vert$ subHoph $\mu=-0.015 $ $ \vert$ 100 points for period")
-exportgraphics(gcf,'plot.png','Resolution',200)
+% plot(uM(1:2:end-1,1),uM(2:2:end-1,1))
+% plot(uM(1:2:end-1,end),uM(2:2:end-1,end),'-o')
+% 
+% x=r*cos(linspace(0,2*pi,np+1));
+% y=r*sin(linspace(0,2*pi,np+1));
+% u(1:2:end-1)=x(1:end-1); u(2:2:end-1)=y(1:end-1);
+% plot(u(1:2:end-1),u(2:2:end-1),'-x')
+% axis equal;
+% % grid on;
+% 
+% h1=legend("iteration=0","iteration=5, resid=1e-16","analytical solution",Location="best");
+% set(h1, 'Interpreter','latex')
+% grid on; grid minor; 
+% set(gca,"FontSize",fnts,"FontName","Latin Modern Math");
+% xlabel("x"); ylabel("y"); title("Multi timestep newton method $ \vert$ subHoph $\mu=-0.015 $ $ \vert$ 100 points for period")
+% exportgraphics(gcf,'plot.png','Resolution',200)
 
 %%
 hold on;

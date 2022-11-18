@@ -1,5 +1,5 @@
 clc; clear;
-mu=0.015;
+mu=-0.015;
 om=1;
 b=-10; % aka gamma
 rss=[];
@@ -9,9 +9,9 @@ rss=[];
 
 rex=real(sqrt((-1+sqrt(1+4*mu))/-2));
 
-r0=0.01; %rex*0.1; %0.142887535036224
+r0=0.1; %rex*0.1; %0.142887535036224
 th0=0;
-K=0.045;%sqrt(0.5^2+0.1^2);%0.04;
+K=0.04;%sqrt(0.5^2+0.1^2);%0.04;
 t0=0;
 tM=[t0];
 yM=[r0;th0];
@@ -21,13 +21,13 @@ r00=r0;
 T=2*pi/(1+b*sqrt((-1+sqrt(1+4*mu))/-2)^2);
 % dt=5.646783412549308/100;
 dt=T/24;
-beta=0;
+beta=pi/2;
 
 x0=r0;
 y0=0;
 %
 vG=zeros(2,1);
-[t,y]=rk4(@subhopfp,100,dt,mu,b,om,t0,[x0;y0],vG);
+[t,y]=rk4(@subhopfp,24*4,dt,mu,b,om,t0,[x0;y0],vG);
 t0=t(end);
 x0=y(1,end);
 y0=y(2,end);
@@ -35,12 +35,12 @@ tM=[t];
 yM=[y];
 GM=yM*0;
 delay=24;
-display(num2str(delay*dt/pi))
+display(num2str(delay*dt/T))
 % plot(sqrt(yM(1,:).^2+yM(2,:).^2))
 
 G=-K*[cos(beta), -sin(beta); sin(beta), cos(beta)];
 tic
-for i=1:2141
+for i=1:2141/1
 [t,y]=rk4(@subhopfp,1,dt,mu,b,om,t0,[x0;y0],vG);
 
 t0=t(end);
@@ -67,10 +67,13 @@ hold on;
 plot(tM/T,yM(1,:),"-");
 plot(tM/T,yM(2,:),"-");
 plot(tM/T,(tM-tM+1)*rex)
-xlabel("time in periods"); ylabel("r"); title("UPO stab | K="+num2str(K)+" mu="+num2str(mu)+" x0 = "+num2str(r0)); legend("x","y"); grid on;
+xlabel("time in periods"); ylabel("r"); title("UPO stab | K="+num2str(K)+" tau = "+num2str(delay*dt/pi/2,"%4.2f")+" periods | mu="+num2str(mu)+" x0 = "+num2str(r0));  grid on;
 r=sqrt(yM(1,:).^2+yM(2,:).^2);
 plot(tM/T,r)
+legend("x","y","r_{exact}","r");
 r(end)-rex
+exportgraphics(gcf,"plot.png",'Resolution',100)
+
 %%
 hold on;
 plot(tM/T,GM(1,:),"-");

@@ -39,8 +39,8 @@ z=z+alpha*evc(3);
 % r=28;
 % sigma=10;
 % b=8/3;
-nt=8e3;
-dt=0.05/2/2;
+nt=1e3;
+dt=0.05;
 
 [T,X]=rk4(@odefun,nt,dt,0,[x;y;z],r,b,sigma);
 
@@ -128,7 +128,7 @@ rM=[];
 close all;
 plot(u(1:neq:end-1),u(2:neq:end-1),'x-')
 %%
-for ic=1:90
+for ic=1:1
 r=r-0.1
 tic;
  for i=1:15

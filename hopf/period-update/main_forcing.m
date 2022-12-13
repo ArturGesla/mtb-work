@@ -1,4 +1,4 @@
-clc; clear;
+clc; clear; close all;
 mu=-0.015;
 om=1;
 b=-10; % aka gamma

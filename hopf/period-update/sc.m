@@ -1,4 +1,4 @@
-clc; clear;
+clc; clear; close all;
 mu=-0.015;
 om=1;
 b=-10; % aka gamma
@@ -9,7 +9,7 @@ rss=[];
 
 rex=real(sqrt((-1+sqrt(1+4*mu))/-2));
 
-r0=rex;%0.1; %rex*0.1; %0.142887535036224
+r0=0.1; %rex*0.1; %0.142887535036224
 th0=0;
 K=0.04;%sqrt(0.5^2+0.1^2);%0.04;
 t0=0;
@@ -20,7 +20,7 @@ r00=r0;
 % T=2*pi/(1-b*mu);
 T=2*pi/(1+b*sqrt((-1+sqrt(1+4*mu))/-2)^2);
 % dt=5.646783412549308/100;
-np=24;
+np=100;
 dt=T/np;
 beta=pi/2;
 
@@ -28,20 +28,21 @@ x0=r0;
 y0=0;
 %
 vG=zeros(2,1);
-[t,y]=rk4(@subhopfp,np*100,dt,mu,b,om,t0,[x0;y0],vG);
+[t,y]=rk4(@subhopfp,np*1,dt,mu,b,om,t0,[x0;y0],vG);
 t0=t(end);
 x0=y(1,end);
 y0=y(2,end);
 tM=[t];
 yM=[y];
 GM=yM*0;
-delay=24;
+delay=np;
 display(num2str(delay*dt/T))
 % plot(sqrt(yM(1,:).^2+yM(2,:).^2))
-%%
+
+% period 1 
 G=-K*[cos(beta), -sin(beta); sin(beta), cos(beta)];
 tic
-for i=1:np*100 %10 periods
+for i=1:np*20 %10 periods
 [t,y]=rk4(@subhopfp,1,dt,mu,b,om,t0,[x0;y0],vG);
 
 t0=t(end);
@@ -61,7 +62,51 @@ vG=G*[yM(1,end)-yM(1,end-delay); yM(2,end)-yM(2,end-delay)];
 GM=[GM,vG];
 end
 toc
+%
+mu=-0.02;
+rex2=real(sqrt((-1+sqrt(1+4*mu))/-2));
+
+
+T2=2*pi/(1+b*sqrt((-1+sqrt(1+4*mu))/-2)^2);
+% delay=round(T2/dt);
+
+% period 2 
+
+tic
+for i=1:np*20 %10 periods
+[t,y]=rk4(@subhopfp,1,dt,mu,b,om,t0,[x0;y0],vG);
+
+t0=t(end);
+x0=y(1,end);
+y0=y(2,end);
+
+tM=[tM,t0];
+yM=[yM,[x0;y0]];
+
+
+%forcing
+vG=G*[yM(1,end)-yM(1,end-delay); yM(2,end)-yM(2,end-delay)];
+
+GM=[GM,vG];
+end
+toc
+
+% minimise the resid wrt T
+% hold on; grid on;
+% 
+% plot(tM/(delay*dt),vecnorm(yM-yM(:,end),1),"-");
+% plot(tM(end-np-round(np/5):end-np+round(np/5))/(delay*dt),vecnorm(yM(:,end-np-round(np/5):end-np+round(np/5))-yM(:,end),1),"-");
+%
+s=vecnorm(yM(:,end-delay-round(delay/5):end-delay+round(delay/5))-yM(:,end),1);
+[a,b]=min(s);
+%delay=round((tM(end)-tM(end-np-round(np/5)+b-1))/dt);
 %%
+close all;
+hold on; grid on;
+
+plot(tM/(delay*dt),vecnorm(yM-yM(:,end),1),"-");
+plot(tM(end-np-round(np/5):end-np+round(np/5))/(delay*dt),vecnorm(yM(:,end-np-round(np/5):end-np+round(np/5))-yM(:,end),1),"-");
+%% main plot
 close all;
 f=figure("Position",[2000 200 800 600]);
 hold on;
@@ -83,11 +128,12 @@ semilogy(tM/T,r(end)*exp(mu*(t-t(end))))
 
 %% phase
 plot(yM(1,:),yM(2,:)); axis equal;
-%%
-hold on;
-plot(tM/T,GM(1,:),"-");
-plot(tM/T,GM(2,:),"-");
-legend("x force","y force");
+%% force
+
+% plot(tM/T,GM(1,:),"-");
+% plot(tM/T,GM(2,:),"-");
+semilogy(tM/T,vecnorm(GM,2),"-"); hold on;
+% legend("x force","y force");
 title("feedback force"); grid on;
 %%
 plot3(yM(1,:),yM(2,:),tM)

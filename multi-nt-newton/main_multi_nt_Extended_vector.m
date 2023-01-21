@@ -1,19 +1,21 @@
 clc; clear; close all;
 %%
-neq=2; mu=-0.15; b=-10;omega=1;
+neq=2; mu=-0.05; b=-1; omega=1;
 
 % sub
 % mu=-0.1;
 p = [-1 0 1 0 mu 0];
 r = roots(p);
-r=r(end);
+r2=r(3);
+r1=r(5);
+r=r2
 om=1;
 % b=1;
 omEff=om+b*r^2;
 f=omEff/2/pi;
 T=1/f;
 %
-np=10;
+np=50;
 dt=T/np;
 g=zeros(2*np+1,1);
 J=zeros(2*np+1);
@@ -22,14 +24,14 @@ u=zeros(2*np+1,1)+T;
 % r=sqrt(-mu)
 % r=0.05
 
-x=r*cos(linspace(0,2*pi,np+1)); x=x+rand(1,length(x)).*x*0.1;
-y=r*sin(linspace(0,2*pi,np+1)); y=y+rand(1,length(y)).*y*0.1;
+x=r*cos(linspace(0,2*pi,np+1)); %x=x+rand(1,length(x)).*x*0.1;
+y=r*sin(linspace(0,2*pi,np+1)); %y=y+rand(1,length(y)).*y*0.1;
 u(1:2:end-1)=x(1:end-1); u(2:2:end-1)=y(1:end-1);
 % plot(x,y); axis equal;
 
 uM=[];
 uM=[uM,u];
-%%
+%
 % calc J and g
  for i=1:8
     for ip=1:np-1
@@ -139,11 +141,21 @@ plot(uM(1:2:end-1,:),uM(2:2:end-1,:))
 
 %%
 hold on;
-plot(uM(1,:)',uM(2,:)'); axis equal;
-plot(u(1:2:end),u(2:2:end))
+% plot(uM(1,:)',uM(2,:)'); 
+axis equal;
+plot(u(1:2:end-1),u(2:2:end-1))
 %%
 plot(sqrt(u(1:2:end).^2+u(2:2:end).^2))
 %%
 hold on;
 plot(uM')
 plot(sqrt(sum(uM.^2,1))')
+
+%%
+close all;
+A=J;
+B=eye(length(u));
+B(end,end)=0;
+% ev=eig(A,B); plot(ev,'x'); grid on; hold on;
+ev=eig(A); plot(ev,'o'); grid on; hold on;
+

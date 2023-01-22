@@ -32,28 +32,35 @@ hold on;
 leg=[];
 symbol="-";
 plot(zc,uPlot(1:4:end-1)); leg=[leg;"p"];
-% plot(zc,uPlot(2:4:end-1),symbol); leg=[leg;"u"];
-% plot(zc,uPlot(3:4:end-1),symbol); leg=[leg;"v"];
+plot(zc,uPlot(2:4:end-1),symbol); leg=[leg;"u"];
+plot(zc,uPlot(3:4:end-1),symbol); leg=[leg;"v"];
 % plot(zc,uPlot(3:4:end-1),symbol); leg=[leg;string(num2str(Re))];
-% plot(zw,uPlot(4:4:end-1),symbol); leg=[leg;"w"];
+plot(zw,uPlot(4:4:end-1),symbol); leg=[leg;"w"];
 legend(leg); grid on;
 title("Re: "+num2str(Re)+" | k^{1/2}: "+num2str(sqrt(u(end))))
 
 %% evplot
-% uPlot=uEvReal;
-uPlot=uEvImag;
+
+% b=10;
+uEvReal=real(evc(:,b));
+uEvImag=imag(evc(:,b));
+
+uPlot=uEvReal;
+uPlot2=uEvImag;
 % uPlot=u;
  close all;
 hold on;
 leg=[];
 symbol="-";
 plot(zc,uPlot(1:4:end-1),symbol); leg=[leg;"p"];
+% plot(zc,uPlot2(1:4:end-1),symbol+"r"); leg=[leg;"p"];
 plot(zc,uPlot(2:4:end),symbol); leg=[leg;"u"];
 plot(zc,uPlot(3:4:end),symbol); leg=[leg;"v"];
-% % plot(zc,uPlot(3:4:end-1),symbol); leg=[leg;string(num2str(Re))];
+% plot(zc,uPlot2(3:4:end),symbol+"r"); leg=[leg;"v"];
+% plot(zc,uPlot(3:4:end-1),symbol); leg=[leg;string(num2str(Re))];
 plot(zw,uPlot(4:4:end),symbol); leg=[leg;"w"];
 legend(leg); grid on;
-title("Re: "+num2str(Re)+" | k^{1/2}: "+num2str(sqrt(u(end))))
+title("Re: "+num2str(Re)+" | ev: "+num2str(evs(b)))
 %%
 
 ev=eig(full(jac),full(B));
@@ -64,14 +71,17 @@ plot(ev,'x'); xlim([-20 1]); grid on;
 %%
 al=0.34;
 rl=21.6;
+k=0.313;
 
-delta=L/sqrt(Re);
+delta=L/sqrt(Re*k);
 kr=al/delta;
 ra=rl*delta;
 
-% kr=9.5;
- ra=0.8;
-[rhs,jac,B]=calculateJacAndRhs(zc,zw,u,Re,ra,kr,L);  
+kr=0.4;
+ ra=0.5;
+ %
+[rhs,jac,B]=calculateJacAndRhs(zc,zw,u,Re,ra,kr,L); 
+%
 %   evs=eig(full(jac),full(B)); plot(evs,'x');
 [evc,evs]=eigs((jac),(B),40,"smallestabs"); evs=diag(evs); plot(evs,'o');
 % close all;
@@ -80,5 +90,8 @@ xlim([-2 1]); grid on; hold on;
 %%
 [a,b]=max(real(evs))
 plot(evs(b),'+')
+%%
+
+b=2;
 uEvReal=real(evc(:,b));
 uEvImag=real(evc(:,b));

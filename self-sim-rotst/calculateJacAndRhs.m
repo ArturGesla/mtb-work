@@ -38,7 +38,7 @@ for iz=2:Nz-1
     
 %     if kr==0
 if kr==0 || kr~=1
-    jac(iif,iik)=1;%+1/2*ra*1i*kr;
+    jac(iif,iik)=1+1/2*ra*1i*kr;
     end
     jac(iif,iip)=L^2/ra*1i*kr;
  

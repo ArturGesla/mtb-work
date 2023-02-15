@@ -1,7 +1,7 @@
 clc; clear;
-mu=-0.015;
+mu=-0.05;
 om=1;
-b=-10; % aka gamma
+b=-0; % aka gamma
 rss=[];
 
 %
@@ -11,7 +11,7 @@ rex=real(sqrt((-1+sqrt(1+4*mu))/-2));
 
 r0=rex;%0.1; %rex*0.1; %0.142887535036224
 th0=0;
-K=0.04;%sqrt(0.5^2+0.1^2);%0.04;
+K=0.0;%sqrt(0.5^2+0.1^2);%0.04;
 t0=0;
 tM=[t0];
 yM=[r0;th0];
@@ -38,7 +38,7 @@ GM=yM*0;
 delay=24;
 display(num2str(delay*dt/T))
 % plot(sqrt(yM(1,:).^2+yM(2,:).^2))
-%%
+%
 G=-K*[cos(beta), -sin(beta); sin(beta), cos(beta)];
 tic
 for i=1:np*100 %10 periods
@@ -61,9 +61,9 @@ vG=G*[yM(1,end)-yM(1,end-delay); yM(2,end)-yM(2,end-delay)];
 GM=[GM,vG];
 end
 toc
-%%
+%
 close all;
-f=figure("Position",[2000 200 800 600]);
+f=figure("Position",[20 20 800 600]);
 hold on;
 plot(tM/T,yM(1,:),"-");
 plot(tM/T,yM(2,:),"-");
@@ -73,7 +73,7 @@ r=sqrt(yM(1,:).^2+yM(2,:).^2);
 plot(tM/T,r)
 legend("x","y","r_{exact}","r");
 r(end)-rex
-exportgraphics(gcf,"plot.png",'Resolution',100)
+% exportgraphics(gcf,"plot.png",'Resolution',100)
 
 %% lsa
 close all;
@@ -93,7 +93,9 @@ title("feedback force"); grid on;
 plot3(yM(1,:),yM(2,:),tM)
 %%
 r=sqrt(yM(1,:).^2+yM(2,:).^2);
-plot(r-rex)
+% plot(r-rex)
+semilogy(tM,-(r-rex)); hold on;
+semilogy(tM,1e-4*exp(tM*0.0944)); hold on;
 r(end)-rex
 %%
 r=sqrt(yM(1,:).^2+yM(2,:).^2);

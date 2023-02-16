@@ -1,6 +1,6 @@
 clc; clear; close all;
 %%
-neq=2; mu=-0.05; b=-0; omega=1;
+neq=2; mu=-0.05; b=-1; omega=1;
 
 % sub
 % mu=-0.1;
@@ -8,7 +8,7 @@ p = [-1 0 1 0 mu 0];
 r = roots(p);
 r2=r(3);
 r1=r(5);
-r=r1;
+r=r2;
 om=1;
 % b=1;
 omEff=om+b*r^2;

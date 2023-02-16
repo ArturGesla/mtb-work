@@ -1,15 +1,19 @@
 clc; clear;
 mu=-0.05;
 om=1;
-b=-0; % aka gamma
+b=-1; % aka gamma
 rss=[];
 
 %
 % r0=0.3;%0.335710687019729+1e-3;
+p = [-1 0 1 0 mu 0];
+r = roots(p);
+r2=r(3);
+r1=r(5);
 
 rex=real(sqrt((-1+sqrt(1+4*mu))/-2));
 
-r0=rex;%0.1; %rex*0.1; %0.142887535036224
+r0=rex+1e-6;%0.1; %rex*0.1; %0.142887535036224
 th0=0;
 K=0.0;%sqrt(0.5^2+0.1^2);%0.04;
 t0=0;
@@ -20,7 +24,7 @@ r00=r0;
 % T=2*pi/(1-b*mu);
 T=2*pi/(1+b*sqrt((-1+sqrt(1+4*mu))/-2)^2);
 % dt=5.646783412549308/100;
-np=24;
+np=240;
 dt=T/np;
 beta=pi/2;
 
@@ -28,7 +32,7 @@ x0=r0;
 y0=0;
 %
 vG=zeros(2,1);
-[t,y]=rk4(@subhopfp,np*100,dt,mu,b,om,t0,[x0;y0],vG);
+[t,y]=rk4(@subhopfp,np*50,dt,mu,b,om,t0,[x0;y0],vG);
 t0=t(end);
 x0=y(1,end);
 y0=y(2,end);
@@ -41,7 +45,7 @@ display(num2str(delay*dt/T))
 %
 G=-K*[cos(beta), -sin(beta); sin(beta), cos(beta)];
 tic
-for i=1:np*100 %10 periods
+for i=1:np*1 %10 periods
 [t,y]=rk4(@subhopfp,1,dt,mu,b,om,t0,[x0;y0],vG);
 
 t0=t(end);
@@ -73,7 +77,7 @@ r=sqrt(yM(1,:).^2+yM(2,:).^2);
 plot(tM/T,r)
 legend("x","y","r_{exact}","r");
 r(end)-rex
-% exportgraphics(gcf,"plot.png",'Resolution',100)
+exportgraphics(gcf,"subhopfti.png",'Resolution',100)
 
 %% lsa
 close all;
@@ -94,9 +98,15 @@ plot3(yM(1,:),yM(2,:),tM)
 %%
 r=sqrt(yM(1,:).^2+yM(2,:).^2);
 % plot(r-rex)
-semilogy(tM,-(r-rex)); hold on;
-semilogy(tM,1e-4*exp(tM*0.0944)); hold on;
+% semilogy(tM,-(r-rex)); hold on;
+% semilogy(tM,(r)-r1); hold on; semilogy(tM,1e-6*exp(tM*0.0944)); 
+semilogy(tM,r2-(r)); hold on; semilogy(tM,1e10*exp((tM-100)*-1.6944)); 
+% set(gca,"Yscale","lin");
+ylim([1e-16 1])
 r(end)-rex
+grid on;
+xlabel("time"), ylabel("r-rExact"); title("subHopf mu=-0.05; b=-1; omega=1");
+exportgraphics(gcf,"subHopfstab1.png","resolution",150)
 %%
 r=sqrt(yM(1,:).^2+yM(2,:).^2);
 plot(r)

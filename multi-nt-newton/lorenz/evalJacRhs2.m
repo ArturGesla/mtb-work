@@ -1,4 +1,4 @@
-for ip=1:np
+ for ip=1:np
         ix=ip*neq-2;
         iy=ip*neq-1;
         iz=ip*neq;
@@ -24,12 +24,6 @@ for ip=1:np
     g(iy)=T*(r*u(ix)-u(iy)-u(ix)*u(iz))     +(u(iym)-u(iyp))/ds/2;
     g(iz)=T*(u(ix)*u(iy)-b*u(iz))           +(u(izm)-u(izp))/ds/2;
 
-    gstab(ix)=T*(sigma*(u(iy)-u(ix)))      ;
-    gstab(iy)=T*(r*u(ix)-u(iy)-u(ix)*u(iz))   ;
-    gstab(iz)=T*(u(ix)*u(iy)-b*u(iz))           ;
-
-
-
     
     
     J(ix,ix)=T*(sigma*(-1));
@@ -51,28 +45,6 @@ for ip=1:np
     J(iz,izp)=(-1)/ds/2;
     J(iz,izm)=(1)/ds/2;
     J(iz,neq*np+1)=(u(ix)*u(iy)-b*u(iz));
-    
-    %jstab
-    
-     Jstab(ix,ix)=T*(sigma*(-1));
-    Jstab(ix,iy)=T*(sigma*(1));
-%     Jstab(ix,ixp)=(-1)/ds/2;
-%     Jstab(ix,ixm)=(1)/ds/2;
-%     J(ix,neq*np+1)=(sigma*(u(iy)-u(ix)));
-
-    Jstab(iy,iy)=T*(-1);
-    Jstab(iy,ix)=T*(r-u(iz));
-    Jstab(iy,iz)=T*(-u(ix));
-%     Jstab(iy,iyp)=(-1)/ds/2;
-%     Jstab(iy,iym)=(1)/ds/2;
-%     J(iy,neq*np+1)=(r*u(ix)-u(iy)-u(ix)*u(iz));
-
-    Jstab(iz,iz)=T*(-b);
-    Jstab(iz,ix)=T*(u(iy));
-    Jstab(iz,iy)=T*(u(ix));
-%     Jstab(iz,izp)=(-1)/ds/2;
-%     Jstab(iz,izm)=(1)/ds/2;
-%     J(iz,neq*np+1)=(u(ix)*u(iy)-b*u(iz));
   
     end
 
@@ -81,15 +53,6 @@ for ip=1:np
 %     J(iz+1,ix)=1/ds/2;
 %     J(iz+1,ixpp)=-1/ds/2;
     
-%     g(iz+1)=(u(ixm)-u(ixp))/ds/2-60.9946;
-% 
-ip=phaseIndex;
-ix=ip*neq-2;
-        ixp=mod(ip*neq-2+neq-1,neq*np)+1;
-        ixm=mod(ip*neq-2-neq-1,neq*np)+1;
-       
-
-g(iz+1)=(u(ixm)-u(ixp))/ds/2-derX;
-% g(iz+1)=(u(ixm)-u(ixp))/ds/2+13.212372967119705;
+    g(iz+1)=(u(ixm)-u(ixp))/ds/2+13.212372967119705;
     J(iz+1,ixm)=1/ds/2;
     J(iz+1,ixp)=-1/ds/2;

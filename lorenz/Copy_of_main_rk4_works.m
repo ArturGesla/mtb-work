@@ -120,8 +120,8 @@ rM=[];
 close all;
 plot(u(1:neq:end-1),u(2:neq:end-1),'x-')
 %%
-for ic=1:90
-r=r-0.1
+for ic=1:1;%90
+% r=r-0.1
 tic;
  for i=1:15
     

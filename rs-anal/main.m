@@ -12,16 +12,19 @@ besselj(1,zj(5,3));
 
 L=1;
 R=10;
-z=0:0.1:L;
+z=0:0.01/2:L;
 x=0:0.1:R;
 phi=zeros(length(z),length(x));
 
 % A1=@(n)2/(R^2*besselj(2,zj(n,3))*sinh(L/R*zj(n,3)))*(-1/4*R^4*hypergeom([],3,-R^2/4) / gamma(3) );
 A1=@(n)2/(R^2*besselj(2,zj(n,3))^2*sinh(L/R*zj(n,3)))*(R^3*besselj(2,zj(n,3))/zj(n,3));
+B1=@(n)R*(1-(-1)^n)*2/n/pi/besseli(1,n*pi/L*R,1);
 for ix=1:length(x)
     for iz=1:length(z)
-        for in=1:100
+        for in=1:15
             phi(iz,ix)=phi(iz,ix)+sinh(z(iz)/R*zj(in,3))*besselj(1,zj(in,3)*x(ix)/R)*A1(in);
+            kn=in*pi/L;
+            phi(iz,ix)=phi(iz,ix)+sin(kn*z(iz))*besseli(1,kn*x(ix),1)*B1(in)*exp(kn*(x(ix)-R));
         end
     end
 end

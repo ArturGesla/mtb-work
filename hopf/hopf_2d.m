@@ -8,7 +8,7 @@ p = [-1 0 1 0 mu 0];
 r = roots(p);
 r2=r(3);
 r1=r(5);
-r=r2;
+r=r1;
 om=1;
 % b=1;
 omEff=om+b*r^2;
@@ -29,7 +29,7 @@ u=zeros(2*np+1,1)+T;
 % r=sqrt(-mu)
 % r=0.05
 
-phi0=0;%pi/8;
+phi0=pi/8;
 x=r*cos(linspace(phi0+0,phi0+2*pi,np+1)); %x=x+rand(1,length(x)).*x*0.1;
 y=r*sin(linspace(phi0+0,phi0+2*pi,np+1)); %y=y+rand(1,length(y)).*y*0.1;
 u(1:2:end-1)=x(1:end-1); u(2:2:end-1)=y(1:end-1);
@@ -92,4 +92,4 @@ uM=[uM,u];
  %%
  n=gstab/norm(gstab);
  P=eye(2)-n*n';
- [v,ev]=eig(P*Jstab)
+ [v,ev]=eig(P*Jstab*P)

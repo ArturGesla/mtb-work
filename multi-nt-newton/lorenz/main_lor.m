@@ -1,7 +1,7 @@
 clc; clear; close all;
 %
 % neq=3; r=28; b=8/3; sigma=10; T=1.5586; np=70; %valid points, no repeats
-neq=3; r=24; b=8/3; sigma=10; np=55; %valid points, no repeats
+neq=3; r=24; b=8/3; sigma=10; np=1000; %valid points, no repeats
 % neq=3; r=160; b=8/3; sigma=10; T=1.1521; np=240; %valid points, no repeats
 % neq=3; r=140; b=8/3; sigma=10; T=1.5586;
 % neq=3; r=145; b=8/3; sigma=10; T=1.5586;
@@ -187,3 +187,15 @@ plot(sqrt(u(1:2:end).^2+u(2:2:end).^2))
 hold on;
 plot(uM')
 plot(sqrt(sum(uM.^2,1))')
+
+%% maybe global
+clc; close all;
+% JJ=eye(np*neq)+dt*A;
+JJ=P+dt*A;
+
+Jglob=eye(neq);
+for i=1:np
+    Jglob=(JJ(1+(i-1)*neq:neq+(i-1)*neq,1+(i-1)*neq:neq+(i-1)*neq))*Jglob;
+end
+eig(Jglob)
+% exp(u(end)*max(ev))

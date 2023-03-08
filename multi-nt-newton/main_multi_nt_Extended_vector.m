@@ -15,7 +15,7 @@ omEff=om+b*r^2;
 f=omEff/2/pi;
 T=1/f;
 %
-np=20;
+np=250;
 dt=T/np;
 g=zeros(2*np+1,1);
 gstab=zeros(2*np,1);
@@ -26,8 +26,12 @@ u=zeros(2*np+1,1)+T;
 % r=sqrt(-mu)
 % r=0.05
 
-x=r*cos(linspace(0,2*pi,np+1)); %x=x+rand(1,length(x)).*x*0.1;
-y=r*sin(linspace(0,2*pi,np+1)); %y=y+rand(1,length(y)).*y*0.1;
+phi0=0;%pi/8;
+x=r*cos(linspace(phi0+0,phi0+2*pi,np+1)); %x=x+rand(1,length(x)).*x*0.1;
+y=r*sin(linspace(phi0+0,phi0+2*pi,np+1)); %y=y+rand(1,length(y)).*y*0.1;
+% 
+% x=r*cos(linspace(0,2*pi,np+1)); %x=x+rand(1,length(x)).*x*0.1;
+% y=r*sin(linspace(0,2*pi,np+1)); %y=y+rand(1,length(y)).*y*0.1;
 %
 u(1:2:end-1)=x(1:end-1); u(2:2:end-1)=y(1:end-1);
 % plot(x,y); axis equal;
@@ -144,13 +148,13 @@ T=1;
     u=u+du;
     uM=[uM,u];
  end
-%%
+%
 hold on;
 % u=u-du2;
 axis equal;
-% plot(u(1:2:end-1),u(2:2:end-1))
-u=u1; plot(u(1:2:end-1),u(2:2:end-1))
-u=u2; plot(u(1:2:end-1),u(2:2:end-1))
+plot(u(1:2:end-1),u(2:2:end-1))
+% u=u1; plot(u(1:2:end-1),u(2:2:end-1))
+% u=u2; plot(u(1:2:end-1),u(2:2:end-1))
 
 % plot(u(1:2:end)+utang(1:2:end),u(2:2:end)+utang(2:2:end))
 % plot([u(1:2:end), u(1:2:end)+utang(1:2:end)]',[u(2:2:end),u(2:2:end)+utang(2:2:end)]'); axis equal
@@ -158,9 +162,10 @@ u=u2; plot(u(1:2:end-1),u(2:2:end-1))
 % plot([u(1:2:end), u(1:2:end)+du(1:2:end)]',[u(2:2:end),u(2:2:end)+du(2:2:end)]','-x'); 
 grid on; grid minor; axis equal;
 xlabel("x"), ylabel("y"); title("subHopf mu=-0.05; b=-1; omega=1"); legend("lambda = -1.6944","lambda = 0.0944")
-exportgraphics(gcf,"subHopfstab11.png","resolution",150)
+exportgraphics(gcf,"subHopfstab11.png","resolution",150);
+close all;
 
-%%
+%
 % n=gstab/norm(gstab);
 n=reshape(reshape(gstab,[neq,np])./vecnorm(reshape(gstab,[neq,np])),[neq*np,1]);
 P=eye(length(gstab))-n*n';
@@ -179,29 +184,41 @@ A=P*Jstab*P';
 % B=eye(length(u));
 % B(end,end)=0;
 % ev=eig(A,B); plot(ev,'x'); grid on; hold on;
-[evc,ev]=eig(A); ev=diag(ev); plot(real(ev),imag(ev),'o'); grid on; hold on;
+[evc,ev]=eig(A); ev=diag(ev); plot(real(ev),imag(ev),'o'); grid on; hold on; ev
 
-%%
+%
 
-%%
-iev=1;
-ip=7;
-% iiev=iev+(ip-1)*2;
-iiev=1;
-% utang=evc(:,);
-utang=evc(:,iiev);
-
-% ustab=u(1:end-1);
-
-% utang=Jstab*ustab*0.1;
-
-hold on;
-axis equal;
-plot(u(1:2:end-1),u(2:2:end-1));
-plot(u(1:2:end-1)+utang(1:2:end),u(2:2:end-1)+utang(2:2:end));
-plot([u(1:2:end-1)';u(1:2:end-1)'+utang(1:2:end)'],[u(2:2:end-1)';u(2:2:end-1)'+utang(2:2:end)']);
-% iiev=38; utang=evc(:,iiev); plot([u(1:2:end-1)';u(1:2:end-1)'+utang(1:2:end)'],[u(2:2:end-1)';u(2:2:end-1)'+utang(2:2:end)']);
-title("ip: "+num2str(ip)+" iev: "+num2str(iev)+" lam: "+num2str(ev(iiev)))
+%
+% iev=1;
+% ip=7;
+% % iiev=iev+(ip-1)*2;
+% iiev=1;
+% % utang=evc(:,);
+% utang=evc(:,iiev);
+% 
+% % ustab=u(1:end-1);
+% 
+% % utang=Jstab*ustab*0.1;
+% 
+% hold on;
+% axis equal;
+% plot(u(1:2:end-1),u(2:2:end-1));
+% plot(u(1:2:end-1)+utang(1:2:end),u(2:2:end-1)+utang(2:2:end));
+% plot([u(1:2:end-1)';u(1:2:end-1)'+utang(1:2:end)'],[u(2:2:end-1)';u(2:2:end-1)'+utang(2:2:end)']);
+% % iiev=38; utang=evc(:,iiev); plot([u(1:2:end-1)';u(1:2:end-1)'+utang(1:2:end)'],[u(2:2:end-1)';u(2:2:end-1)'+utang(2:2:end)']);
+% title("ip: "+num2str(ip)+" iev: "+num2str(iev)+" lam: "+num2str(ev(iiev)))
 
 % utang=gstab;
 % plot([u(1:2:end-1)';u(1:2:end-1)'+utang(1:2:end)'],[u(2:2:end-1)';u(2:2:end-1)'+utang(2:2:end)']);
+
+% maybe global
+clc; close all;
+% JJ=eye(np*neq)+dt*A;
+JJ=P+dt*A;
+
+Jglob=eye(2);
+for i=1:np
+    Jglob=(JJ(1+(i-1)*neq:2+(i-1)*neq,1+(i-1)*neq:2+(i-1)*neq))*Jglob;
+end
+eig(Jglob)
+exp(u(end)*max(ev))

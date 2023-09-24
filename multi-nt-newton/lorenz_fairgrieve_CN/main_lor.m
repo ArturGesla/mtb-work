@@ -93,7 +93,7 @@ B(np*neq+1,np*neq+1)=0; B=B(1:end-1,1:end-1); %B=sparse(B);
 %
 [evc,evs]=eig(A,B); evs=diag(evs); 
 % 
-b2=abs(evs)<Inf; evs=evs(b2) 
+b2=abs(evs)<Inf; evs=evs(b2); evc=evc(:,b2); 
 lam=1./(1-evs) % one of lambda should be 1
 % exp=1./T*log(abs(lam))
 %% deco
@@ -103,6 +103,7 @@ G=(-E*inv(C)*D+F);
 eigs()
 
 %% visu 
+close all;
 hold on;
 % u=u-du2;
 axis equal;

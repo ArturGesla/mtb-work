@@ -1,0 +1,5 @@
+set xlabel "x";
+set ylabel "T";
+set grid;
+plot "u1.dat" w l title "t=1", "u2.dat" w l title "t=2", "u3.dat" w l title "t=3", "u4.dat" w l title "t=4", "u20.dat" w l title "t=20"; 
+pause -1

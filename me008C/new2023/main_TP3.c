@@ -167,6 +167,47 @@ void remplir_vec_b_TD3(double b[MAX], int nx)
     }
 }
 
+void remplir_Ab_TP3(double C[MAX][MAX], double b[MAX], double h, int nx)
+{
+    for (int i = 0; i < nx; i++)
+    {
+        for (int j = 0; j < nx; j++)
+        {
+            C[i][j] = 0;
+        }
+        b[i] = 0;
+    }
+
+    // premiere ligne
+    {
+        int i = 0;
+        C[i][i] = 2.0;
+        C[i][i + 1] = -1.0;
+        C[i][nx - 1] = -1;
+    }
+
+    // l'interieur
+    for (int i = 1; i < nx - 1; i++)
+    {
+        C[i][i - 1] = -1.0;
+        C[i][i] = 2.0;
+        C[i][i + 1] = -1.0;
+    }
+
+    // derniere ligne
+    {
+        int i = nx - 1;
+        C[i][0] = -1.0;
+        C[i][i - 1] = -1.0;
+        C[i][i] = 2.0;
+    }
+    for (int i = 0; i < nx; i++)
+    {
+        double x = (i + 1) * h;
+        b[i] = h * h * sin(2 * M_PI * x);
+    }
+}
+
 void remplir_vec_se(double se[MAX], double mu, int nx)
 {
     se[0] = mu;
@@ -248,6 +289,69 @@ void factoriser_tridiag_luv(double a[MAX], double d[MAX], double c[MAX],
         u[i] = d[i] - v[i - 1] * l[i];
     }
 }
+
+void remplir_Ab_TD3_1(double A[MAX][MAX], double b[MAX])
+{
+    double C[MAX][MAX] = {{4, -1, 0}, {-1, 4, -1}, {0, -2, 4}};
+    double d[MAX] = {3.0 / 16, 4.0 / 16, 6.0 / 16};
+    for (int i = 0; i < 3; i++)
+    {
+        b[i] = d[i];
+        for (int j = 0; j < 3; j++)
+            A[i][j] = C[i][j];
+    }
+}
+void remplir_Ab_TD3_2(double A[MAX][MAX], double b[MAX])
+{
+    double d[MAX] = {12, 26, 60};
+    for (int i = 0; i < 3; i++)
+    {
+        b[i] = d[i];
+        for (int j = 0; j < 3; j++)
+            A[i][j] = pow(j + 1, i + 1);
+    }
+}
+void remplir_MN_Jacobi(double A[MAX][MAX], double M[MAX][MAX], double N[MAX][MAX], int n)
+{
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            if (i == j)
+                M[i][j] = A[i][j];
+            else
+                N[i][j] = -A[i][j];
+        }
+    }
+}
+void remplir_MN_Gauss_Seidel(double A[MAX][MAX], double M[MAX][MAX], double N[MAX][MAX], int n)
+{
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < i + 1; j++)
+        {
+            M[i][j] = A[i][j];
+            // N=
+        }
+    }
+}
+void remplir_MN_SOR(double A[MAX][MAX], double M[MAX][MAX], double N[MAX][MAX], double omega, int n)
+{
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < i + 1; j++)
+        {
+            if (i == j)
+
+                M[i][j] = A[i][j] / (omega);
+
+            else
+                M[i][j] = A[i][j];
+
+            // N=
+        }
+    }
+}
 void iteration_euler_explicite(double C[MAX][MAX], double Un[MAX], double se[MAX], double Unplus1[MAX], int nx)
 {
     for (int i = 0; i < nx; i++)
@@ -286,7 +390,7 @@ void iteration_euler_implicite_tridiag(double l[MAX], double u[MAX], double v[MA
     resol_trig_sup_tridiag(u, v, Unplus1, y, nx);
 }
 
-void redsidu_gradient(double A[MAX][MAX], double b[MAX], double x[MAX], double r[MAX], int n)
+void residu(double A[MAX][MAX], double b[MAX], double x[MAX], double r[MAX], int n)
 {
     for (int i = 0; i < n; i++)
     {
@@ -317,6 +421,13 @@ double produit_scalaire(double x[MAX], double y[MAX], int n)
     }
     return produit;
 }
+void ukp1_iter(double u[MAX], double du[MAX], double ukp1[MAX], int n)
+{
+    for (int i = 0; i < n; i++)
+    {
+        ukp1[i] = u[i] + du[i];
+    }
+}
 void xkp1_gradient(double xk[MAX], double rk[MAX], double alphak, double xkp1[MAX], int n)
 {
     for (int i = 0; i < n; i++)
@@ -331,11 +442,23 @@ void rkp1_gradient(double rk[MAX], double sk[MAX], double alphak, double rkp1[MA
         rkp1[i] = rk[i] - sk[i] * alphak;
     }
 }
+
+double vecteur_L2_norm(double x[MAX], int n)
+{
+    double norm = 0;
+    for (int i = 0; i < n; i++)
+    {
+        norm += x[i] * x[i];
+    }
+    return sqrt(norm);
+}
 void afficher_vect(double x[MAX], int nx)
 {
     for (int i = 0; i < nx; i++)
-        printf("%4.2f\t", x[i]);
-    printf("\n");
+        if (nx < 10)
+            printf("%4.4f\t", x[i]);
+    if (nx < 10)
+        printf("\n");
 }
 void afficher_mat(double A[MAX][MAX], int nx)
 {
@@ -343,9 +466,11 @@ void afficher_mat(double A[MAX][MAX], int nx)
     {
         for (int j = 0; j < nx; j++)
         {
-            printf("%.4f\t", A[i][j]);
+            if (nx < 10)
+                printf("%.4f\t", A[i][j]);
         }
-        printf("\n");
+        if (nx < 10)
+            printf("\n");
     }
 }
 void sauvgarder_vect(double x[MAX], int nx, char nom[MAX])
@@ -399,7 +524,7 @@ void TD3_gradient()
     afficher_mat(A, nx);
     b[2] = 4;
     afficher_vect(b, nx);
-    redsidu_gradient(A, b, xk, rk, nx);
+    residu(A, b, xk, rk, nx);
 
     for (int i = 0; i < 20; i++)
     {
@@ -415,16 +540,79 @@ void TD3_gradient()
 
 int main()
 {
+    { // TP3
+        double A[MAX][MAX], b[MAX];
+        int n = 3;
+        // remplir_Ab_TD3_1(A, b);
+        remplir_Ab_TD3_2(A, b); // omega opti approx 1.5
+        printf("Matrice A:\n");
+        afficher_mat(A, n);
+        printf("Vecteur b:\n");
+        afficher_vect(b, n);
 
-    TD3_gradient();
+        // Jacobi, GS, SOR
+        double M[MAX][MAX], N[MAX][MAX], r[MAX], u[MAX], du[MAX];
+        // remplir_MN_Jacobi(A, M, N, n);
+        // remplir_MN_Gauss_Seidel(A, M, N, n);
+        double omega_sor = 1.6;
+        remplir_MN_SOR(A, M, N, omega_sor, n);
+        printf("Matrice M:\n");
+        afficher_mat(M, n);
 
-    // // Parametres
-    // int nx = 100;
-    // double h = 1.0 / nx;
-    // double dt = 2 * h * h;
-    // double mu = dt / h / h;
-    // double Tmax = 4;
-    // int nt = Tmax / dt;
+        int kmax = 80;
+        double eps = 1e-10;
+        for (int k = 0; k < kmax; k++)
+        {
+            residu(A, b, u, r, n);
+            // afficher_vect(u, n);
+            double residu_norm = vecteur_L2_norm(r, n);
+            printf("iter: %d\tresidu norm: %4.2e\n", k, residu_norm);
+            if (residu_norm < eps)
+                break;
+            resol_trig_inf(M, du, r, n);
+            ukp1_iter(u, du, u, n);
+        }
+    }
+
+    { // Application
+        //  Parametres
+        int n = 20;
+        double h = 1.0 / n;
+        double A[MAX][MAX], b[MAX];
+        // remplir_Ab_TD3_1(A, b);
+        remplir_Ab_TP3(A, b, h, n);
+        printf("Matrice A:\n");
+        afficher_mat(A, n);
+        printf("Vecteur b:\n");
+        afficher_vect(b, n);
+
+        // Resolution
+        //  Jacobi, GS, SOR
+        double M[MAX][MAX], N[MAX][MAX], r[MAX], u[MAX], du[MAX];
+        // remplir_MN_Jacobi(A, M, N, n);
+        // remplir_MN_Gauss_Seidel(A, M, N, n);
+        double omega_sor = 1.6;
+        remplir_MN_SOR(A, M, N, omega_sor, n);
+        printf("Matrice M:\n");
+        afficher_mat(M, n);
+
+        int kmax = 8000;
+        double eps = 1e-10;
+        for (int k = 0; k < kmax; k++)
+        {
+            residu(A, b, u, r, n);
+            // afficher_vect(u, n);
+            double residu_norm = vecteur_L2_norm(r, n);
+            printf("iter: %d\tresidu norm: %4.2e\n", k, residu_norm);
+            if (residu_norm < eps)
+                break;
+            resol_trig_inf(M, du, r, n);
+            ukp1_iter(u, du, u, n);
+        }
+        char nom_de_sauvgarde[60] = "u_TP3.dat";
+        sauvgarder_vect(u, n, nom_de_sauvgarde);
+    }
+
     // char nom_de_sauvgarde[60] = "u4i.dat";
     // // nt = 200;
 

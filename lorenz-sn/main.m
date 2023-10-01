@@ -47,6 +47,10 @@ rank(full(jac(1:end-1,1:end-1)))
 j2=(full(jac(1:end-1,1:end-1)));
 close all;
 [evc,evs]=eig(j2); evs=diag(evs);
+% B=j2*0; for i=1:3 
+%     B(i,i)=1; 
+% end
+% [evc,evs]=eig(j2,B); evs=diag(evs);
 evsM{end+1}=evs; leg=[leg;"nt = "+num2str(nt)];
 plot(evs,'x'); grid on;
 

@@ -576,7 +576,7 @@ int main()
 
     { // Application
         //  Parametres
-        int n = 20;
+        int n = 4;
         double h = 1.0 / n;
         double A[MAX][MAX], b[MAX];
         // remplir_Ab_TD3_1(A, b);
@@ -596,7 +596,8 @@ int main()
         printf("Matrice M:\n");
         afficher_mat(M, n);
 
-        int kmax = 8000;
+        // int kmax = 8000;
+        int kmax = 1;
         double eps = 1e-10;
         for (int k = 0; k < kmax; k++)
         {

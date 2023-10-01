@@ -13,14 +13,14 @@ up(i)=u(i)+eps;
 um(i)=u(i)-eps;
 
 u=up;
-[g,jac]=calculateRhsAndJac(3,2,u);
+[g,jac]=calculateRhsAndJac(3,nt,u);
  gp=g;
 
  u=um;
-[g,jac]=calculateRhsAndJac(3,2,u);
+[g,jac]=calculateRhsAndJac(3,nt,u);
  gm=g;
 
-[g,jac]=calculateRhsAndJac(3,2,u);
+[g,jac]=calculateRhsAndJac(3,nt,u);
 J=full(jac);
 u=uorg;
 
@@ -28,5 +28,6 @@ col=(gp-gm)/2/eps;
 col=col';
 
 J(:,i);
+i
 norm(col-J(:,i))
-i=i+1
+i=i+1;

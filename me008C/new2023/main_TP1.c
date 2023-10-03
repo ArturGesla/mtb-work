@@ -65,7 +65,7 @@ void iteration_euler_explicite(double C[MAX][MAX], double Un[MAX], double se[MAX
 void afficher_vect(double x[MAX], int nx)
 {
     for (int i = 0; i < nx; i++)
-        printf("%4.2f\t", x[i]);
+        printf("%4.4f\t", x[i]);
     printf("\n");
 }
 void afficher_mat(double A[MAX][MAX], int nx)
@@ -74,7 +74,7 @@ void afficher_mat(double A[MAX][MAX], int nx)
     {
         for (int j = 0; j < nx; j++)
         {
-            printf("%.1f\t", A[i][j]);
+            printf("%2.4f\t", A[i][j]);
         }
         printf("\n");
     }
@@ -124,11 +124,11 @@ void sauvgarder_valeur_instantane(double x[MAX], int nx, double t, char nom[MAX]
 int main()
 {
     // Parametres
-    int nx = 100;
+    int nx = 4;
     double h = 1.0 / nx;
-    double dt = 0.50 * h * h;
+    double dt = 0.25 * h * h;
     double mu = dt / h / h;
-    double Tmax = 4;
+    double Tmax = 2.5;
     int nt = Tmax / dt;
     char nom_de_sauvgarde[60] = "u1u.dat";
     // nt = 200;
@@ -151,10 +151,10 @@ int main()
 
     printf("Matrice C:\n");
     remplir_mat_C(C, mu, nx);
-    // afficher_mat(C, nx);
+    afficher_mat(C, nx);
 
     // Integration temporelle
-    // nt=3;
+    // nt = 3;
     for (int it = 0; it < nt; it++)
     {
         iteration_euler_explicite(C, Un, se, Unplus1, nx);
@@ -166,6 +166,11 @@ int main()
     }
 
     sauvgarder_vect_et_maillage_et_bords(Un, nx, h, nom_de_sauvgarde);
+
+    printf("Vecteur Un:\n");
+    afficher_vect(Un, nx);
+
+    // afficher_vect(Un, nx);
 
     return 0;
 }

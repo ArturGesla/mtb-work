@@ -473,6 +473,13 @@ void afficher_mat(double A[MAX][MAX], int nx)
             printf("\n");
     }
 }
+void initialiser_vecteur(double x[MAX], int nx, double valeur)
+{
+    for (int i = 0; i < nx; i++)
+    {
+        x[i] = valeur;
+    }
+}
 void sauvgarder_vect(double x[MAX], int nx, char nom[MAX])
 {
     FILE *fptr;
@@ -526,7 +533,7 @@ void TD3_gradient()
     afficher_vect(b, nx);
     residu(A, b, xk, rk, nx);
 
-    for (int i = 0; i < 20; i++)
+    for (int i = 0; i < 3; i++)
     {
         s_gradient(A, rk, sk, nx);
         // afficher_vect(sk, nx);
@@ -537,9 +544,45 @@ void TD3_gradient()
         afficher_vect(xk, nx);
     }
 }
+void TD3_conj_gradient()
+{
+    // TD3 3.3
+    int nx = 3;
+    double A[MAX][MAX], b[MAX], rk[MAX], sk[MAX], alphak, xk[MAX];
+    double pk[MAX], qk[MAX], beta, rkp1[MAX];
+    printf("Matrice A:\n");
+    remplir_mat_A_TD3(A, nx);
+    afficher_mat(A, nx);
+    b[2] = 4;
+    printf("Vecteur b:\n");
+    afficher_vect(b, nx);
+    residu(A, b, xk, rk, nx);
+    residu(A, b, xk, pk, nx);
+
+    for (int i = 0; i < 3; i++)
+    {
+        printf("======= iter:\t%d\n", i);
+        s_gradient(A, pk, qk, nx);
+        // afficher_vect(sk, nx);
+        alphak = produit_scalaire(rk, rk, nx) / produit_scalaire(pk, qk, nx);
+        printf("alphak:%lf\n", alphak);
+        xkp1_gradient(xk, pk, alphak, xk, nx);
+        rkp1_gradient(rk, qk, alphak, rkp1, nx);
+        afficher_vect(xk, nx);
+        afficher_vect(rkp1, nx);
+
+        // conj
+        beta = produit_scalaire(rkp1, rkp1, nx) / produit_scalaire(rk, rk, nx);
+        printf("beta:%lf\n", beta);
+        xkp1_gradient(rkp1, pk, beta, pk, nx);
+        afficher_vect(pk, nx);
+        remplir_vec_Un_avec_Unplus1(rk, rkp1, nx);
+    }
+}
 
 int main()
 {
+    if (0)
     { // TP3
         double A[MAX][MAX], b[MAX];
         int n = 3;
@@ -558,6 +601,7 @@ int main()
         remplir_MN_SOR(A, M, N, omega_sor, n);
         printf("Matrice M:\n");
         afficher_mat(M, n);
+        initialiser_vecteur(u, n, 0.0);
 
         int kmax = 80;
         double eps = 1e-10;
@@ -574,9 +618,10 @@ int main()
         }
     }
 
+    if (0)
     { // Application
         //  Parametres
-        int n = 4;
+        int n = 40;
         double h = 1.0 / n;
         double A[MAX][MAX], b[MAX];
         // remplir_Ab_TD3_1(A, b);
@@ -595,9 +640,10 @@ int main()
         remplir_MN_SOR(A, M, N, omega_sor, n);
         printf("Matrice M:\n");
         afficher_mat(M, n);
+        initialiser_vecteur(u, n, 0.0);
 
-        // int kmax = 8000;
-        int kmax = 1;
+        int kmax = 8000;
+        // int kmax = 1;
         double eps = 1e-10;
         for (int k = 0; k < kmax; k++)
         {
@@ -614,6 +660,7 @@ int main()
         sauvgarder_vect(u, n, nom_de_sauvgarde);
     }
 
+    TD3_conj_gradient();
     // char nom_de_sauvgarde[60] = "u4i.dat";
     // // nt = 200;
 

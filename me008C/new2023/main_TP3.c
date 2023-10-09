@@ -178,11 +178,30 @@ void remplir_Ab_TP3(double C[MAX][MAX], double b[MAX], double h, int nx)
         b[i] = 0;
     }
 
+    // // premiere ligne
+    // {
+    //     int i = 0;
+    //     C[i][i] = 2.0;
+    //     C[i][i + 1] = -1.0;
+    //     // C[i][nx - 1] = -1; // not the best idea
+    // }
+
     // premiere ligne
     {
         int i = 0;
-        C[i][i] = 2.0;
-        C[i][i + 1] = -1.0;
+        C[i][i] = 4.0;
+        C[i][i + 1] = 1;
+        for (int j = 2; j < nx - 1; j++)
+        {
+            C[i][j] = 2.0;
+        }
+        C[i][nx - 1] = 1;
+
+        // for (int j = 0; j < nx; j++)
+        // {
+        //     C[i][j] = 2.0;
+        // }
+        // C[i][nx - 1] = 0.0; // not the best idea
         // C[i][nx - 1] = -1; // not the best idea
     }
 
@@ -205,6 +224,21 @@ void remplir_Ab_TP3(double C[MAX][MAX], double b[MAX], double h, int nx)
     {
         double x = (i + 1) * h;
         b[i] = h * h * sin(2 * M_PI * x);
+    }
+}
+void remplir_E_si_TP3(double A[MAX][MAX], double b[MAX], double mu, double E[MAX][MAX], double si[MAX], int nx)
+{
+    for (int i = 0; i < nx; i++)
+    {
+        si[i] = b[i] * mu;
+        for (int j = 0; j < nx; j++)
+        {
+            E[i][j] = A[i][j] * mu;
+            if (i == j)
+            {
+                E[i][j] += 1.0;
+            }
+        }
     }
 }
 
@@ -337,6 +371,14 @@ void remplir_MN_Gauss_Seidel(double A[MAX][MAX], double M[MAX][MAX], double N[MA
 }
 void remplir_MN_SOR(double A[MAX][MAX], double M[MAX][MAX], double N[MAX][MAX], double omega, int n)
 {
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            M[i][j] = 0.0;
+        }
+    }
+
     for (int i = 0; i < n; i++)
     {
         for (int j = 0; j < i + 1; j++)
@@ -627,7 +669,7 @@ int main()
             // afficher_vect(u, n);
             double residu_norm = vecteur_L2_norm(r, n);
             // printf("iter: %d\tresidu norm: %4.2e\n", k, residu_norm);
-            printf("iter: %d\tresidu norm: %4.2e\t rkp1/rk: %4.2e \n", k, residu_norm,residu_norm/residu_norm_m1);
+            printf("iter: %d\tresidu norm: %4.2e\t rkp1/rk: %4.2e \n", k, residu_norm, residu_norm / residu_norm_m1);
             if (residu_norm < eps)
                 break;
             resol_trig_inf(M, du, r, n);
@@ -635,10 +677,10 @@ int main()
         }
     }
 
-    if (1)
+    if (0)
     { // Application
         //  Parametres
-        int n = 40;
+        int n = 100;
         double h = 1.0 / n;
         double A[MAX][MAX], b[MAX];
         // remplir_Ab_TD3_1(A, b);
@@ -653,7 +695,7 @@ int main()
         double M[MAX][MAX], N[MAX][MAX], r[MAX], u[MAX], du[MAX];
         // remplir_MN_Jacobi(A, M, N, n);
         // remplir_MN_Gauss_Seidel(A, M, N, n);
-        double omega_sor = 1.9;
+        double omega_sor = 1.26;
         remplir_MN_SOR(A, M, N, omega_sor, n);
         printf("Matrice M:\n");
         afficher_mat(M, n);
@@ -661,7 +703,7 @@ int main()
 
         int kmax = 8000;
         // int kmax = 1;
-        double eps = 1e-10;
+        double eps = 1e-8;
         for (int k = 0; k < kmax; k++)
         {
             double residu_norm_m1 = vecteur_L2_norm(r, n);
@@ -669,18 +711,107 @@ int main()
             // afficher_vect(u, n);
             double residu_norm = vecteur_L2_norm(r, n);
             // printf("iter: %d\tresidu norm: %4.2e\n", k, residu_norm);
-            printf("iter: %d\tresidu norm: %4.2e\t rkp1/rk: %4.2e \n", k, residu_norm,residu_norm/residu_norm_m1);
+            printf("iter: %d\tresidu norm: %4.2e\t rkp1/rk: %4.2e \n", k, residu_norm, residu_norm / residu_norm_m1);
             if (residu_norm < eps)
                 break;
             resol_trig_inf(M, du, r, n);
             ukp1_iter(u, du, u, n);
         }
-        char nom_de_sauvgarde[60] = "u_TP3.dat";
-        sauvgarder_vect_et_maillage(u, n,h, nom_de_sauvgarde);
+        char nom_de_sauvgarde[60] = "u_TP3_stationnaire.dat";
+        sauvgarder_vect_et_maillage(u, n, h, nom_de_sauvgarde);
+    }
+
+    // integration temporelle
+    if (1)
+    {
+        //  Parametres
+        int n = 100;
+        double h = 1.0 / n;
+        double dt = 100 * h * h;
+        double mu = dt / h / h;
+        double Tmax = 4;
+        int nt = Tmax / dt;
+        nt = 30;
+        char nom_de_sauvgarde[60] = "u30i.dat";
+
+        double A[MAX][MAX], b[MAX], E[MAX][MAX], si[MAX], rhs[MAX];
+        // remplir_Ab_TD3_1(A, b);
+        remplir_Ab_TP3(A, b, h, n);
+        printf("Matrice A:\n");
+        afficher_mat(A, n);
+        printf("Vecteur b:\n");
+        afficher_vect(b, n);
+        remplir_E_si_TP3(A, b, mu, E, si, n);
+        printf("Matrice E:\n");
+        afficher_mat(E, n);
+        printf("Vecteur si:\n");
+        afficher_vect(si, n);
+
+        // Resolution
+        //  Jacobi, GS, SOR
+        double M[MAX][MAX], N[MAX][MAX], r[MAX], u[MAX], du[MAX];
+        // remplir_MN_Jacobi(E, M, N, n);
+        // remplir_MN_Gauss_Seidel(E, M, N, n);
+        double omega_sor = 1.26;
+        remplir_MN_SOR(E, M, N, omega_sor, n);
+        printf("Matrice M:\n");
+        afficher_mat(M, n);
+
+        int kmax = 6000;
+        // int kmax = 1;
+        double eps = 1e-8;
+
+        double Unplus1[MAX], Un[MAX];
+        initialiser_vecteur(Unplus1, n, 0.0);
+        initialiser_vecteur(Un, n, 0.0);
+
+        // nt = 1;
+        printf("Parametres:\t nx: %d\t h: %lf\t dt: %lf\t mu: %lf\t Tmax: %lf\t nt: %d\n",
+               n, h, dt, mu, Tmax, nt);
+
+        for (int it = 0; it < nt; it++)
+        {
+            xkp1_gradient(Un, si, 1.0, rhs, n);
+            // afficher_vect(rhs, n);
+
+            // resolution iterative
+            double residu_norm;
+            for (int k = 0; k < kmax; k++)
+            {
+                double residu_norm_m1 = vecteur_L2_norm(r, n);
+                residu(E, rhs, Unplus1, r, n);
+                // afficher_vect(u, n);
+                residu_norm = vecteur_L2_norm(r, n);
+                // printf("iter: %d\tresidu norm: %4.2e\n", k, residu_norm);
+                // printf("iter: %d\tresidu norm: %4.2e\t rkp1/rk: %4.2e \n", k, residu_norm, residu_norm / residu_norm_m1);
+                if (residu_norm < eps)
+                {
+                    printf("Conv en iter: %d\tresidu norm: %4.2e\t rkp1/rk: %4.2e \n", k, residu_norm, residu_norm / residu_norm_m1);
+                    break;
+                }
+
+                resol_trig_inf(M, du, r, n);
+                ukp1_iter(Unplus1, du, Unplus1, n);
+            }
+            if (!(residu_norm <eps))
+            {
+                printf("Code converge pas.\n");
+                break;
+            }
+
+            remplir_vec_Un_avec_Unplus1(Un, Unplus1, n);
+            if ((nt > 10 && (it + 1) % (nt / 10) == 0) || nt < 1000)
+                printf("===== IE iter: %d temps: %lf dt: %lf\n", it + 1, (it + 1) * dt, dt);
+            // afficher_vect(Unplus1, n);
+
+            // sauvgarder_valeur_instantane(Un, nx, (it + 1) * dt, "valeurs_instantanes.dat");
+        }
+
+        sauvgarder_vect_et_maillage(Un, n, h, nom_de_sauvgarde);
     }
 
     // TD3_conj_gradient();
     // TD3_gradient();
-    
+
     return 0;
 }

@@ -324,7 +324,7 @@ int main()
 
     sauvgarder_vect_et_maillage_et_bords(Un, nx, h, nom_de_sauvgarde);
 
-    // Exercice 4
+    // Exercice 5
     double a[MAX], d[MAX], c[MAX], u[MAX], v[MAX], l[MAX]; // a,b,c; u,v,l
 
     remplir_vec_adc(a, d, c, nx);

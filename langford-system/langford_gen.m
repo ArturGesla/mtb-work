@@ -9,21 +9,36 @@ opt=odeset('RelTol',1e-10);
 plot3(X(:,1),X(:,2),X(:,3))
 
 %%
-close all;
-nt=100000; %generalised does not work wtf xd
-dt=1e-4;
+% close all;
+nt=3000; %generalised does not work wtf xd
+dt=1e-1;
 % a=-3; b=-9.3; c=8; d=-3; e=5.98; close all;
-a=-3; b=-8; c=8; d=-3; e=5.98; close all; x0=[2.99;0;3]; %per orbit
-a=-3; b=-8; c=8; d=-3; e=5.98; close all; x0=[0.1;0.1;0.1]; %per orbit
+% a=-3; b=-1; c=-b; d=a; e=2/3; close all; x0=[1e-2;0;1e-3]; %per orbit
+ mu=2.01; a=mu-3; b=-1/4; c=-b; d=a; e=mu; c2=0.2; close all; x0=[0.1;0;2]; %per orbit
+% a=-3; b=-8; c=8; d=-3; e=5.98; close all; x0=[0.1;0.1;0.1]; %per orbit
 langfordG = @(t,y) [a*y(1)+b*y(2)+y(1)*y(3);
     c*y(1)+d*y(2)+y(2)*y(3);
-    e*y(3)-(y(1)*y(1)+y(2)*y(2)+y(3)*y(3))]; % Anonymous Function
+    e*y(3)-(y(1)*y(1)+y(2)*y(2)+y(3)*y(3))];
+langfordG = @(t,y) [a*y(1)+b*y(2)+y(1)*y(3)+c2*y(1)*(1-y(3)^2);
+                    c*y(1)+d*y(2)+y(2)*y(3)+c2*y(2)*(1-y(3)^2);
+                    e*y(3)-(y(1)*y(1)+y(2)*y(2)+y(3)*y(3))];% Anonymous Function
 % [t,y]=rk4_2(@(t,y)langfordG(t,y),nt,dt,t0,[1;1;1]);
 [t,y]=rk4_2(@(t,y)langfordG(t,y),nt,dt,t0,x0);
 % [t,y]=rk4_2(@(t,y)langfordG(t,y),nt,dt,t0,[0.003; 0.001; 0.001]);
+% plot3(y(1,:),y(2,:),y(3,:));
+% xlabel("x"); ylabel("y");  zlabel("z"); 
+%
+subplot(1,2,1)
+plot(t,y'); hold on;
+plot(t,sqrt(y(1,:).^2+y(2,:).^2));
+subplot(1,2,2)
 plot3(y(1,:),y(2,:),y(3,:));
-xlabel("x"); ylabel("y");  zlabel("z"); 
-
+delta=0.8*mu-0.8*2.8+1
+z=[-1-sqrt(delta),-1+sqrt(delta)]/-0.4
+r=sqrt(z.*(z-mu))
+sqrt(y(1,end).^2+y(2,end).^2)
+%%
+plot3(y(1,:),y(2,:),y(3,:));
 %%
 close all;
 figure("Position",[1921           1        1920         997])
@@ -46,14 +61,15 @@ end
 exportgraphics(gcf,"plot1.png","Resolution",300);
 
 %%
+X=y';
 x=X(end-1000:end,1);
 y=X(end-1000:end,2);
-z=X(end-1000:end,3);
+z1=X(end-1000:end,3);
 t1=t(end-1000:end);
 % plot3(x,y,z)
 plot(t1,x); clf;
 [f,z]=ft(t1,x); semilogy(f,z); hold on; grid on;
 [f,z]=ft(t1,y); semilogy(f,z); hold on; grid on;
-[f,z]=ft(t1,z); semilogy(f,z); hold on; grid on;
+[f,z]=ft(t1,z1); semilogy(f,z); hold on; grid on;
 % xlim([0 0.2]);
 % ylim([1e-6 1])

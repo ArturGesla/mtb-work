@@ -1,5 +1,6 @@
 clc; clear;
 lam=2.02;
+lam=1.8
 k=1;
 c=1;
 neq=3;

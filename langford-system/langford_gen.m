@@ -10,11 +10,12 @@ plot3(X(:,1),X(:,2),X(:,3))
 
 %%
 % close all;
-nt=3000; %generalised does not work wtf xd
+nt=30000; %generalised does not work wtf xd
 dt=1e-1;
+t0=0;
 % a=-3; b=-9.3; c=8; d=-3; e=5.98; close all;
 % a=-3; b=-1; c=-b; d=a; e=2/3; close all; x0=[1e-2;0;1e-3]; %per orbit
- mu=2.01; a=mu-3; b=-1/4; c=-b; d=a; e=mu; c2=0.2; close all; x0=[0.1;0;2]; %per orbit
+ mu=2.01; a=mu-3; b=-1/1; c=-b; d=a; e=mu; c2=0.2; close all; x0=[0.1;0;2]; %per orbit
 % a=-3; b=-8; c=8; d=-3; e=5.98; close all; x0=[0.1;0.1;0.1]; %per orbit
 langfordG = @(t,y) [a*y(1)+b*y(2)+y(1)*y(3);
     c*y(1)+d*y(2)+y(2)*y(3);
@@ -35,8 +36,9 @@ subplot(1,2,2)
 plot3(y(1,:),y(2,:),y(3,:));
 delta=0.8*mu-0.8*2.8+1
 z=[-1-sqrt(delta),-1+sqrt(delta)]/-0.4
-r=sqrt(z.*(z-mu))
+r=sqrt(-z.*(z-mu))
 sqrt(y(1,end).^2+y(2,end).^2)
+y(3,end)
 %%
 plot3(y(1,:),y(2,:),y(3,:));
 %%
@@ -62,10 +64,10 @@ exportgraphics(gcf,"plot1.png","Resolution",300);
 
 %%
 X=y';
-x=X(end-1000:end,1);
-y=X(end-1000:end,2);
-z1=X(end-1000:end,3);
-t1=t(end-1000:end);
+x=X(end-20000:end,1);
+y=X(end-20000:end,2);
+z1=X(end-20000:end,3);
+t1=t(end-20000:end);
 % plot3(x,y,z)
 plot(t1,x); clf;
 [f,z]=ft(t1,x); semilogy(f,z); hold on; grid on;
@@ -73,3 +75,20 @@ plot(t1,x); clf;
 [f,z]=ft(t1,z1); semilogy(f,z); hold on; grid on;
 % xlim([0 0.2]);
 % ylim([1e-6 1])
+
+
+%% stab
+lam=1.5;
+lam=(2-sqrt(1.76))/0.4;
+lam=2.01;
+x=0;y=0; z=lam;
+delta=0.8*lam-0.8*2.8+1;
+z=(1-sqrt(delta))/0.4;
+r=sqrt(-z*(z-lam));
+t=4;
+x=r*cos(t);y=r*sin(t);
+
+J=[lam-3+z+0.2*(1-z^2), -1/4, x-0.2*z*2*x;
+    1/4,lam-3+z+0.2*(1-z^2),  y-0.2*z*2*y;
+    -2*x,-2*y,lam-2*z];
+eig(J)

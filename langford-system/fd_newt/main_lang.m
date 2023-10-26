@@ -64,7 +64,7 @@ plot(X(:,1),X(:,2),'x-'); hold on;
 plot(X(1,1),X(1,2),'o-')
 
 %%
-T=2*pi/b;
+T=2*pi/-b;
 % np=np-1;
 dt=T/(np-1);
 g=zeros(neq*np+1,1);

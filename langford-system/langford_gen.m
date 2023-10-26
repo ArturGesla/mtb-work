@@ -4,18 +4,18 @@ langfordG = @(t,y) [a*y(1)+b*y(2)+y(1)*y(3);
     c*y(1)+d*y(2)+y(2)*y(3);
     e*y(3)-(y(1)*y(1)+y(2)*y(2)+y(3)*y(3))]; % Anonymous Function
 opt=odeset('RelTol',1e-10);
- [t,X] = ode45(langford, [0,100], [ -4,0,3],opt);
+ [t,X] = ode45(langfordG, [0,100], [ -4,0,3],opt);
 % plot(X(:,1),X(:,2))
 plot3(X(:,1),X(:,2),X(:,3))
 
 %%
 % close all;
-nt=30000; %generalised does not work wtf xd
+nt=3000; %generalised does not work wtf xd
 dt=1e-1;
 t0=0;
 % a=-3; b=-9.3; c=8; d=-3; e=5.98; close all;
 % a=-3; b=-1; c=-b; d=a; e=2/3; close all; x0=[1e-2;0;1e-3]; %per orbit
- mu=2.01; a=mu-3; b=-1/1; c=-b; d=a; e=mu; c2=0.2; close all; x0=[0.1;0;2]; %per orbit
+ mu=2.01; a=mu-3; b=-1/4; c=-b; d=a; e=mu; c2=0.2; close all; x0=[0.1;0;2]; %per orbit
 % a=-3; b=-8; c=8; d=-3; e=5.98; close all; x0=[0.1;0.1;0.1]; %per orbit
 langfordG = @(t,y) [a*y(1)+b*y(2)+y(1)*y(3);
     c*y(1)+d*y(2)+y(2)*y(3);
@@ -80,12 +80,12 @@ plot(t1,x); clf;
 %% stab
 lam=1.5;
 lam=(2-sqrt(1.76))/0.4;
-lam=2.01;
+lam=1.9;
 x=0;y=0; z=lam;
 delta=0.8*lam-0.8*2.8+1;
 z=(1-sqrt(delta))/0.4;
 r=sqrt(-z*(z-lam));
-t=4;
+t=6;
 x=r*cos(t);y=r*sin(t);
 
 J=[lam-3+z+0.2*(1-z^2), -1/4, x-0.2*z*2*x;

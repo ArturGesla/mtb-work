@@ -24,23 +24,23 @@ for ip=1:np-1
     
     g(ix)=T*(a*x+b*y+x*z+c2*x*(1-z^2))                +(u(ix)-u(ixp))/ds;
     g(iy)=T*(c*x+d*y+y*z+c2*y*(1-z^2))                +(u(iy)-u(iyp))/ds;
-    g(iz)=T*(e*z-(x*x+y*y+z*z))                    +(u(iz)-u(izp))/ds;
+    g(iz)=T*(e*z-(x*x+y*y+z*z))                        +(u(iz)-u(izp))/ds;
 
     
-    J(ix,ix)=T*(a*1/2+1/2*z+c2*1/2*(1-z^2))+(1)/ds;         J(ix,ixp)=T*(a*1/2+b*y+1/2*z+c2*1/2*(1-z^2))+(-1)/ds;
+    J(ix,ix)=T*(a*1/2+1/2*z+c2*1/2*(1-z^2))+(1)/ds;         J(ix,ixp)=T*(a*1/2+1/2*z+c2*1/2*(1-z^2))+(-1)/ds;
     J(ix,iy)=T*(b*1/2);                                     J(ix,iyp)=T*(b*1/2);
     J(ix,iz)=T*(x*1/2+c2*x*(-2*z*1/2));                     J(ix,izp)=T*(x*1/2+c2*x*(-2*z*1/2));
     J(ix,neq*np+1)=(a*x+b*y+x*z+c2*x*(1-z^2));
 % 
-%     J(iy,iy)=T*(-1/2)+1/ds;                 J(iy,iyp)=T*(-1/2)-1/ds;
-%     J(iy,ix)=T*(r/2-z/2);                   J(iy,ixp)=T*(r/2-z/2);
-%     J(iy,iz)=T*(-x/2);                      J(iy,izp)=T*(-x/2);
-%     J(iy,neq*np+1)=(r*x-y-x*z);
+    J(iy,iy)=T*(d*1/2+z*1/2+c2*1/2*(1-z^2))+1/ds;           J(iy,iyp)=T*(d*1/2+z*1/2+c2*1/2*(1-z^2))-1/ds;
+    J(iy,ix)=T*(1/2*c);                                     J(iy,ixp)=T*(1/2*c);
+    J(iy,iz)=T*(1/2*y+c2*y*(-2*z*1/2));                     J(iy,izp)=T*(1/2*y+c2*y*(-2*z*1/2));
+    J(iy,neq*np+1)=(c*x+d*y+y*z+c2*y*(1-z^2));
 
-%     J(iz,iz)=T*(-b)/2+1/ds;                   J(iz,izp)=T*(-b)/2-1/ds;
-%     J(iz,ix)=T*(y/2);                           J(iz,ixp)=T*(y/2);
-%     J(iz,iy)=T*(x/2);                       J(iz,iyp)=T*(x/2);
-%     J(iz,neq*np+1)=(x*y-b*z);
+    J(iz,iz)=T*(e*1/2-(2*z*1/2))+(1)/ds;                    J(iz,izp)=T*(e*1/2-(2*z*1/2))+(-1)/ds;
+    J(iz,ix)=T*(-(2*x*1/2));                                J(iz,ixp)=T*(-(2*x*1/2));
+    J(iz,iy)=T*(-(2*y*1/2));                                       J(iz,iyp)=T*(-(2*y*1/2));
+    J(iz,neq*np+1)=(e*z-(x*x+y*y+z*z));
     
     
 end

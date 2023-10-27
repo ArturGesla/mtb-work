@@ -31,6 +31,10 @@ y(3,end)
 %% anal
 % lam=1.5;
 % lam=(2-sqrt(1.76))/0.4;
+% mu=1.9;
+% mu=1.99;
+% mu=2.01;
+mu=2.05;
 lam=mu;
 x=0;y=0; z=lam;
 delta=0.8*lam-0.8*2.8+1;
@@ -43,11 +47,12 @@ J=[lam-3+z+0.2*(1-z^2), -1/4, x-0.2*z*2*x;
     1/4,lam-3+z+0.2*(1-z^2),  y-0.2*z*2*y;
     -2*x,-2*y,lam-2*z];
 eig(J)
+expM=[eig(J)];
 %%
 
 neq=3;
-% r=24; b=8/3; sigma=10;
-np=80; np=np+2;%valid points, no repeats
+% r=24; b=8/3; sigma=10;ans
+np=100; np=np+1;%valid points, no repeats
 % neq=3; r=160; b=8/3; sigma=10; T=1.1521; np=240; %valid points, no repeats
 % neq=3; r=140; b=8/3; sigma=10; T=1.5586;
 % neq=3; r=145; b=8/3; sigma=10; T=1.5586;
@@ -63,7 +68,7 @@ close all;
 plot(X(:,1),X(:,2),'x-'); hold on;
 plot(X(1,1),X(1,2),'o-')
 
-%%
+%
 T=2*pi/-b;
 % np=np-1;
 dt=T/(np-1);
@@ -86,11 +91,12 @@ u(1:neq:end-1)=x(1:end); u(2:neq:end-1)=y(1:end); u(3:neq:end-1)=z(1:end);
 %  bb=np-1; 
 phaseIndex=bb;%phase index
 ds=1/np; derX=0;%(x(b-1)-x(b+1))/2/ds
-%%
+%
 uM=[];
 uM=[uM,u];
 uMC=[];
-mu=1.90; a=mu-3; b=-1/4; c=-b; d=a; e=mu; c2=0.2;
+% mu=1.90;
+a=mu-3; b=-1/4; c=-b; d=a; e=mu; c2=0.2;
 % r=15;
 %
 % calc J and g
@@ -98,7 +104,7 @@ mu=1.90; a=mu-3; b=-1/4; c=-b; d=a; e=mu; c2=0.2;
 % for ii=1:42
     for ii=1:1
 tic;
- for i=1:1
+ for i=1:10
     
      evalJacRhs3
 %      evalJacRhs_bdf2
@@ -118,4 +124,37 @@ tic;
 %  r=r+(24.74-r)*0.1
 % r=r-0.1
 end
+% fg
+A=full(J(1:end-1,1:end-1)); B=[];
+B(np*neq,np*neq)=1; B(np*neq-1,np*neq-1)=1; B(np*neq-2,np*neq-2)=1;
+% B(3,np*neq-neq)=1; B(2,np*neq-neq-1)=1; B(1,np*neq-neq-2)=1; 
+B(np*neq+1,np*neq+1)=0; B=B(1:end-1,1:end-1); %B=sparse(B);
+% [evc,evs]=eigs(A,B,neq,"smallestabs"); evs=diag(evs)
+% lam=1./(1-evs) % one of lambda should be 1
+% exp=1./T*log(abs(lam))
+
+%
+[evc,evs]=eig(A,B); evs=diag(evs); 
+% 
+b2=abs(evs)<Inf; evs=evs(b2); evc=evc(:,b2); 
+lam=1./(1-evs); % one of lambda should be 1
+exp=1./T*log((lam))
+expM=[expM,exp];
+%
+close all;
+plot3(u(1:3:end-1),u(2:3:end-1),u(3:3:end-1));
+
+
+grid on; hold on;
+
+iev=3; du=evc(:,iev);
+du=evc(:,2)+evc(:,1);
+du=evc(:,2)+evc(:,3);
+plot3(u(1)+du(1),u(2)+du(2),u(3)+du(3),'sq');
+plot3(u(1:3:end-1)+du(1:3:end),u(2:3:end-1)+du(2:3:end),u(3:3:end-1)+du(3:3:end));
+
 %%
+% plot(u(1:3:end-1));
+% hold on;
+% plot(du(1:3:end)+u(1:3:end-1));
+plot(du(1:3:end))

@@ -1,10 +1,11 @@
 close all; clear; clc;
-nt=3000; %generalised does not work wtf xd
 dt=1e-1;
+nt=300/dt; %generalised does not work wtf xd
+
 t0=0;
 % a=-3; b=-9.3; c=8; d=-3; e=5.98; close all;
 % a=-3; b=-1; c=-b; d=a; e=2/3; close all; x0=[1e-2;0;1e-3]; %per orbit
- mu=1.90; a=mu-3; b=-1/4; c=-b; d=a; e=mu; c2=0.2; close all; x0=[0.1;0;2]; %per orbit
+ mu=1.97; a=mu-3; b=-4/1; c=-b; d=a; e=mu; c2=0.2; close all; x0=[0.1;0;2]; %per orbit
 % a=-3; b=-8; c=8; d=-3; e=5.98; close all; x0=[0.1;0.1;0.1]; %per orbit
 % langfordG = @(t,y) [a*y(1)+b*y(2)+y(1)*y(3);
 %     c*y(1)+d*y(2)+y(2)*y(3);
@@ -28,26 +29,40 @@ z=[-1-sqrt(delta),-1+sqrt(delta)]/-0.4
 r=sqrt(-z.*(z-mu))
 sqrt(y(1,end).^2+y(2,end).^2)
 y(3,end)
+%%
+close all;
+ra=sqrt(-z.*(z-mu)); ra=ra(2);
+r=sqrt(y(1,:).^2+y(2,:).^2);
+semilogy(t,abs(r-ra));
+r2=abs(r(500:1500)-ra);
+t2=t(500:1500);
+hold on; semilogy(t2,r2);
+a=polyfit(t2,log(r2),1);
+semilogy(t2,exp(a(1)*t2))
+semilogy(t2,exp(-0.0624*t2))
 %% anal
 % lam=1.5;
 % lam=(2-sqrt(1.76))/0.4;
 % mu=1.9;
 % mu=1.99;
-% mu=2.01;
-mu=2.05;
+% mu=2.001;
+% mu=2.05;
 lam=mu;
 x=0;y=0; z=lam;
 delta=0.8*lam-0.8*2.8+1;
 z=(1-sqrt(delta))/0.4;
 r=sqrt(-z*(z-lam));
-t=6;
+t=0;
 x=r*cos(t);y=r*sin(t);
 
-J=[lam-3+z+0.2*(1-z^2), -1/4, x-0.2*z*2*x;
-    1/4,lam-3+z+0.2*(1-z^2),  y-0.2*z*2*y;
+J=[lam-3+z+0.2*(1-z^2), b, x-0.2*z*2*x;
+    -b,lam-3+z+0.2*(1-z^2),  y-0.2*z*2*y;
     -2*x,-2*y,lam-2*z];
-eig(J)
+evE=eig(J)
 expM=[eig(J)];
+n=[0;1;0];
+msk=[eye(3)-n*n'];
+evE=eig(msk'*J*msk)
 %%
 
 neq=3;
@@ -96,7 +111,10 @@ uM=[];
 uM=[uM,u];
 uMC=[];
 % mu=1.90;
-a=mu-3; b=-1/4; c=-b; d=a; e=mu; c2=0.2;
+a=mu-3; 
+% b=-1/4;
+c=-b; d=a; e=mu; c2=0.2;
+
 % r=15;
 %
 % calc J and g
@@ -138,6 +156,8 @@ B(np*neq+1,np*neq+1)=0; B=B(1:end-1,1:end-1); %B=sparse(B);
 % 
 b2=abs(evs)<Inf; evs=evs(b2); evc=evc(:,b2); 
 lam=1./(1-evs); % one of lambda should be 1
+
+
 exp=1./T*log((lam))
 expM=[expM,exp];
 %
@@ -149,7 +169,7 @@ grid on; hold on;
 
 iev=3; du=evc(:,iev);
 du=evc(:,2)+evc(:,1);
-du=evc(:,2)+evc(:,3);
+% du=evc(:,2)+evc(:,3);
 plot3(u(1)+du(1),u(2)+du(2),u(3)+du(3),'sq');
 plot3(u(1:3:end-1)+du(1:3:end),u(2:3:end-1)+du(2:3:end),u(3:3:end-1)+du(3:3:end));
 

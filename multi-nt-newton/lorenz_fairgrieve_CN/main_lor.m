@@ -1,7 +1,7 @@
 clc; clear; close all;
 %%
 % neq=3; r=28; b=8/3; sigma=10; T=1.5586; np=70; %valid points, no repeats
-neq=3; r=24; b=8/3; sigma=10; np=80; np=np+2;%valid points, no repeats
+neq=3; r=24; b=8/3; sigma=10; np=50; np=np+2;%valid points, no repeats
 % neq=3; r=160; b=8/3; sigma=10; T=1.1521; np=240; %valid points, no repeats
 % neq=3; r=140; b=8/3; sigma=10; T=1.5586;
 % neq=3; r=145; b=8/3; sigma=10; T=1.5586;
@@ -46,7 +46,7 @@ uMC=[];
 % for ii=1:42
     for ii=1:1
 tic;
- for i=1:10
+ for i=1:15
     
      evalJacRhs
 %      evalJacRhs_bdf2
@@ -113,7 +113,7 @@ plot(u(end-3),u(end-2),'sq');
 %
 % ie=2;
 % plot(u(1:2:end-1)+evc(1:2:end-1,ie),u(2:2:end-1)+evc(2:2:end-1,ie));
-
+evc=evc/1000*10;
 ie=3;
 plot(u(1:neq:end-1)+real(evc(1:neq:end,ie)),u(2:neq:end-1)+real(evc(2:neq:end,ie)));
 plot([u(1:neq:end-1),u(1:neq:end-1)+real(evc(1:neq:end,ie))]',[u(2:neq:end-1), u(2:neq:end-1)+real(evc(2:neq:end,ie))]');

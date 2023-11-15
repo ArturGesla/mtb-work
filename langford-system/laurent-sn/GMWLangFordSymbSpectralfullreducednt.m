@@ -21,6 +21,7 @@ close all;
 lbda = 1.8; xyz_init = [0.76  0.0  1.38197]; Period = 25.13; %8*pi; %25.13;
 
 lbda = 1.97
+% lbda = 2.01
 
 %% Lorenz 
 %     dotX = sigma*(Y - X);
@@ -48,7 +49,7 @@ lbda = 1.97
 %rho = 138 change rho for continuation 
 % Numerical parameters
 ntphys = 100; % number of grid points for initial guess (and plotting)
-nt = 12;  % number of modes
+nt = 4;  % number of modes
 
 itnewtonmax = 8;
 

@@ -5,7 +5,7 @@ nt=300/dt; %generalised does not work wtf xd
 t0=0;
 % a=-3; b=-9.3; c=8; d=-3; e=5.98; close all;
 % a=-3; b=-1; c=-b; d=a; e=2/3; close all; x0=[1e-2;0;1e-3]; %per orbit
- mu=1.97; a=mu-3; b=-4/1; c=-b; d=a; e=mu; c2=0.2; close all; x0=[0.1;0;2]; %per orbit
+ mu=1.97; a=mu-3; b=-1/4; c=-b; d=a; e=mu; c2=0.2; close all; x0=[0.1;0;2]; %per orbit
 % a=-3; b=-8; c=8; d=-3; e=5.98; close all; x0=[0.1;0.1;0.1]; %per orbit
 % langfordG = @(t,y) [a*y(1)+b*y(2)+y(1)*y(3);
 %     c*y(1)+d*y(2)+y(2)*y(3);
@@ -67,7 +67,7 @@ evE=eig(msk'*J*msk)
 
 neq=3;
 % r=24; b=8/3; sigma=10;ans
-np=100; np=np+1;%valid points, no repeats
+np=400; np=np+1;%valid points, no repeats
 % neq=3; r=160; b=8/3; sigma=10; T=1.1521; np=240; %valid points, no repeats
 % neq=3; r=140; b=8/3; sigma=10; T=1.5586;
 % neq=3; r=145; b=8/3; sigma=10; T=1.5586;
@@ -172,6 +172,7 @@ du=evc(:,2)+evc(:,1);
 % du=evc(:,2)+evc(:,3);
 plot3(u(1)+du(1),u(2)+du(2),u(3)+du(3),'sq');
 plot3(u(1:3:end-1)+du(1:3:end),u(2:3:end-1)+du(2:3:end),u(3:3:end-1)+du(3:3:end));
+save("exp-fd-nt-"+num2str(np),"exp");
 
 %%
 % plot(u(1:3:end-1));

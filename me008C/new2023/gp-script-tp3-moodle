@@ -1,0 +1,10 @@
+set key center top;
+set grid;
+set xlabel "x";
+plot\
+ "u3s.dat" w lp lc -1 title "donnee1",\
+ "u3s2.dat"w lp lc -1 title "donnee2",\
+ "u3c.dat" w lp lc -1 title "donnee3",\
+ "u3c2.dat"w lp lc -1 title "donnee4"\
+  ;
+  pause -1;

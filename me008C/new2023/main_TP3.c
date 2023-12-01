@@ -224,8 +224,13 @@ void remplir_Ab_TP3(double C[MAX][MAX], double b[MAX], double h, int nx)
     {
         double x = (i + 1) * h;
         b[i] = h * h * sin(2 * M_PI * x);
+        // b[i] = h * h * sin(4 * M_PI * x);
+        // b[i] = h * h * cos(2 * M_PI * x);
+        // b[i] = h * h * cos(4 * M_PI * x);
     }
 }
+
+// implicit version
 void remplir_E_si_TP3(double A[MAX][MAX], double b[MAX], double mu, double E[MAX][MAX], double si[MAX], int nx)
 {
     for (int i = 0; i < nx; i++)
@@ -234,6 +239,23 @@ void remplir_E_si_TP3(double A[MAX][MAX], double b[MAX], double mu, double E[MAX
         for (int j = 0; j < nx; j++)
         {
             E[i][j] = A[i][j] * mu;
+            if (i == j)
+            {
+                E[i][j] += 1.0;
+            }
+        }
+    }
+}
+
+// explicit version
+void remplir_E_se_TP3(double A[MAX][MAX], double b[MAX], double mu, double E[MAX][MAX], double si[MAX], int nx)
+{
+    for (int i = 0; i < nx; i++)
+    {
+        si[i] = b[i] * mu;
+        for (int j = 0; j < nx; j++)
+        {
+            E[i][j] = -A[i][j] * mu;
             if (i == j)
             {
                 E[i][j] += 1.0;
@@ -569,7 +591,8 @@ void sauvgarder_valeur_instantane(double x[MAX], int nx, double t, char nom[MAX]
     FILE *fptr;
     fptr = fopen(nom, "a");
     fprintf(fptr, "%1.17e\t", t);
-    int indices[] = {10, 20, 25, 50, 75};
+    // int indices[] = {10, 20, 25, 50, 75};
+    int indices[] = {4, 8, 12, 16, 20};
 
     for (int i = 0; i < 5; i++)
     {
@@ -680,7 +703,7 @@ int main()
     if (0)
     { // Application
         //  Parametres
-        int n = 100;
+        int n = 40;
         double h = 1.0 / n;
         double A[MAX][MAX], b[MAX];
         // remplir_Ab_TD3_1(A, b);
@@ -721,18 +744,18 @@ int main()
         sauvgarder_vect_et_maillage(u, n, h, nom_de_sauvgarde);
     }
 
-    // integration temporelle
+    // integration temporelle implicite
     if (1)
     {
         //  Parametres
-        int n = 100;
+        int n = 40;
         double h = 1.0 / n;
-        double dt = 100 * h * h;
+        double dt = 0.2 * h * h;
         double mu = dt / h / h;
         double Tmax = 4;
         int nt = Tmax / dt;
-        nt = 30;
-        char nom_de_sauvgarde[60] = "u30i.dat";
+        nt = 113;
+        char nom_de_sauvgarde[60] = "utm.dat";
 
         double A[MAX][MAX], b[MAX], E[MAX][MAX], si[MAX], rhs[MAX];
         // remplir_Ab_TD3_1(A, b);
@@ -793,7 +816,7 @@ int main()
                 resol_trig_inf(M, du, r, n);
                 ukp1_iter(Unplus1, du, Unplus1, n);
             }
-            if (!(residu_norm <eps))
+            if (!(residu_norm < eps))
             {
                 printf("Code converge pas.\n");
                 break;
@@ -804,7 +827,71 @@ int main()
                 printf("===== IE iter: %d temps: %lf dt: %lf\n", it + 1, (it + 1) * dt, dt);
             // afficher_vect(Unplus1, n);
 
-            // sauvgarder_valeur_instantane(Un, nx, (it + 1) * dt, "valeurs_instantanes.dat");
+            sauvgarder_valeur_instantane(Un, n, (it + 1) * dt, "valeurs_instantanes.dat");
+        }
+
+        sauvgarder_vect_et_maillage(Un, n, h, nom_de_sauvgarde);
+    }
+
+    // integration temporelle explicite
+    if (0)
+    {
+        //  Parametres
+        int n = 40;
+        double h = 1.0 / n;
+        double dt = 0.2 * h * h;
+        double mu = dt / h / h;
+        double Tmax = 4;
+        int nt = Tmax / dt;
+        nt = 113;
+        char nom_de_sauvgarde[60] = "utm.dat";
+
+        double A[MAX][MAX], b[MAX], E[MAX][MAX], si[MAX], rhs[MAX];
+        // remplir_Ab_TD3_1(A, b);
+        remplir_Ab_TP3(A, b, h, n);
+        printf("Matrice A:\n");
+        afficher_mat(A, n);
+        printf("Vecteur b:\n");
+        afficher_vect(b, n);
+        remplir_E_se_TP3(A, b, mu, E, si, n);
+        printf("Matrice E:\n");
+        afficher_mat(E, n);
+        printf("Vecteur si:\n");
+        afficher_vect(si, n);
+
+        // // Resolution
+        // //  Jacobi, GS, SOR
+        // double M[MAX][MAX], N[MAX][MAX], r[MAX], u[MAX], du[MAX];
+        // // remplir_MN_Jacobi(E, M, N, n);
+        // // remplir_MN_Gauss_Seidel(E, M, N, n);
+        // double omega_sor = 1.26;
+        // remplir_MN_SOR(E, M, N, omega_sor, n);
+        // printf("Matrice M:\n");
+        // afficher_mat(M, n);
+
+        // int kmax = 6000;
+        // // int kmax = 1;
+        // double eps = 1e-8;
+
+        double Unplus1[MAX], Un[MAX];
+        initialiser_vecteur(Unplus1, n, 0.0);
+        initialiser_vecteur(Un, n, 0.0);
+
+        // nt = 1;
+        printf("Parametres:\t nx: %d\t h: %lf\t dt: %lf\t mu: %lf\t Tmax: %lf\t nt: %d\n",
+               n, h, dt, mu, Tmax, nt);
+
+        for (int it = 0; it < nt; it++)
+        {
+            iteration_euler_explicite(E, Un, si, Unplus1, n);
+            remplir_vec_Un_avec_Unplus1(Un, Unplus1, n);
+
+            remplir_vec_Un_avec_Unplus1(Un, Unplus1, n);
+            if ((nt > 10 && (it + 1) % (nt / 10) == 0) || nt < 1000)
+                printf("===== IE iter: %d temps: %lf dt: %lf\n", it + 1, (it + 1) * dt, dt);
+            // afficher_vect(Unplus1, n);
+
+            // sauvgarder_valeur_instantane(Un, n, (it + 1) * dt, "valeurs_instantanes.dat");
         }
 
         sauvgarder_vect_et_maillage(Un, n, h, nom_de_sauvgarde);

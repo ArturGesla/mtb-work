@@ -1,0 +1,11 @@
+set key;
+set grid;
+set xlabel "x";
+plot\
+ "u-113-6e.dat" w lp lc -1 title "donnee1",\
+ "u-113-6i.dat" w lp lc -1 title "donnee2",\
+ "u-113-2e.dat" w lp lc -1 title "donnee3",\
+ "u-113-2i.dat" w lp lc -1 title "donnee4"\
+      ;
+        pause -1;
+        

@@ -1,0 +1,12 @@
+set key right bottom;
+set grid;
+set xlabel "t";
+set ylabel "u(x_i,t)";
+set xrange [0:1];
+plot\
+ "valeurs_instantanes.dat"  ev 1000 u 1:2 w lp lc -1 title "donnee1",\
+ "valeurs_instantanes.dat"  ev 1000 u 1:3 w lp lc -1 title "donnee2",\
+ "valeurs_instantanes.dat"  ev 1000 u 1:4 w lp lc -1 title "donnee3",\
+ "valeurs_instantanes.dat"  ev 1000 u 1:5 w lp lc -1 title "donnee4"\
+  ;
+  pause -1;

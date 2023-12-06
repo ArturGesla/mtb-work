@@ -190,16 +190,13 @@ int main()
         char nom_de_sauvgarde[60] = "u1u.dat";
         // nt = 200;
 
-        double Tmax = 0.1;
+        double Tmax = 0.001;
         int nt = Tmax / dt;
 
         double Un[MAX];     // Condition initial
         double se[MAX];     // vecteur se
         double C[MAX][MAX]; // matrice C
         double Unplus1[MAX];
-
-        printf("Parametres:\t nx: %d\t h: %lf\t dt: %lf\t mu: %lf\t Tmax: %lf\t nt: %d\n",
-               nx, h, dt, mu, Tmax, nt);
 
         remplir_vec_U0(Un, nx);
         remplir_vec_se(se, mu, nx);
@@ -220,10 +217,23 @@ int main()
             }
 
             remplir_vec_Un_avec_Unplus1(Un, Unplus1, nx);
-            sauvgarder_valeur_instantane(Un, nx, (it + 1) * dt, "valeurs_instantanes.dat");
+
+            {
+                FILE *fptr;
+                fptr = fopen("valeurs_instantanees.dat", "a");
+                fprintf(fptr, "%1.17e\t%1.17e\n", (it + 1) * dt, Un[nx*2/10-1]);
+                fclose(fptr);
+            }
         }
 
-        sauvgarder_vect_et_maillage_et_bords(Un, nx, h, "u.dat");
+        {
+            FILE *fptr;
+            fptr = fopen("u.dat", "w");
+            fprintf(fptr, "%1.17e\t%1.17e\n", 0.0,1.0);
+            for (int i = 0; i < nx; i++)
+                fprintf(fptr, "%1.17e\t%1.17e\n", (i + 1) * h, Un[i]);
+            fclose(fptr);
+        }
     }
 
     return 0;

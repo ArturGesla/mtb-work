@@ -3,7 +3,7 @@ clc; close all; clear;
 np=100; r=24;
 main_lorenz_ti
 %
-z=fft(X); nt=8;
+z=fft(X); nt=3;
 arr=[1:nt]; a1=arr; arr=[arr,length(z)-fliplr(arr(1:end-1))+1];
 zcut=z*0; zcut(arr,:)=z(arr,:);
 X2=ifft(zcut);
@@ -30,7 +30,7 @@ u(nt*3*2+1)=om;
 u0=u;
 %
 
-for i=1:8
+for i=1:15
 [g,jac]=calculateRhsAndJac(3,nt,u);
 u=u-jac\g';
 norm(g)
@@ -42,7 +42,7 @@ z2=reshape(u(1:nt*3),[3,nt])'+reshape(u(nt*3+1:end-1),[3,nt])'*1i;
 
 %%
 evsM={}; leg=[];
-%%
+%
 rank(full(jac(1:end-1,1:end-1)))
 j2=(full(jac(1:end-1,1:end-1)));
 % close all;
@@ -74,6 +74,8 @@ plot(evs,'x'); grid on;
 om=2*pi/T;
 om=u(end);
  plot(real(evs),imag(evs)/om,'o'); grid on; hold on;
+ %% new idea
+ 
 %%
 close all;
 sym=['x','o','>','<','v','^'];

@@ -1,0 +1,11 @@
+???
+-ksp_type cg -size 1000
+-ksp_type minres -size 1000
+-ksp_type bcgs -size 1000
+-ksp_type cg -pc_type jacobi
+-ksp_type cg -pc_type asm
+-ksp_type gmres -pc_type asm
+-ksp_type cg -pc_type hypre
+-ksp_type preonly -pc_type lu
+-ksp_type cg -pc_type jacobi
+-ksp_type cg -pc_type hypre

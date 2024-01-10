@@ -1,6 +1,7 @@
 all:
 	# gcc main_TP3.c -lm -O3 -o o.o; ./o.o
-	gcc main_TP3_exam.c -lm -O3 -o o.o; ./o.o
+	# gcc main_TP3_exam.c -lm -O3 -o o.o; ./o.o
+	gcc main_TP3_evaluation_check.c -lm -O3 -o o.o; ./o.o
 3:
 	gcc main_TP3.c -lm -O3 -o o.o;
 2:

@@ -229,6 +229,17 @@ void remplir_Ab_TP3(double C[MAX][MAX], double b[MAX], double h, int nx)
         // b[i] = h * h * cos(4 * M_PI * x);
     }
 }
+void remplir_b_TP3()
+{
+    int nx = 100;
+    double h = 1.0 / nx;
+    double b[MAX];
+    for (int i = 0; i < nx; i++)
+    {
+        double x = (i + 1) * h;
+        b[i] = h * h * sin(2 * M_PI * x);
+    }
+}
 
 // implicit version
 void remplir_E_si_TP3(double A[MAX][MAX], double b[MAX], double mu, double E[MAX][MAX], double si[MAX], int nx)

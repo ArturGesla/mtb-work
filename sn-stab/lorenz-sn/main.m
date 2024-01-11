@@ -1,6 +1,6 @@
 clc; close all; clear;
 %%
-np=100; r=24;
+np=52; r=24;
 main_lorenz_ti
 %
 z=fft(X); nt=7;
@@ -40,7 +40,7 @@ end
 % close all;
 clf;
 z2=reshape(u(1:nt*3),[3,nt])'+reshape(u(nt*3+1:end-1),[3,nt])'*1i;
-nnt=100; X4=ifft([z2;zeros(nnt,3);conj(flipud(z2(2:end,:)))]); X4=real(X4)*length(X4);
+nnt=51-nt-nt+1; X4=ifft([z2;zeros(nnt,3);conj(flipud(z2(2:end,:)))]); X4=real(X4)*length(X4);
 % plot3(X4(:,1),X4(:,2),X4(:,3)); hold on; plot3(X(:,1),X(:,2),X(:,3));
 plot(X4(:,1),X4(:,2)); hold on; plot(X(:,1),X(:,2));
 

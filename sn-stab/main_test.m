@@ -22,3 +22,19 @@ hold on;
 plot(x,y,'-o')
 
 %%
+run lorenz_fairgrieve_CN\main_lor.m; 
+%%
+save("dataFD.mat",'X','evc','x','evs');
+run lorenz-sn\main.m; 
+save("dataSN.mat",'X4');
+
+%%
+load dataFD.mat
+
+%%
+plot(X(:,1),X(:,2)); hold on; plot(X4(:,1),X4(:,2));
+%%
+plot(X(:,1),X(:,2)); hold on; plot(X(:,1)+x(:,1),X(:,2)+x(:,2)); plot(X(1,1)+x(1,1),X(1,2)+x(1,2),'o');
+%%
+plot(abs(fft((X(:,1)))),'-x'); hold on; plot(abs(fft(X4(:,1))),'-o'); set(gca,"Yscale","log")
+plot(abs(fft((x(1:end-1,1)))),'-x');

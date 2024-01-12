@@ -97,7 +97,7 @@ b2=abs(evs)<Inf; evs=evs(b2); evc=evc(:,b2);
 lam=1./(1-evs) % one of lambda should be 1
 exp=1./T*log(abs(lam))
 %%
-v=evc(:,3);
+v=evc(:,2);
 x=reshape(v,[3,np])';
 X=reshape(u(1:end-1),[3,np])';
 

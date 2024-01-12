@@ -61,6 +61,12 @@ om=2*pi/T;
 om=u(end);
  plot(real(evs),imag(evs)/om,'+'); grid on; hold on;
  text(real(evs),imag(evs)/om,num2str([1:length(evs)]'));
+
+ vv=evc(:,39);
+ z4=reshape(vv(1:nt*3),[3,nt])'+reshape(vv(nt*3+1:end),[3,nt])'*1i;
+nnt=51-nt-nt+1; x4=ifft([z2;zeros(nnt,3);conj(flipud(z2(2:end,:)))]); x4=real(X4)*length(x4);
+% plot3(X4(:,1),X4(:,2),X4(:,3)); hold on; plot3(X(:,1),X(:,2),X(:,3));
+plot(x4(:,1),x4(:,2)); hold on; plot(X(:,1),X(:,2));
  %% new idea
  figure(2); plot(real(evc(1:3:end,[21,30,34,38,35,31,22])))
 %%

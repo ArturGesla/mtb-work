@@ -59,9 +59,9 @@ tic;
 % r=r-0.1
     end
 %%
-
+close all;
 X=reshape(u(1:end-4),[3,np-1])'; 
-plot(X(:,1),X(:,2)); hold on; plot(X(1,1),X(1,2),'o'); plot(X(2,1),X(2,2),'>'); 
+plot(X(:,1),X(:,2)); hold on; plot(X(1,1),X(1,2),'o'); plot(X(2,1),X(2,2),'>'); axis equal; grid on;
 
 %% stab
 Jc=full(J(1:end-1,1:end-1)); B=zeros(length(Jc)); B(end-2:end,1:3)=eye(3); Jc(end-2:end,1:3)=0;

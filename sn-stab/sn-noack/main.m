@@ -7,9 +7,13 @@ clc; close all; clear;
 %     -w+u^2+v^2*g*g];
 
 clc; clear; close all;
+%%
 %
 %parms
-mu=0.04; r=sqrt(mu); gm=1; %gamma
+% it=it+1;
+% mu=0.04; r=sqrt(mu); gm=1; %gamma
+mu=0.04+it*0.04; r=sqrt(mu); gm=1; %gamma
+% mu=3/4; r=sqrt(mu); gm=1; %gamma
 neq=3; np=100; np=np+2;
 
 %init
@@ -19,9 +23,9 @@ T=2*pi; x=u; y=v; z=w;
 X=[x(1:end-1)',y(1:end-1)',z(1:end-1)'];
 X=X+rand(size(X))*1e-2;
 
-%%
+%
 
-z=fft(X); nt=31;
+z=fft(X); nt=3;
 arr=[1:nt]; a1=arr; arr=[arr,length(z)-fliplr(arr(1:end-1))+1];
 zcut=z*0; zcut(arr,:)=z(arr,:);
 X2=ifft(zcut);
@@ -49,97 +53,59 @@ u0=u;
 %
 %
 for i=1:15
-[g,jac]=calculateRhsAndJac(3,nt,u);
+[g,jac]=calculateRhsAndJac(3,nt,u,mu,gm);
 u=u-jac\g';
 fprintf("it: %d \t norm(rhs): %4.2e\n",i,norm(g))
 end
 
-%% stability
+% stability
 
 j2=jac(1:end-1,1:end-1);
 [evc,evs]=eig(full(j2)); evs=diag(evs);
-%%
+%
 close all;
-plot(evs,'x'); grid on; 
+plot(evs,'x'); grid on; hold on;
 text(real(evs),imag(evs),num2str([1:length(evs)]')); 
 % w maire ok z fd
 
-%% new method - remap to half mode
-nt2=(nt-1)*2+1;
-u2=[]; u2(nt2*3*2+1)=om/2;
-
-z=reshape(u(1:(end-1)/2),[3,nt])'+1i*reshape(u((end-1)/2+1:(end-1)),[3,nt])';
-z2=reshape(u2(1:(end-1)/2),[3,nt2])'+1i*reshape(u2((end-1)/2+1:(end-1)),[3,nt2])';
-
-z2(1:2:end,:)=z;
-
-u2(1:end-1)=[real(reshape(z2.',[nt2*3,1])); imag(reshape(z2.',[nt2*3,1]))]; u2=u2.';
-% u2 should solve g
-
-[g,jac]=calculateRhsAndJac(3,nt2,u2); norm(g)
-
-j2hm=jac(1:end-1,1:end-1);
-[evc2,evs2]=eig(full(j2hm)); evs2=diag(evs2);
-
+evsAnal=[0;(-1-sqrt(1-8*mu))/2;(-1+sqrt(1-8*mu))/2;];
+plot(real(evsAnal),imag(evsAnal),'o');
+xlim([-1 0.4]);
+ylim([-4 4])
+exportgraphics(gcf,"spec"+num2str(it)+".png");
 %%
-clf;
-plot(evs,'x'); grid on;
-hold on; plot(evs2,'+'); grid on;
-% text(real(evs2),imag(evs2),num2str([1:length(evs2)]')); 
-
-%%
-ll=mod(floor((0:nt2*3-1)./3),2);
-ll2=[ll,ll];
-% b=zeros(length(evs2)); b(4:6,4:6)=eye(3);
-b=diag(ll2);
-%
-% 
-% [evc3,evs3]=eig(full(j2hm),b); evs3=diag(evs3); plot(evs3,'sq'); grid on;
-% [evc3,evs3]=eig(full(j2hm-b*j2hm+b),b); evs3=diag(evs3); plot(evs3,'sq'); grid on;
-
-
-
-%
-% spy(j2hm-b*j2hm+b);
-% spy(b)
-% 
-% grid on; set(gca,"XTick",[1:3:nt2*3*2]);set(gca,"YTick",[1:3:nt2*3*2])
-
-%
-l3=zeros(3,nt2*2); l3(1,1:nt2)=ones(1,nt2)*2-mod([0:nt2-1],2)*4; l3(1,1)=1; l31=reshape(l3,[3*nt2*2,1])';
-l3=zeros(3,nt2*2); l3(2,1:nt2)=ones(1,nt2)*2-mod([0:nt2-1],2)*4; l3(2,1)=1; l32=reshape(l3,[3*nt2*2,1])';
-l3=zeros(3,nt2*2); l3(3,1:nt2)=ones(1,nt2)*2-mod([0:nt2-1],2)*4; l3(3,1)=1; l33=reshape(l3,[3*nt2*2,1])';
-
-l3=zeros(3,nt2*2); l3(1,1:nt2)=ones(1,nt2)*2; l3(1,1)=1; r31=reshape(l3,[3*nt2*2,1])';
-l3=zeros(3,nt2*2); l3(2,1:nt2)=ones(1,nt2)*2; l3(2,1)=1; r32=reshape(l3,[3*nt2*2,1])';
-l3=zeros(3,nt2*2); l3(3,1:nt2)=ones(1,nt2)*2; l3(3,1)=1; r33=reshape(l3,[3*nt2*2,1])';
-
-%
-jmod=j2hm;%-b*j2hm+b;
-jmod(4,:)=l31;
-jmod(5,:)=l32;
-jmod(6,:)=l33;
-
-bmod=jmod*0;
-bmod(4,:)=r31;
-bmod(5,:)=r32;
-bmod(6,:)=r33;
-
-%
-[evc,evs]=eig(full(jmod),full(bmod)); evs=diag(evs); b=abs(evs)<Inf; evs=evs(b); evc=evc(:,b);
-
-%%
-% close all;
+close all;
 clf;
 
-up=u2; ntp=nt2;
+up=u; ntp=nt;
 zp=reshape(up(1:(end-1)/2),[3,ntp])'+1i*reshape(up((end-1)/2+1:(end-1)),[3,ntp])';
 xp=ifft([zp;conj(flipud(zp(2:end,:)))])*((length(zp)-1)*2+1);xp=real(xp);
-plot3(xp(:,1),xp(:,2),xp(:,3)); grid on; hold on; xpb=xp;
+% plot3(xp(:,1),xp(:,2),xp(:,3)); grid on; hold on; xpb=xp;
+plot(xp)
+%%
+close all;
+clf;
 
-up=[evc(:,3);0]; ntp=nt2;
+up=[evc(:,11);0]; ntp=nt;
+zp=reshape(up(1:(end-1)/2),[3,ntp])'+1i*reshape(up((end-1)/2+1:(end-1)),[3,ntp])';
+xp=ifft([zp;conj(flipud(zp(2:end,:)))])*((length(zp)-1)*2+1);xp=real(xp); xpp=xp;
+% xp=xp+xpb;  plot3(xp(:,1),xp(:,2),xp(:,3)); grid on; hold on; 
+
+plot(xp)
+%%
+up=[evc(:,12);0]; ntp=nt;
 zp=reshape(up(1:(end-1)/2),[3,ntp])'+1i*reshape(up((end-1)/2+1:(end-1)),[3,ntp])';
 xp=ifft([zp;conj(flipud(zp(2:end,:)))])*((length(zp)-1)*2+1);xp=real(xp);
-plot3(xp(:,1),xp(:,2),xp(:,3)); grid on; xpp=xp;
+xp=xp+xpb;  plot3(xp(:,1),xp(:,2),xp(:,3)); grid on; hold on; 
+
+up=[evc(:,13);0]; ntp=nt;
+zp=reshape(up(1:(end-1)/2),[3,ntp])'+1i*reshape(up((end-1)/2+1:(end-1)),[3,ntp])';
+xp=ifft([zp;conj(flipud(zp(2:end,:)))])*((length(zp)-1)*2+1);xp=real(xp);
+xp=xp+xpb; plot3(xp(:,1),xp(:,2),xp(:,3)); grid on; hold on; 
+
+% up=[evc(:,3);0]; ntp=nt2;
+% zp=reshape(up(1:(end-1)/2),[3,ntp])'+1i*reshape(up((end-1)/2+1:(end-1)),[3,ntp])';
+% xp=ifft([zp;conj(flipud(zp(2:end,:)))])*((length(zp)-1)*2+1);xp=real(xp);
+% plot3(xp(:,1),xp(:,2),xp(:,3)); grid on; xpp=xp;
 
 %% not trzeba to przemyslec

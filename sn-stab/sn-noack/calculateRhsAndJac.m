@@ -1,4 +1,4 @@
-function [g,jac]=calculateRhsAndJac(neq,nt,u)
+function [g,jac]=calculateRhsAndJac(neq,nt,u,mu,gm)
 %%
 % Noack system
 % f=[mu*u-v*g-w*u;
@@ -7,7 +7,7 @@ function [g,jac]=calculateRhsAndJac(neq,nt,u)
 %4 nonlinear terms - troche zabawy
 % 
 
-mu=0.04; gm=1; 
+% mu=0.04; gm=1; 
 
 ii=[]; jj=[]; vv=[];
 

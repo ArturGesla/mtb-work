@@ -11,9 +11,9 @@ clc; clear; close all;
 %
 %parms
 % it=it+1;
-% mu=0.04; r=sqrt(mu); gm=1; %gamma
+mu=0.04; r=sqrt(mu); gm=1; %gamma
 % mu=0.04+it*0.04; r=sqrt(mu); gm=1; %gamma
-mu=3/4; r=sqrt(mu); gm=1; %gamma
+% mu=3/4; r=sqrt(mu); gm=1; %gamma
 neq=3; np=100; np=np+2;
 
 %init
@@ -25,7 +25,7 @@ X=X+rand(size(X))*1e-2;
 
 %
 
-z=fft(X); nt=3;
+z=fft(X); nt=5;
 arr=[1:nt]; a1=arr; arr=[arr,length(z)-fliplr(arr(1:end-1))+1];
 zcut=z*0; zcut(arr,:)=z(arr,:);
 X2=ifft(zcut);
@@ -58,7 +58,7 @@ u=u-jac\g';
 fprintf("it: %d \t norm(rhs): %4.2e\n",i,norm(g))
 end
 
-% stability
+%% stability
 
 j2=jac(1:end-1,1:end-1);
 [evc,evs]=eig(full(j2)); evs=diag(evs);
@@ -72,7 +72,7 @@ evsAnal=[0;(-1-sqrt(1-8*mu))/2;(-1+sqrt(1-8*mu))/2;];
 plot(real(evsAnal),imag(evsAnal),'o');
 xlim([-1 0.4]);
 ylim([-4 4])
-exportgraphics(gcf,"spec"+num2str(it)+".png");
+% exportgraphics(gcf,"spec"+num2str(it)+".png");
 %%
 close all;
 clf;
@@ -80,18 +80,33 @@ clf;
 up=u; ntp=nt;
 zp=reshape(up(1:(end-1)/2),[3,ntp])'+1i*reshape(up((end-1)/2+1:(end-1)),[3,ntp])';
 xp=ifft([zp;conj(flipud(zp(2:end,:)))])*((length(zp)-1)*2+1);xp=real(xp);
-% plot3(xp(:,1),xp(:,2),xp(:,3)); grid on; hold on; xpb=xp;
-plot(xp)
+plot3(xp(:,1),xp(:,2),xp(:,3)); grid on; hold on; xpb=xp;
+% plot(xp)
 %%
 close all;
 clf;
+iev=20;
 
-up=[evc(:,11);0]; ntp=nt;
+up=[evc(:,iev);0]; ntp=nt; u1=up(1:end-1);
+% up=[j2*u2;0]; ntp=nt; 
+% up=[u2;0]; ntp=nt; 
 zp=reshape(up(1:(end-1)/2),[3,ntp])'+1i*reshape(up((end-1)/2+1:(end-1)),[3,ntp])';
 xp=ifft([zp;conj(flipud(zp(2:end,:)))])*((length(zp)-1)*2+1);xp=real(xp); xpp=xp;
-% xp=xp+xpb;  plot3(xp(:,1),xp(:,2),xp(:,3)); grid on; hold on; 
+% xp=xp+xpb;  
+% plot3(xp(:,1),xp(:,2),xp(:,3)); grid on; hold on; 
 
 plot(xp)
+
+%% expo counterpart
+ll=length(xp); sigma=evs(iev);
+t=0:2*pi/ll:2*pi-2*pi/ll;
+xp=xpp.*(exp(sigma*t)');
+
+z2=fft(xp)./length(xp);
+u2=z2(1:nt,:); 
+u2=[reshape(real(u2.'),[3*nt,1]);reshape(imag(u2.'),[3*nt,1])]; 
+%%
+clf; ip=1; plot(up(ip:3:end-1),'x-'); hold on; plot(u2(ip:3:end),'x-');  u3=j2*u2; plot(u3(ip:3:end),'x-')
 %%
 up=[evc(:,12);0]; ntp=nt;
 zp=reshape(up(1:(end-1)/2),[3,ntp])'+1i*reshape(up((end-1)/2+1:(end-1)),[3,ntp])';

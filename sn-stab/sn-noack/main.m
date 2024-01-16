@@ -12,8 +12,8 @@ clc; clear; close all;
 %parms
 % it=it+1;
 % mu=0.04; r=sqrt(mu); gm=1; %gamma
-mu=0.04+it*0.04; r=sqrt(mu); gm=1; %gamma
-% mu=3/4; r=sqrt(mu); gm=1; %gamma
+% mu=0.04+it*0.04; r=sqrt(mu); gm=1; %gamma
+mu=3/4; r=sqrt(mu); gm=1; %gamma
 neq=3; np=100; np=np+2;
 
 %init

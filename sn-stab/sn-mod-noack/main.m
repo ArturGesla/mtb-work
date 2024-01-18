@@ -1,5 +1,5 @@
 clc; close all; clear;
-cd     '/people/gesla/Documents/git/mtb-work/sn-stab/sn-noack';
+cd     '/people/gesla/Documents/git/mtb-work/sn-stab/sn-mod-noack';
 %%
 
 % Noack system
@@ -8,7 +8,7 @@ cd     '/people/gesla/Documents/git/mtb-work/sn-stab/sn-noack';
 %     -w+u^2+v^2*g*g];
 
 clc; clear; close all;
-%%
+%
 %
 %parms
 % it=it+1;
@@ -26,7 +26,7 @@ X=X+rand(size(X))*1e-2;
 
 %
 
-z=fft(X); nt=2;
+z=fft(X); nt=3; if(mod(nt,2)==0) error("nt even"); end
 arr=[1:nt]; a1=arr; arr=[arr,length(z)-fliplr(arr(1:end-1))+1];
 zcut=z*0; zcut(arr,:)=z(arr,:);
 X2=ifft(zcut);
@@ -50,7 +50,9 @@ plot(x,'-x')
 % z1=zcut(a1,:);
 u=[reshape(real(z1.'),[3*nt,1]);reshape(imag(z1.'),[3*nt,1])];
 u(nt*3*2+1)=om;
-u0=u;
+% u0=u; u(end)=1
+% load("../sn-noack/u2.mat"); u=u2;
+load("../sn-noack/u2-nt3.mat"); u=u2;
 %
 %
 for i=1:15

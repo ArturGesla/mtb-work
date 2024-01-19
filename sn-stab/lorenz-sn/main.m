@@ -3,7 +3,7 @@ clc; close all; clear;
 np=52; r=24;
 main_lorenz_ti
 %
-z=fft(X); nt=30;
+z=fft(X); nt=4;
 arr=[1:nt]; a1=arr; arr=[arr,length(z)-fliplr(arr(1:end-1))+1];
 zcut=z*0; zcut(arr,:)=z(arr,:);
 X2=ifft(zcut);

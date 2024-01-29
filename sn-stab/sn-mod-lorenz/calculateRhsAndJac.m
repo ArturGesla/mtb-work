@@ -15,7 +15,7 @@ b=8/3;
 
 lastid=nt*neq*2+1;
 om=u(lastid);
-for ik=1;%0:2*nt-1
+for ik=0:2*nt-1
     ix=ik*neq+1; iy=ix+1; iz=iy+1;
     
     realEq=ik<nt;
@@ -120,7 +120,7 @@ if(realEq==1)
     g(ix)=g(ix)+s*(cr(ikl,kSum)*u(iylr)-ci(ikl,kSum)*sgn(ikl)*u(iyli));
     g(ix)=g(ix)-s*(cr(ikl,kSum)*u(ixlr)-ci(ikl,kSum)*sgn(ikl)*u(ixli));
     g(ix)=g(ix)-ikl*om*(-u(ixlr)*ci(ikl,kSum)-sgn(ikl)*u(ixli)*cr(ikl,kSum));
-    g(ix)
+%     g(ix)
 
     g(iy)=g(iy)+r*(cr(ikl,kSum)*u(ixlr)-ci(ikl,kSum)*sgn(ikl)*u(ixli));
     g(iy)=g(iy)-1*(cr(ikl,kSum)*u(iylr)-ci(ikl,kSum)*sgn(ikl)*u(iyli));

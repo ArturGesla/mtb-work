@@ -3,7 +3,7 @@ clc; close all; clear;
 np=52; r=24;
 main_lorenz_ti
 %
-z=fft(X); nt=9;
+z=fft(X); nt=7;
 arr=[1:nt]; a1=arr; arr=[arr,length(z)-fliplr(arr(1:end-1))+1];
 zcut=z*0; zcut(arr,:)=z(arr,:);
 X2=ifft(zcut);
@@ -60,10 +60,15 @@ end
 [evc,evs]=eig(j2,B); evs=diag(evs);
 % evsM{end+1}=evs; leg=[leg;"nt = "+num2str(nt)];
 
-om=2*pi/T;
+% om=2*pi/T;
 om=u(end);
  plot(real(evs),imag(evs)/om,'+'); grid on; hold on;
  text(real(evs),imag(evs)/om,num2str([1:length(evs)]'));
+
+ b=(abs(evs)<Inf); evs=evs(b);
+ [a,b]=sort(abs(imag(evs))); 
+ fprintf("Numerical fl mult:\n");
+disp(exp(2*pi/om*evs(b(1:3))).');
 %%
 close all;
 clf;

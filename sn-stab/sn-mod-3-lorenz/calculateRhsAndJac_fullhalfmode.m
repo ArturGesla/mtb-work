@@ -15,8 +15,8 @@ b=8/3;
 
 lastid=nt*neq*2+1;
 om=u(lastid);
-exchange=0;  for ik=0:2*nt-1
-% exchange=1; for ik=[0:nt-1,nt+1:2*nt-1]
+% exchange=0;  for ik=0:2*nt-1
+exchange=1; for ik=[0:nt-1,nt+1:2*nt-1]
     ix=ik*neq+1; iy=ix+1; iz=iy+1;
     
     realEq=ik<nt;

@@ -1,4 +1,5 @@
-clc; close all; clear;
+clc; close all; clear; mua=[];
+%
 % cd     '/people/gesla/Documents/git/mtb-work/sn-stab/sn-mod-noack';
 %
 
@@ -41,17 +42,18 @@ uinit=u;
 %
 %  load unt7.mat;
 %  load unt13.mat;
+%
 for i=1:17
-[g,jac]=calculateRhsAndJac(3,nt,u,r);
+[g,jac]=calculateRhsAndJac_2(3,nt,u,r);
 u=u-jac\g';
 fprintf("it: %d \t norm(rhs): %4.2e\n",i,norm(g))
 end
-
+%
 % clf; spy(jac); grid on; grid minor;
-[U,S,V]=svds(jac(1:end,1:end),5,'smallest');
-% [U,S,V]=svds(jac(1:end-1,1:end-1),5,'smallest');
+% [U,S,V]=svds(jac(1:end,1:end),5,'smallest');s=diag(S);
+% [U,S,V]=svds(jac(1:end-1,1:end-1),5,'smallest'); s=diag(S);
 % [U,S,V]=svds(jac(1:nt*3,1:nt*3),5,'smallest');
-%% second stability
+% second stability
 
 nt2=nt;
 % l3=zeros(3,nt2*2); l3(1,1:nt2)=ones(1,nt2)*2-mod([0:nt2-1],2)*4; l3(1,1)=1; l31=reshape(l3,[3*nt2*2,1])';
@@ -64,7 +66,8 @@ l3=zeros(3,nt2*2); l3(3,1:nt2)=ones(1,nt2)*2; l3(3,1)=1; r33=reshape(l3,[3*nt2*2
 
 
 jmod=full(jac(1:end-1,1:end-1));%-b*j2hm+b;
- ind=nt*3+1;
+%  ind=nt*3+1;
+ ind=1*3+1;
 % jmod(ind,:)=l31;
 % jmod(ind+1,:)=l32;
 % jmod(ind+2,:)=l33;
@@ -79,7 +82,8 @@ bmod(ind+2,:)=r33;
 fprintf("Result || \n");
 fprintf("Numerical fl mult:\n");
 disp((1+evs)');
-
+mu=log(evs+1)/pi*u(end)
+% load mua.mat; mua=[mua;max(real(mu))]; save('mua.mat','mua');
 %% naive stab - Hill
 [evc,evs]=eig(full(jac(1:end-1,1:end-1))); evs=diag(evs); %b=abs(evs)<Inf; evs=evs(b); evc=evc(:,b);
 %  b=(abs(evs)<Inf); evs=evs(b);
@@ -87,14 +91,15 @@ disp((1+evs)');
  fprintf("Numerical fl mult:\n");
 disp(exp(2*pi/om*evs(b(1:4))).');
 evs=evs(b(1:4)); evc=evc(:,b(1:4)); 
+load mua.mat; mua=[mua;max(real(evs))]; save('mua.mat','mua');
 %%
-
-% up=u+[V(:,1);0]; ntp=nt; 
+% close all;
+% up=u+[V(:,4);0]; ntp=nt; 
 % up=u; ntp=nt; 
-% up=u+[evc(:,2);0]; ntp=nt; 
+up=[evc(:,1);0]; ntp=nt;  up=up*0; up(4:6)=evc(4:6,2);
 % up=[evc(:,3);0]; ntp=nt; 
 % up=u; ntp=nt; 
-up=[V(:,4)]; ntp=nt; 
+% up=[V(:,5)]; ntp=nt; 
 zp=reshape(up(1:(end-1)/2),[3,ntp])'+1i*reshape(up((end-1)/2+1:(end-1)),[3,ntp])';
 
 % up=[V(:,3);0]; ntp=nt; zp=zp+reshape(up(1:(end-1)/2),[3,ntp])'+1*1i*reshape(up((end-1)/2+1:(end-1)),[3,ntp])';
@@ -102,16 +107,17 @@ zp=reshape(up(1:(end-1)/2),[3,ntp])'+1i*reshape(up((end-1)/2+1:(end-1)),[3,ntp])
 
 nz=(np-1)*2-length(zp)*2+1; zp=[zp;zeros(nz,3);conj(flipud(zp(2:end,:)))]; xp=ifft(zp)*(length(zp)); xp=real(xp);
 
-clf; plot3(xp(:,1),xp(:,2),xp(:,3)); grid on; hold on; xpb=xp; plot3(xp(1,1),xp(1,2),xp(1,3),'o');plot3(xp(2,1),xp(2,2),xp(2,3),'>'); plot3(xp(1:end/2,1),xp(1:end/2,2),xp(1:end/2,3),'r');
- clf; plot(xp); grid on;
+clf; 
+% plot3(xp(:,1),xp(:,2),xp(:,3),".-"); grid on; hold on; xpb=xp; plot3(xp(1,1),xp(1,2),xp(1,3),'o');plot3(xp(2,1),xp(2,2),xp(2,3),'>'); plot3(xp(1:end/2,1),xp(1:end/2,2),xp(1:end/2,3),'r');
+ clf; plot(xp); grid on; hold on;
 %%
 a=load("unt7.mat");
 up=a.u; ntp=7; 
 zp=reshape(up(1:(end-1)/2),[3,ntp])'+1i*reshape(up((end-1)/2+1:(end-1)),[3,ntp])';
 nz=(np-1)*2-length(zp)*2+1; zp=[zp;zeros(nz,3);conj(flipud(zp(2:end,:)))]; xp=ifft(zp)*(length(zp)); xp=real(xp);
 
- plot3(xp(:,1),xp(:,2),xp(:,3),'.'); grid on; hold on; xpb=xp; plot3(xp(1,1),xp(1,2),xp(1,3),'o');plot3(xp(2,1),xp(2,2),xp(2,3),'>');
-% plot(xp)
+%  plot3(xp(:,1),xp(:,2),xp(:,3),'.'); grid on; hold on; xpb=xp; plot3(xp(1,1),xp(1,2),xp(1,3),'o');plot3(xp(2,1),xp(2,2),xp(2,3),'>');
+plot(xp)
 
 %%
 xp=X; plot3(xp(:,1),xp(:,2),xp(:,3));

@@ -122,6 +122,6 @@ plot(u(end-3),u(end-2),'sq');
 ie=3;
 mult=10;
 plot(u(1:neq:end-1)+real(evc(1:neq:end,ie)*mult),u(2:neq:end-1)+real(evc(2:neq:end,ie))*mult);
-plot([u(1:neq:end-1),u(1:neq:end-1)+real(evc(1:neq:end,ie)*mult)]',[u(2:neq:end-1), u(2:neq:end-1)+real(evc(2:neq:end,ie)*mult)]');
+% plot([u(1:neq:end-1),u(1:neq:end-1)+real(evc(1:neq:end,ie)*mult)]',[u(2:neq:end-1), u(2:neq:end-1)+real(evc(2:neq:end,ie)*mult)]');
 title("Lorenz | r: "+num2str(r)+" fl mult: "+num2str(lam(ie)))
 

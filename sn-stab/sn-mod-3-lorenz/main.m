@@ -10,7 +10,7 @@ main_lorenz_ti
 
 
 
-z=fft(X)./length(X); nt=13; if(mod(nt,2)==0) error("nt even"); end
+z=fft(X)./length(X); nt=7; if(mod(nt,2)==0) error("nt even"); end
 arr=[1:nt]; %arr(2:2:end)=[];
 a1=arr; arr=[arr,length(z)-fliplr(arr(2:end))+2];
 zcut=z*0; zcut(arr,:)=z(arr,:);
@@ -73,16 +73,17 @@ l3=zeros(3,nt2*2); l3(3,1:nt2)=ones(1,nt2)*2; l3(3,1)=1; r33=reshape(l3,[3*nt2*2
 
 
 jmod=full(jac(1:end-1,1:end-1));%-b*j2hm+b;
- ind=nt*3+1;
+%  ind=nt*3+1;
+ ind=4:6:(nt-1)*3;ind=[ind,ind+nt*3]
 %  ind=1*3+1;
 % jmod(ind,:)=l31;
 % jmod(ind+1,:)=l32;
 % jmod(ind+2,:)=l33;
 
 bmod=jmod*0;
-bmod(ind,:)=r31;
-bmod(ind+1,:)=r32;
-bmod(ind+2,:)=r33;
+bmod(ind,:)=repmat(r31,[6,1]); %r31;
+bmod(ind+1,:)=repmat(r32,[6,1]); %r32;
+bmod(ind+2,:)=repmat(r33,[6,1]); %r33;
 
 [evc,evs]=eig(full(jmod),full(bmod)); evs=diag(evs); b=abs(evs)<Inf; evs=evs(b); evc=evc(:,b);
 

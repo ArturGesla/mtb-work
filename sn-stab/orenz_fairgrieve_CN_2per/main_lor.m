@@ -44,6 +44,7 @@ uMC=[];
 % calc J and g
 % r=r*1.1
 % for ii=1:42
+evp=0;
     for ii=1:1
 tic;
  for i=1:15
@@ -82,6 +83,10 @@ grid on; grid minor; axis equal;
 plot(uM(1:neq:end-1,:),uM(2:neq:end-1,:));
 xlabel("x"); ylabel("y"); title("Lorenz | UPO near Hopf at r=24.73")
 %% Fairgrieve part
+evp=1;
+ evalJacRhs
+ 
+ 
 A=full(J(1:end-1,1:end-1)); B=[];
 B(np*neq,np*neq)=1; B(np*neq-1,np*neq-1)=1; B(np*neq-2,np*neq-2)=1;
 % B(3,np*neq-neq)=1; B(2,np*neq-neq-1)=1; B(1,np*neq-neq-2)=1; 
@@ -112,16 +117,17 @@ close all;
 hold on;
 % u=u-du2;
 axis equal;
-plot(u(1:neq:end-1),u(2:neq:end-1)); 
+% plot(u(1:neq:end-1),u(2:neq:end-1)); 
 % plot(u(1:neq:3),u(2:neq:2*neq),'o');
-plot(u(end-3),u(end-2),'sq');
+% plot(u(end-3),u(end-2),'sq');
 %
 % ie=2;
 % plot(u(1:2:end-1)+evc(1:2:end-1,ie),u(2:2:end-1)+evc(2:2:end-1,ie));
 % evc=evc*20;
-ie=3;
-mult=10;
-plot(u(1:neq:end-1)+real(evc(1:neq:end,ie)*mult),u(2:neq:end-1)+real(evc(2:neq:end,ie))*mult);
+ie=2;
+mult=1;
+% plot(u(1:neq:end-1)+real(evc(1:neq:end,ie)*mult),u(2:neq:end-1)+real(evc(2:neq:end,ie))*mult);
+plot3(u(1:neq:end-1)+real(evc(1:neq:end,ie)*mult),u(2:neq:end-1)+real(evc(2:neq:end,ie))*mult,u(3:neq:end-1)+real(evc(3:neq:end,ie))*mult);
 % plot([u(1:neq:end-1),u(1:neq:end-1)+real(evc(1:neq:end,ie)*mult)]',[u(2:neq:end-1), u(2:neq:end-1)+real(evc(2:neq:end,ie)*mult)]');
 title("Lorenz | r: "+num2str(r)+" fl mult: "+num2str(lam(ie)))
 

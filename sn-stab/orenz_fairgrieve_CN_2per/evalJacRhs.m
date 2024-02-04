@@ -1,5 +1,6 @@
 
 for ip=1:np-1
+    mult=(1+(ip>(np-1)/2)*-2*(evp==1));
         ix=ip*neq-2;
         iy=ip*neq-1;
         iz=ip*neq;
@@ -12,7 +13,7 @@ for ip=1:np-1
         iym=mod(ip*neq-1-neq-1,neq*np)+1-neq*((ip*neq-1-neq-1)<0);
         izm=mod(ip*neq-0-neq-1,neq*np)+1-neq*((ip*neq-0-neq-1)<0);
 
-    T=u(neq*np+1); dt=T/(np-1); ds=1/(np-1)*2;
+    T=u(neq*np+1); dt=T/(np-1); ds=1/(np-1)*2*mult;
 
     x=(u(ixp)+u(ix))/2;
     y=(u(iyp)+u(iy))/2;

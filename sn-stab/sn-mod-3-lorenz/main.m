@@ -44,17 +44,24 @@ uinit=u;
 %  load unt13.mat;
 %
 for i=1:17
-[g,jac]=calculateRhsAndJac_2(3,nt,u,r);
+[g,jac]=calculateRhsAndJac(3,nt,u,r);
 u=u-jac\g';
-fprintf("it: %d \t norm(rhs): %4.2e\n",i,norm(g))
+fprintf("it: %d \t norm(rhs): %4.2e\n",i,norm(g));
+
+if(norm(g)<1e-12)
+    break; 
 end
+    
+end
+%%
+svds(jac(1:end-1,1:end-1),5,'smallest')
 %
 % clf; spy(jac); grid on; grid minor;
 % [U,S,V]=svds(jac(1:end,1:end),5,'smallest');s=diag(S);
 % [U,S,V]=svds(jac(1:end-1,1:end-1),5,'smallest'); s=diag(S);
 % [U,S,V]=svds(jac(1:nt*3,1:nt*3),5,'smallest');
 % second stability
-
+%%
 nt2=nt;
 % l3=zeros(3,nt2*2); l3(1,1:nt2)=ones(1,nt2)*2-mod([0:nt2-1],2)*4; l3(1,1)=1; l31=reshape(l3,[3*nt2*2,1])';
 % l3=zeros(3,nt2*2); l3(2,1:nt2)=ones(1,nt2)*2-mod([0:nt2-1],2)*4; l3(2,1)=1; l32=reshape(l3,[3*nt2*2,1])';
@@ -66,8 +73,8 @@ l3=zeros(3,nt2*2); l3(3,1:nt2)=ones(1,nt2)*2; l3(3,1)=1; r33=reshape(l3,[3*nt2*2
 
 
 jmod=full(jac(1:end-1,1:end-1));%-b*j2hm+b;
-%  ind=nt*3+1;
- ind=1*3+1;
+ ind=nt*3+1;
+%  ind=1*3+1;
 % jmod(ind,:)=l31;
 % jmod(ind+1,:)=l32;
 % jmod(ind+2,:)=l33;

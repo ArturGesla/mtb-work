@@ -1,9 +1,9 @@
 clc; close all; clear;
-%%
-np=52; r=24;
+%
+np=52; r=24; nt=14;
 main_lorenz_ti
 %
-z=fft(X); nt=7;
+z=fft(X); 
 arr=[1:nt]; a1=arr; arr=[arr,length(z)-fliplr(arr(1:end-1))+1];
 zcut=z*0; zcut(arr,:)=z(arr,:);
 X2=ifft(zcut);
@@ -16,7 +16,7 @@ z1=zcut(a1,:)./np;
 om=2*pi/T;
 an=angle(sum(z1(2,1))); %this could be better
 z1=z1.*exp(-an*1i*[0:nt-1]');
-angle(sum(z1(:,1)))
+angle(sum(z1(:,1)));
 % zcut(arr,:)=zcut(arr,:).*exp(an*1i*[arr-1]');
 % X3=ifft(zcut);
 % plot(X3); hold on;
@@ -29,12 +29,21 @@ u=[reshape(real(z1.'),[3*nt,1]);reshape(imag(z1.'),[3*nt,1])];
 u(nt*3*2+1)=om;
 u0=u;
 %
+close all;
 
 for i=1:15
 [g,jac]=calculateRhsAndJac(3,nt,u);
 u=u-jac\g';
-norm(g)
+fprintf("iter:%d\tnorm: %4.2e\n",i,norm(g));
+if(norm(g)<1e-10)
+    break;
 end
+end
+% small stab
+j2=((jac(1:end-1,1:end-1)));
+ev=eigs(j2,1,0.0465)
+save("stabSNLorenz-"+num2str(nt)+".mat","ev","nt");
+
 % save("uSN-lorenz-nt9.mat","u")
 %%
 

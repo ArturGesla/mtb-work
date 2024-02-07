@@ -10,7 +10,7 @@ main_lorenz_ti
 
 
 
-z=fft(X)./length(X); nt=13; if(mod(nt,2)==0) error("nt even"); end
+z=fft(X)./length(X); nt=41; if(mod(nt,2)==0) error("nt even"); end
 arr=[1:nt]; %arr(2:2:end)=[];
 a1=arr; arr=[arr,length(z)-fliplr(arr(2:end))+2];
 zcut=z*0; zcut(arr,:)=z(arr,:);
@@ -46,7 +46,10 @@ uinit=u;
 for i=1:17
 [g,jac]=calculateRhsAndJac_2(3,nt,u,r);
 u=u-jac\g';
-fprintf("it: %d \t norm(rhs): %4.2e\n",i,norm(g))
+fprintf("it: %d \t norm(rhs): %4.2e\n",i,norm(g));
+if(norm(g)<1e-10)
+    break;
+end
 end
 %
 % clf; spy(jac); grid on; grid minor;
@@ -82,7 +85,10 @@ bmod(ind+2,:)=r33;
 fprintf("Result || \n");
 fprintf("Numerical fl mult:\n");
 disp((1+evs)');
-mu=log(evs+1)/pi*u(end)
+mu=log(evs+1)/pi*u(end);
+ev=max(real(mu))
+close all;
+save("stabCMLorenz-"+num2str(nt)+".mat",'ev','nt');
 % load mua.mat; mua=[mua;max(real(mu))]; save('mua.mat','mua');
 %% naive stab - Hill
 [evc,evs]=eig(full(jac(1:end-1,1:end-1))); evs=diag(evs); %b=abs(evs)<Inf; evs=evs(b); evc=evc(:,b);

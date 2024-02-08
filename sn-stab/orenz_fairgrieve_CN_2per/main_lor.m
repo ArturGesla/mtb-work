@@ -24,6 +24,8 @@ u=zeros(neq*np+1,1)+T;
 % Jstab=sparse(neq*np,neq*np);%zeros(neq*np+1);
 % ustab=zeros(neq*np,1);
 
+% inv time trick
+ll=length(X); X((ll+1)/2:end,:)=flipud(X(1:(ll+1)/2,:));
 
 amp=0;
 x=X(:,1); x=x+rand(1,length(x))'.*x*amp;
@@ -34,6 +36,7 @@ u(1:neq:end-1)=x(1:end); u(2:neq:end-1)=y(1:end); u(3:neq:end-1)=z(1:end);
 [a,bb]=(min(abs(gradient(x(1:end-1))))); 
 %  bb=np-1; 
 phaseIndex=bb;%phase index
+phaseIndex=32;%phase index
 ds=1/np; derX=0;%(x(b-1)-x(b+1))/2/ds
 
 uM=[];
@@ -44,15 +47,16 @@ uMC=[];
 % calc J and g
 % r=r*1.1
 % for ii=1:42
-evp=0;
+evp=1;evalJacRhs
+%%
     for ii=1:1
 tic;
- for i=1:15
+ for i=1:10
     
      evalJacRhs
 %      evalJacRhs_bdf2
     %
-    du=-sparse(J)\g;
+    du=-sparse(J)\g';
     
 %    [L,U] = ilu(sparse(J),struct('type','ilutp','droptol',1e-16));
 % du=bicgstab(-J,g,1e-10,6,L,U);
@@ -88,7 +92,12 @@ evp=1;
  
  
 A=full(J(1:end-1,1:end-1)); B=[];
-B(np*neq,np*neq)=1; B(np*neq-1,np*neq-1)=1; B(np*neq-2,np*neq-2)=1;
+
+% B(np*neq,np*neq)=1; B(np*neq-1,np*neq-1)=1; B(np*neq-2,np*neq-2)=1;
+
+ip=(np+1)/2;
+B(ip*neq,ip*neq)=1; B(ip*neq-1,ip*neq-1)=1; B(ip*neq-2,ip*neq-2)=1;
+
 % B(3,np*neq-neq)=1; B(2,np*neq-neq-1)=1; B(1,np*neq-neq-2)=1; 
 B(np*neq+1,np*neq+1)=0; B=B(1:end-1,1:end-1); %B=sparse(B);
 % [evc,evs]=eigs(A,B,neq,"smallestabs"); evs=diag(evs)
@@ -100,7 +109,7 @@ B(np*neq+1,np*neq+1)=0; B=B(1:end-1,1:end-1); %B=sparse(B);
 % 
 b2=abs(evs)<Inf; evs=evs(b2); evc=evc(:,b2); 
 lam=1./(1-evs) % one of lambda should be 1
-exp=1./T/2*log(abs(lam))
+exp=1./T*log(abs(lam))
 % %%
 % v=evc(:,2);
 % x=reshape(v,[3,np])';
@@ -113,7 +122,7 @@ exp=1./T/2*log(abs(lam))
 % eigs()
 
 %% visu 
-close all;
+% close all;
 hold on;
 % u=u-du2;
 axis equal;
@@ -124,8 +133,8 @@ axis equal;
 % ie=2;
 % plot(u(1:2:end-1)+evc(1:2:end-1,ie),u(2:2:end-1)+evc(2:2:end-1,ie));
 % evc=evc*20;
-ie=2;
-mult=1;
+ie=3;
+mult=4;
 % plot(u(1:neq:end-1)+real(evc(1:neq:end,ie)*mult),u(2:neq:end-1)+real(evc(2:neq:end,ie))*mult);
 plot3(u(1:neq:end-1)+real(evc(1:neq:end,ie)*mult),u(2:neq:end-1)+real(evc(2:neq:end,ie))*mult,u(3:neq:end-1)+real(evc(3:neq:end,ie))*mult);
 % plot([u(1:neq:end-1),u(1:neq:end-1)+real(evc(1:neq:end,ie)*mult)]',[u(2:neq:end-1), u(2:neq:end-1)+real(evc(2:neq:end,ie)*mult)]');

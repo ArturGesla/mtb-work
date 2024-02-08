@@ -15,9 +15,8 @@ b=8/3;
 
 lastid=nt*neq*2+1;
 om=u(lastid);
- exchange=0;  for ik=0:2*nt-1
-% exchange=1; for ik=[0:2:nt,nt:2:2*nt-1]%0:2*nt-1
-% exchange=1; for ik=[0:nt-1,nt+1:2*nt-1]
+% exchange=0;  for ik=0:2*nt-1
+exchange=1; for ik=[0:nt-1,nt+1:2*nt-1]
     ix=ik*neq+1; iy=ix+1; iz=iy+1;
     
     realEq=ik<nt;
@@ -188,21 +187,8 @@ end
 end
 
 if (exchange==1)
-
-    %then the half mode equations without first real mode
-for ik=[3:2:nt-1,nt+1:2:2*nt-1]
-    ix=ik*neq+1; iy=ix+1; iz=iy+1;
-         g(ix)=u(ix);
-         g(iy)=u(iy);
-         g(iz)=u(iz);
-ii(end+1)=ix; jj(end+1)=ix; vv(end+1)=1;
-ii(end+1)=iy; jj(end+1)=iy; vv(end+1)=1;
-ii(end+1)=iz; jj(end+1)=iz; vv(end+1)=1;
-end
-
 %finally the real half mode equation
-for ik=1%nt
-% for ik=[1:2:nt-1,nt+1:2:2*nt-1]
+for ik=nt
     ix=ik*neq+1; iy=ix+1; iz=iy+1;
     
 %     has to express that u(1)-u(0)=0

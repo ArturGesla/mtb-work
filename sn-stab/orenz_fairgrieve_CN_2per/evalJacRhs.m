@@ -1,4 +1,6 @@
-
+% disp("lol")
+g=[];
+J=[];
 for ip=1:np-1
     mult=(1+(ip>(np-1)/2)*-2*(evp==1));
         ix=ip*neq-2;
@@ -49,6 +51,21 @@ iz=ip*neq;
 J(ix,ix)=1; J(ix,1)=-1; g(ix)=u(ix)-u(1);
 J(iy,iy)=1; J(iy,2)=-1; g(iy)=u(iy)-u(2);
 J(iz,iz)=1; J(iz,3)=-1; g(iz)=u(iz)-u(3);
+% 
+if(evp==1)
+    ip=(np+1)/2;
+    ix=ip*neq-2;
+iy=ip*neq-1;
+iz=ip*neq;
+        
+J(ix,:)=0;
+J(iy,:)=0;
+J(iz,:)=0;
+J(ix,ix)=+1; J(ix,1)=-1; g(ix)=u(ix)-u(1);
+J(iy,iy)=+1; J(iy,2)=-1; g(iy)=u(iy)-u(2);
+J(iz,iz)=+1; J(iz,3)=-1; g(iz)=u(iz)-u(3);
+
+end
 
 %
     % last row
@@ -64,7 +81,10 @@ ix=ip*neq-2;
         ixp=mod(ip*neq-2+neq-1,neq*np)+1;
         ixm=mod(ip*neq-2-neq-1,neq*np)+1;
        
-
+ip=np;        
+iz=ip*neq;
+mult=(1+(ip>(np-1)/2)*-2*(evp==1));
+ds=1/(np-1)*2*mult;
 g(iz+1)=(u(ixm)-u(ixp))/ds/2-derX;
 % g(iz+1)=(u(ixm)-u(ixp))/ds/2+13.212372967119705;
     J(iz+1,ixm)=1/ds/2;

@@ -1,17 +1,18 @@
 clc; close all; clear; mua=[];
-%
+%%
 % cd     '/people/gesla/Documents/git/mtb-work/sn-stab/sn-mod-noack';
 %
 
 % Lorenz system
-np=52; r=24;
+np=101; r=24;
 main_lorenz_ti
 %
 
 
 
 
-z=fft(X)./length(X); nt=9; if(mod(nt,2)==0) error("nt even"); end
+
+z=fft(X)./length(X); nt=13; %if(mod(nt,2)==0) error("nt even"); end
 arr=[1:nt]; %arr(2:2:end)=[];
 a1=arr; arr=[arr,length(z)-fliplr(arr(2:end))+2];
 zcut=z*0; zcut(arr,:)=z(arr,:);
@@ -26,11 +27,32 @@ om=2*pi/T;
 % phase
 halfsol = @(phi) real(1i*sum([0:nt-1]'.*z1(:,1).*exp(1i*phi*[0:nt-1]).')); %fully wrong wtf
 phi=fzero(halfsol,0);
-z1=z1.*exp(i*phi*[0:nt-1]).';
+% z1=z1.*exp(i*phi*[0:nt-1]).';
 z11=z*0; z11(1:nt,:)=z1; z11(end-nt+2:end,:)=flipud(conj(z1(2:end,:)));
 X3=ifft(z11)*length(z11);
 set(gca,"ColorOrderIndex",1);plot(X3,'--'); 
 %
+
+
+ll=length(X3); X3((ll+2)/2:end,:)=flipud(X3(2:(ll+2)/2,:));
+z=fft(X3)./length(X3); 
+arr=[1:nt]; %arr(2:2:end)=[];
+a1=arr; arr=[arr,length(z)-fliplr(arr(2:end))+2];
+zcut=z*0; zcut(arr,:)=z(arr,:);
+z1=zcut(1:nt,:);
+
+close all;
+set(gca,"ColorOrderIndex",1);plot(X3,'-'); hold on; 
+
+X4=ifft(zcut)*length(zcut);
+set(gca,"ColorOrderIndex",1);plot(X4,'-.'); grid on;
+halfsol = @(phi) real(1i*sum([0:nt-1]'.*z1(:,1).*exp(1i*phi*[0:nt-1]).')); %fully wrong wtf
+phi=fzero(halfsol,0.4);
+
+close all; set(gca,"ColorOrderIndex",1);plot(linspace(0,2*pi,length(X4)),X4,'-.'); hold on; plot([phi phi],[0 30])
+
+
+
 u=[reshape(real(z1.'),[3*nt,1]);reshape(imag(z1.'),[3*nt,1])];
 u(nt*3*2+1)=om/2;
 uinit=u;
@@ -45,18 +67,21 @@ uinit=u;
 %  load unt13.mat;
 %%
 for i=1:1
+    %%
 [g,jac]=calculateRhsAndJac(3,nt,u,r);
-u=u-jac\g';
-fprintf("it: %d \t norm(rhs): %4.2e\n",i,norm(g));
 
+fprintf("it: %d \t norm(rhs): %4.2e\n",i,norm(g));
+%%
+u=u-jac\g';
 if(norm(g)<1e-12)
     break; 
 end
-    u(4:6)'
+disp(u(1:6)');
 
 end
 %%
 svds(jac(1:end-1,1:end-1),5,'smallest')
+% svds(jac(1:end,1:end),5,'smallest')
 %
 % clf; spy(jac); grid on; grid minor;
 % [U,S,V]=svds(jac(1:end,1:end),5,'smallest');s=diag(S);
@@ -107,12 +132,12 @@ disp(exp(2*pi/om*evs(b(1:4))).');
 evs=evs(b(1:4)); evc=evc(:,b(1:4)); 
 load mua.mat; mua=[mua;max(real(evs))]; save('mua.mat','mua');
 %%
-% close all;
-up=u+[1*evc(:,3);0]; ntp=nt; 
+close all;
+% up=u+[1*evc(:,3);0]; ntp=nt; 
 % up=u; ntp=nt; 
 % up=[evc(:,2);0]; ntp=nt;  up=up*0; up(4:6)=evc(4:6,2);
 % up=[evc(:,3);0]; ntp=nt; 
-% up=u; ntp=nt; 
+up=u; ntp=nt; 
 % up=[V(:,5)]; ntp=nt; 
 zp=reshape(up(1:(end-1)/2),[3,ntp])'+1i*reshape(up((end-1)/2+1:(end-1)),[3,ntp])';
 
@@ -122,16 +147,16 @@ zp=reshape(up(1:(end-1)/2),[3,ntp])'+1i*reshape(up((end-1)/2+1:(end-1)),[3,ntp])
 nz=(np-1)*2-length(zp)*2+1; zp=[zp;zeros(nz,3);conj(flipud(zp(2:end,:)))]; xp=ifft(zp)*(length(zp)); xp=real(xp);
 
 % clf; 
-plot3(xp(:,1),xp(:,2),xp(:,3),".-"); grid on; hold on; xpb=xp; plot3(xp(1,1),xp(1,2),xp(1,3),'o');plot3(xp(2,1),xp(2,2),xp(2,3),'>'); plot3(xp(1:end/2,1),xp(1:end/2,2),xp(1:end/2,3),'r');
-%  clf; plot(xp); grid on; hold on;
+% plot3(xp(:,1),xp(:,2),xp(:,3),".-"); grid on; hold on; xpb=xp; plot3(xp(1,1),xp(1,2),xp(1,3),'o');plot3(xp(2,1),xp(2,2),xp(2,3),'>'); plot3(xp(1:end/2,1),xp(1:end/2,2),xp(1:end/2,3),'r');
+  clf; plot(xp,'-x'); grid on; hold on;
 %%
 a=load("unt7.mat");
 up=a.u; ntp=7; 
 zp=reshape(up(1:(end-1)/2),[3,ntp])'+1i*reshape(up((end-1)/2+1:(end-1)),[3,ntp])';
 nz=(np-1)*2-length(zp)*2+1; zp=[zp;zeros(nz,3);conj(flipud(zp(2:end,:)))]; xp=ifft(zp)*(length(zp)); xp=real(xp);
 
-%  plot3(xp(:,1),xp(:,2),xp(:,3),'.'); grid on; hold on; xpb=xp; plot3(xp(1,1),xp(1,2),xp(1,3),'o');plot3(xp(2,1),xp(2,2),xp(2,3),'>');
-plot(xp)
+ plot3(xp(:,1),xp(:,2),xp(:,3),'.'); grid on; hold on; xpb=xp; plot3(xp(1,1),xp(1,2),xp(1,3),'o');plot3(xp(2,1),xp(2,2),xp(2,3),'>');
+% plot(xp)
 
 %%
 xp=X; plot3(xp(:,1),xp(:,2),xp(:,3));

@@ -67,6 +67,7 @@ uinit=u;
 %  load unt7.mat;
 %  load unt13.mat;
 %%
+%jeszcze kiedys tu wroce 10.02.24
 for i=1:1
     %%
 [g,jac]=calculateRhsAndJac(3,nt,u,r);

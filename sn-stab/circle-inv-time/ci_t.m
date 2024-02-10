@@ -5,9 +5,9 @@ if (n==m)
 c=0;
 elseif(abs(n)>(nt-1))
 % %     elseif(abs(n)>(nt-8))
-c=2*(1-(-1)^(abs(n-m)))/pi/(n-m);    %0;
+c=1*(1-(-1)^(abs(n-m)))/pi/(n-m);    %0;
 else
-c=2*(1-(-1)^(abs(n-m)))/pi/(n-m);    
+c=1*(1-(-1)^(abs(n-m)))/pi/(n-m);    
 end
 
 % c=0;

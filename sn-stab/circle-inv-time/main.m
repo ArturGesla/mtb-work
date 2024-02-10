@@ -9,11 +9,11 @@ main_lorenz_ti
 %
 
 
-t=0:4*pi/length(X):4*pi-4*pi/length(X); phi2=pi/4;
+t=0:4*pi/length(X):4*pi-4*pi/length(X); phi2=0;pi/4;
 X(:,1)=cos(t+phi2);X(:,2)=sin(t+phi2); X(:,3)=0;
 plot(gradient(X(:,1),t)+X(:,2));
 
-z=fft(X)./length(X); nt=3; %if(mod(nt,2)==0) error("nt even"); end
+z=fft(X)./length(X); nt=51; %if(mod(nt,2)==0) error("nt even"); end
 arr=[1:nt]; %arr(2:2:end)=[];
 a1=arr; arr=[arr,length(z)-fliplr(arr(2:end))+2];
 zcut=z*0; zcut(arr,:)=z(arr,:);

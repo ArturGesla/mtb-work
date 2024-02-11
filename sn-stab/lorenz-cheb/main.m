@@ -9,9 +9,9 @@ clc; close all; clear; mua=[];
 %
 
 %  sn=load("../lorenz-sn/xforcheb.mat");
-sn=load("../lorenz-sn/xforcheb24.7368.mat");
+% sn=load("../lorenz-sn/xforcheb24.7368.mat");
 % sn=load("../lorenz-sn/xforcheb24.73.mat");
-% sn=load("../lorenz-sn/xforcheb24.mat");
+sn=load("../lorenz-sn/xforcheb24.mat");
 X=sn.xp; t=sn.t; r=sn.r; T=t(end);
 
 

@@ -40,8 +40,18 @@ if(norm(g)<1e-10)
     break;
 end
 end
-semilogy(abs(u(1:nt*3)+u(nt*3+1:end-1))); hold on;
+%%
+semilogy(abs(u(1:3:nt*3)+u(nt*3+1:3:end-1)),'x-'); hold on;
+semilogy(abs(u(2:3:nt*3)+u(nt*3+2:3:end-1)),'x-'); hold on;
+semilogy(abs(u(3:3:nt*3)+u(nt*3+3:3:end-1)),'x-'); hold on;
+grid on;
+%%
+semilogy(abs(u(1:3:nt*3)),'xb-'); hold on;
+semilogy(abs(+u(nt*3+1:3:end-1)),'xb--'); hold on;
 
+semilogy(abs(u(2:3:nt*3)+u(nt*3+2:3:end-1)),'x-'); hold on;
+semilogy(abs(u(3:3:nt*3)+u(nt*3+3:3:end-1)),'x-'); hold on;
+grid on;
 %% small stab
 j2=((jac(1:end-1,1:end-1)));
 ev=eigs(j2,1,0.0465)

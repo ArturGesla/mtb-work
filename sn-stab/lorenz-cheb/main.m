@@ -8,7 +8,8 @@ np=502; r=24; nt=301;
 main_lorenz_ti
 %
 
-sn=load("../lorenz-sn/xforcheb.mat");
+% sn=load("../lorenz-sn/xforcheb.mat");
+sn=load("../lorenz-sn/xforcheb24.7368.mat");
 X=sn.xp; t=sn.t; r=sn.r;
 
 

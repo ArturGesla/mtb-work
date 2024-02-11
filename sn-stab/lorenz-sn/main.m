@@ -31,6 +31,7 @@ u0=u;
 %
 close all;
 %%
+r=r+1e-6
 for i=1:16
 [g,jac]=calculateRhsAndJac(3,nt,u,r);
 u=u-jac\g';
@@ -40,7 +41,7 @@ if(norm(g)<1e-10)
 end
 end
 semilogy(abs(u(1:nt*3)+u(nt*3+1:end-1))); hold on;
-r=r+0.01
+
 %% small stab
 j2=((jac(1:end-1,1:end-1)));
 ev=eigs(j2,1,0.0465)
@@ -97,7 +98,7 @@ plot3(xp(:,1),xp(:,2),xp(:,3)); grid on; hold on;
 % x for  cheb
 xp=[xp;xp(1,:)];
 t=linspace(0,2*pi/u(end),length(xp));
-save("xforcheb.mat","xp","t",'r');
+save("xforcheb"+num2str(r)+".mat","xp","t",'r','u','nt');
 
 %% expo counterpart
 ll=length(xp); sigma=evs(105)*1;

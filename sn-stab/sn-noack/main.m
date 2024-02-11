@@ -15,18 +15,18 @@ clc; clear; close all;
 mu=0.04; r=sqrt(mu); gm=1; %gamma
 % mu=0.04+it*0.04; r=sqrt(mu); gm=1; %gamma
 % mu=3/4; r=sqrt(mu); gm=1; %gamma
-neq=3; np=100; np=np+2;
+neq=3; np=100; np=np+2; om1=5; nt=15;
 
 %init
-t=0:2*pi/(np-1):2*pi; u=r*cos(t); v=r*sin(t)/gm; w=r^2*ones(1,length(t));
+t=0:2*pi/(np-1):2*pi; u=r*cos(t*om1); v=r*sin(t*om1)/gm; w=r^2*ones(1,length(t));
 T=2*pi; x=u; y=v; z=w;
 
 X=[x(1:end-1)',y(1:end-1)',z(1:end-1)'];
-X=X+rand(size(X))*1e-2;
+% X=X+rand(size(X))*1e-2;
 
 %
 
-z=fft(X); nt=2;
+z=fft(X); 
 arr=[1:nt]; a1=arr; arr=[arr,length(z)-fliplr(arr(1:end-1))+1];
 zcut=z*0; zcut(arr,:)=z(arr,:);
 X2=ifft(zcut);
@@ -44,8 +44,8 @@ angle(sum(z1(:,1)))
 % X3=ifft(zcut);
 % plot(X3); hold on;
 % x=real(z1(1,1)+z1(2,1)*exp(i*om*t)+z1(3,1)*exp(2*i*om*t)+z1(2,1)'*exp(-i*om*t)+z1(3,1)'*exp(-2*i*om*t));
-x=real(z1(1,1)+z1(2,1)*exp(1i*om*t)+z1(2,1)'*exp(-1i*om*t));
-plot(x,'-x')
+% x=real(z1(1,1)+z1(2,1)*exp(1i*om*t)+z1(2,1)'*exp(-1i*om*t));
+% plot(x,'-x')
 %
 % z1=zcut(a1,:);
 u=[reshape(real(z1.'),[3*nt,1]);reshape(imag(z1.'),[3*nt,1])];
@@ -54,12 +54,18 @@ u0=u;
 %
 %
 for i=1:15
-[g,jac]=calculateRhsAndJac(3,nt,u,mu,gm);
+[g,jac]=calculateRhsAndJac(3,nt,u,mu,gm,om1);
 u=u-jac\g';
 fprintf("it: %d \t norm(rhs): %4.2e\n",i,norm(g))
+if(norm(g)<1e-12)
+    break; 
 end
 
-clf; spy(jac); grid on; grid minor;
+end
+close all;
+semilogy(abs(reshape(u(1:3*nt)+u(3*nt+1:end-1)*1i,[3,nt])'));
+grid on; grid minor;
+% clf; spy(jac); grid on; grid minor;
 %% stability
 
 % u((end-1)/2+1:end)=-u((end-1)/2+1:end);

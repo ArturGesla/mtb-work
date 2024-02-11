@@ -1,4 +1,4 @@
-function [g,jac]=calculateRhsAndJac(neq,nt,u,mu,gm)
+function [g,jac]=calculateRhsAndJac(neq,nt,u,mu,gm,om1)
 %%
 % Noack system
 % f=[mu*u-v*g-w*u;
@@ -173,26 +173,26 @@ for ik=0:2*nt-1
 %     ii(end+1)=iz; jj(end+1)=izlr; vv(end+1)= -(~realEq*(om*kSum));
 
 
-    g(ix)= mu*u(ix)-gm*u(iy)-nlxz-(realEq*(-om*kSum*u(ixli))+~realEq*(om*kSum*u(ixlr)));
-    g(iy)=mu*u(iy)+u(ix)/gm-nlyz-(realEq*(-om*kSum*u(iyli))+~realEq*(om*kSum*u(iylr)));
+    g(ix)= mu*u(ix)-gm*u(iy)-nlxz-(realEq*(-om*kSum*u(ixli))+~realEq*(om*kSum*u(ixlr)))/om1;
+    g(iy)=mu*u(iy)+u(ix)/gm-nlyz-(realEq*(-om*kSum*u(iyli))+~realEq*(om*kSum*u(iylr)))/om1;
     g(iz)=-u(iz)+nlxx+nlyy*gm*gm-(realEq*(-om*kSum*u(izli))+~realEq*(om*kSum*u(izlr)));
 
 
 %     %temp jac
-    ii(end+1)=ix; jj(end+1)=lastid; vv(end+1)=-(realEq*(-kSum*u(ixli))+~realEq*(kSum*u(ixlr)));
-    ii(end+1)=iy; jj(end+1)=lastid; vv(end+1)=-(realEq*(-kSum*u(iyli))+~realEq*(kSum*u(iylr)));
+    ii(end+1)=ix; jj(end+1)=lastid; vv(end+1)=-(realEq*(-kSum*u(ixli))+~realEq*(kSum*u(ixlr)))/om1;
+    ii(end+1)=iy; jj(end+1)=lastid; vv(end+1)=-(realEq*(-kSum*u(iyli))+~realEq*(kSum*u(iylr)))/om1;
     ii(end+1)=iz; jj(end+1)=lastid; vv(end+1)=-(realEq*(-kSum*u(izli))+~realEq*(kSum*u(izlr)));
 %     
 %     %jac
     ii(end+1)=ix; jj(end+1)=ix; vv(end+1)=mu;
     ii(end+1)=ix; jj(end+1)=iy; vv(end+1)=-gm;
-    ii(end+1)=ix; jj(end+1)=ixli; vv(end+1)=-(realEq*(-om*kSum));
-    ii(end+1)=ix; jj(end+1)=ixlr; vv(end+1)=-(~realEq*(om*kSum));
+    ii(end+1)=ix; jj(end+1)=ixli; vv(end+1)=-(realEq*(-om*kSum))/om1;
+    ii(end+1)=ix; jj(end+1)=ixlr; vv(end+1)=-(~realEq*(om*kSum))/om1;
 
     ii(end+1)=iy; jj(end+1)=ix; vv(end+1)=1/gm;
     ii(end+1)=iy; jj(end+1)=iy; vv(end+1)=mu;
-    ii(end+1)=iy; jj(end+1)=iyli; vv(end+1)=-(realEq*(-om*kSum));
-    ii(end+1)=iy; jj(end+1)=iylr; vv(end+1)=-(~realEq*(om*kSum));
+    ii(end+1)=iy; jj(end+1)=iyli; vv(end+1)=-(realEq*(-om*kSum))/om1;
+    ii(end+1)=iy; jj(end+1)=iylr; vv(end+1)=-(~realEq*(om*kSum))/om1;
 
     ii(end+1)=iz; jj(end+1)=iz; vv(end+1)=-1;
     ii(end+1)=iz; jj(end+1)=izli; vv(end+1)= -(realEq*(-om*kSum));

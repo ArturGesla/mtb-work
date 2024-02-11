@@ -1,4 +1,4 @@
-function [g,jac]=calculateRhsAndJac(neq,nt,u,r)
+function [g,jac]=calculateRhsAndJac(neq,nt,u,r,om1)
 %%
 
 s=10;
@@ -11,9 +11,10 @@ g=u*0;
 
 %u=[xr0,yr0,zr0,xr1,...,xi0,yi0,zi0,...]
 
-%   dxdt=s*(y-x)
-%   dydt=x*(r-z)-y
-%   dzdt=xy-b*z
+% Noack system
+% f=[mu*u-v*g-w*u;
+%     mu*v+u/g-v*w;
+%     -w+u^2+v^2*g*g];
 
 lastid=nt*neq+1;
 om=u(lastid);
@@ -85,16 +86,16 @@ om=u(lastid);
     for ikl=ik+1:2:nt-1
     ixl=abs(ikl)*neq+1; iyl=abs(ikl)*neq+2; izl=abs(ikl)*neq+3; 
   
-    g(ix)=g(ix)-u(ixl)*ikl*(2-(1*(ik==0)))*om/pi;
-    g(iy)=g(iy)-u(iyl)*ikl*(2-(1*(ik==0)))*om/pi;
+    g(ix)=g(ix)-u(ixl)*ikl*(2-(1*(ik==0)))*om/pi*1/om1;
+    g(iy)=g(iy)-u(iyl)*ikl*(2-(1*(ik==0)))*om/pi*1/om1;
     g(iz)=g(iz)-u(izl)*ikl*(2-(1*(ik==0)))*om/pi;
     
-    ii(end+1)=ix; jj(end+1)=ixl; vv(end+1)=-ikl*(2-(1*(ik==0)))*om/pi;
-    ii(end+1)=iy; jj(end+1)=iyl; vv(end+1)=-ikl*(2-(1*(ik==0)))*om/pi;
+    ii(end+1)=ix; jj(end+1)=ixl; vv(end+1)=-ikl*(2-(1*(ik==0)))*om/pi*1/om1;
+    ii(end+1)=iy; jj(end+1)=iyl; vv(end+1)=-ikl*(2-(1*(ik==0)))*om/pi*1/om1;
     ii(end+1)=iz; jj(end+1)=izl; vv(end+1)=-ikl*(2-(1*(ik==0)))*om/pi;
     
-    ii(end+1)=ix; jj(end+1)=lastid; vv(end+1)=-u(ixl)*ikl*(2-(1*(ik==0)))/pi;
-    ii(end+1)=iy; jj(end+1)=lastid; vv(end+1)=-u(iyl)*ikl*(2-(1*(ik==0)))/pi;
+    ii(end+1)=ix; jj(end+1)=lastid; vv(end+1)=-u(ixl)*ikl*(2-(1*(ik==0)))/pi*1/om1;
+    ii(end+1)=iy; jj(end+1)=lastid; vv(end+1)=-u(iyl)*ikl*(2-(1*(ik==0)))/pi*1/om1;
     ii(end+1)=iz; jj(end+1)=lastid; vv(end+1)=-u(izl)*ikl*(2-(1*(ik==0)))/pi;
                 
     end

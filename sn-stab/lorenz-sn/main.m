@@ -31,7 +31,7 @@ u0=u;
 %
 close all;
 %%
-r=r+1e-6
+% r=r+1e-6
 for i=1:16
 [g,jac]=calculateRhsAndJac(3,nt,u,r);
 u=u-jac\g';

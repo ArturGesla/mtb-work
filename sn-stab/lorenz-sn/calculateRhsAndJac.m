@@ -1,9 +1,9 @@
-function [g,jac]=calculateRhsAndJac(neq,nt,u)
+function [g,jac]=calculateRhsAndJac(neq,nt,u,r)
 %%
 
 s=10;
 b=8/3;
-r=24;
+% r=24;
 ii=[]; jj=[]; vv=[];
 
 %u=[xr0,yr0,zr0,xr1,...,xi0,yi0,zi0,...]

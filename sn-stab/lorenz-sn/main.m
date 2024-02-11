@@ -1,6 +1,6 @@
 clc; close all; clear;
 %
-np=52; r=24; nt=40;
+np=52; r=24; nt=10;
 main_lorenz_ti
 %
 z=fft(X); 
@@ -30,15 +30,17 @@ u(nt*3*2+1)=om;
 u0=u;
 %
 close all;
-
+%%
 for i=1:16
-[g,jac]=calculateRhsAndJac(3,nt,u);
+[g,jac]=calculateRhsAndJac(3,nt,u,r);
 u=u-jac\g';
 fprintf("iter:%d\tnorm: %4.2e\n",i,norm(g));
 if(norm(g)<1e-10)
     break;
 end
 end
+semilogy(abs(u(1:nt*3)+u(nt*3+1:end-1))); hold on;
+r=r+0.01
 %% small stab
 j2=((jac(1:end-1,1:end-1)));
 ev=eigs(j2,1,0.0465)
@@ -88,14 +90,14 @@ up=[u]; ntp=nt;
 zp=reshape(up(1:(end-1)/2),[3,ntp])'+1i*reshape(up((end-1)/2+1:(end-1)),[3,ntp])';
 xp=ifft([zp;conj(flipud(zp(2:end,:)))])*((length(zp)-1)*2+1);xp=real(xp); xpp=xp;
 % xp=xp+xpb;  
-% plot3(xp(:,1),xp(:,2),xp(:,3)); grid on; hold on; 
+plot3(xp(:,1),xp(:,2),xp(:,3)); grid on; hold on; 
 
-plot(xp)
+% plot(xp)
 
 % x for  cheb
 xp=[xp;xp(1,:)];
 t=linspace(0,2*pi/u(end),length(xp));
-save("xforcheb.mat","xp","t");
+save("xforcheb.mat","xp","t",'r');
 
 %% expo counterpart
 ll=length(xp); sigma=evs(105)*1;

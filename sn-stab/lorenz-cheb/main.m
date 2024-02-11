@@ -4,14 +4,14 @@ clc; close all; clear; mua=[];
 %
 
 % Lorenz system
- r=24; nt=90; np=4*nt;
+ r=24; nt=50; np=4*nt;
 %main_lorenz_ti
 %
 
 %  sn=load("../lorenz-sn/xforcheb.mat");
-% sn=load("../lorenz-sn/xforcheb24.7368.mat");
+sn=load("../lorenz-sn/xforcheb24.7368.mat");
 % sn=load("../lorenz-sn/xforcheb24.73.mat");
-sn=load("../lorenz-sn/xforcheb24.mat");
+% sn=load("../lorenz-sn/xforcheb24.mat");
 X=sn.xp; t=sn.t; r=sn.r; T=t(end);
 
 
@@ -34,7 +34,7 @@ az=sn.u(6:3:sn.nt*3,1);
 bz=sn.u(sn.nt*3+1+5:3:sn.nt*3*2,1);
 X3(:,3)=cos([1:sn.nt-1].*tch*sn.u(end))*az*2-sin([1:sn.nt-1].*tch*sn.u(end))*bz*2+sn.u(3);
 
-
+X=X3;
 
 
 y=X; v2=[y;flipud(y(2:end-1,:))]; z=real(fft(v2)./length(v2)); a=z; a(2:end,:)=2*a(2:end,:); %z are cheb coeffs
@@ -78,7 +78,7 @@ u=u-jac\g;
 
 end
 % pause;
-semilogy(abs(reshape(u(1:end-1),[3,nt])'),'-'); hold on;
+semilogy(abs(reshape(u(1:end-1),[3,nt])'),'-x'); hold on; grid on;
 
 %%
 %% visu

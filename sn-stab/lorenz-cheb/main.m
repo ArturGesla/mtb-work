@@ -1,45 +1,63 @@
-clc; close all; clear;
+clc; close all; clear; mua=[];
 %
-np=52; r=24; nt=40;
+% cd     '/people/gesla/Documents/git/mtb-work/sn-stab/sn-mod-noack';
+%
+
+% Lorenz system
+np=502; r=24; nt=301; 
 main_lorenz_ti
 %
-z=fft(X); 
-arr=[1:nt]; a1=arr; arr=[arr,length(z)-fliplr(arr(1:end-1))+1];
-zcut=z*0; zcut(arr,:)=z(arr,:);
-X2=ifft(zcut);
-%
-% close all;
-% plot(X); hold on;
-% plot(X2); hold on;
-%
-z1=zcut(a1,:)./np;
-om=2*pi/T;
-an=angle(sum(z1(2,1))); %this could be better
-z1=z1.*exp(-an*1i*[0:nt-1]');
-angle(sum(z1(:,1)));
-% zcut(arr,:)=zcut(arr,:).*exp(an*1i*[arr-1]');
-% X3=ifft(zcut);
-% plot(X3); hold on;
-% x=real(z1(1,1)+z1(2,1)*exp(i*om*t)+z1(3,1)*exp(2*i*om*t)+z1(2,1)'*exp(-i*om*t)+z1(3,1)'*exp(-2*i*om*t));
-x=real(z1(1,1)+z1(2,1)*exp(1i*om*t)+z1(2,1)'*exp(-1i*om*t));
-plot(x,'-x')
-%
-% z1=zcut(a1,:);
-u=[reshape(real(z1.'),[3*nt,1]);reshape(imag(z1.'),[3*nt,1])];
-u(nt*3*2+1)=om;
-u0=u;
-%
-close all;
 
-for i=1:16
-[g,jac]=calculateRhsAndJac(3,nt,u);
-u=u-jac\g';
-fprintf("iter:%d\tnorm: %4.2e\n",i,norm(g));
-if(norm(g)<1e-10)
-    break;
+sn=load("../lorenz-sn/xforcheb.mat");
+X=sn.xp; t=sn.t;
+
+
+
+ X1=X;
+tch=cos(0:pi/(np*1-1):pi)'; tch1=tch;
+
+%
+tch=(tch+1)/2*t(end); X=interp1(t,X,tch); 
+
+y=X; v2=[y;flipud(y(2:end-1,:))]; z=real(fft(v2)./length(v2)); a=z; a(2:end,:)=2*a(2:end,:); %z are cheb coeffs
+zcut=z*0; zcut([1:nt,end-nt+2:end],:)=z([1:nt,end-nt+2:end],:); ycut=ifft(zcut).*length(zcut); ycut=ycut(1:end/2+1,:);
+
+% plot(t,X1,'--'); hold on; set(gca,"ColorOrderIndex",1);
+plot(tch,y,'->'); hold on; set(gca,"ColorOrderIndex",1);
+plot(tch,ycut,'-x'); hold on; set(gca,"ColorOrderIndex",1);
+fprintf("cheb init approx accuracy: %4.2e\n",norm(y-ycut,"fro"));
+%
+u=[reshape(real(a(1:nt,:).'),[3*nt,1])];
+u(nt*3+1)=2*pi/T;
+% % plot
+% neq=3;
+% xch=X*0;
+% for i=0:nt-1
+%     
+%     xch(:,1)=xch(:,1)+u(i*neq+1).*cos(i*acos(tch1));
+%     xch(:,2)=xch(:,2)+u(i*neq+2).*cos(i*acos(tch1));
+%     xch(:,3)=xch(:,3)+u(i*neq+3).*cos(i*acos(tch1));
+% end
+% 
+% plot(tch,xch,'o-'); hold on; set(gca,"ColorOrderIndex",1); %same as ycut
+%%
+% u=u*0; u(end-3)=1;
+for i=1:1
+[g,jac]=calculateRhsAndJac(3,nt,u,r);
+
+fprintf("it: %d \t norm(rhs): %4.2e\n",i,norm(g));
+
+if(norm(g)<1e-12)
+    break; 
 end
+u=u-jac\g;
+%     u(4:6)'
+
 end
-%% small stab
+% pause;
+
+%%
+% small stab
 j2=((jac(1:end-1,1:end-1)));
 ev=eigs(j2,1,0.0465)
 save("stabSNLorenz-"+num2str(nt)+".mat","ev","nt");
@@ -84,18 +102,13 @@ clf;
 
 % up=[evc(:,105);0]; ntp=nt; u1=up(1:end-1);
 % up=[j2*u2;0]; ntp=nt; 
-up=[u]; ntp=nt; 
+up=[u3;0]; ntp=nt; 
 zp=reshape(up(1:(end-1)/2),[3,ntp])'+1i*reshape(up((end-1)/2+1:(end-1)),[3,ntp])';
 xp=ifft([zp;conj(flipud(zp(2:end,:)))])*((length(zp)-1)*2+1);xp=real(xp); xpp=xp;
 % xp=xp+xpb;  
 % plot3(xp(:,1),xp(:,2),xp(:,3)); grid on; hold on; 
 
 plot(xp)
-
-% x for  cheb
-xp=[xp;xp(1,:)];
-t=linspace(0,2*pi/u(end),length(xp));
-save("xforcheb.mat","xp","t");
 
 %% expo counterpart
 ll=length(xp); sigma=evs(105)*1;

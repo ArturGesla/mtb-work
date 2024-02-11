@@ -11,3 +11,5 @@ z=cos(n*y);
 % plot(z,'-x')
 plot(x,z,'-'); 
 grid on;
+%%
+chebyshevT

@@ -1,144 +1,143 @@
-clc; close all; clear;
-cd     '/people/gesla/Documents/git/mtb-work/sn-stab/sn-noack';
-%%
-
-% Noack system
-% f=[mu*u-v*g-w*u;
-%     mu*v+u/g-v*w;
-%     -w+u^2+v^2*g*g];
-
-clc; clear; close all;
-%%
+clc; close all; clear; mua=[];
 %
-%parms
-% it=it+1;
-mu=0.04; r=sqrt(mu); gm=1; %gamma
-% mu=0.04+it*0.04; r=sqrt(mu); gm=1; %gamma
-% mu=3/4; r=sqrt(mu); gm=1; %gamma
-neq=3; np=100; np=np+2; om1=5; nt=15;
-
-%init
-t=0:2*pi/(np-1):2*pi; u=r*cos(t*om1); v=r*sin(t*om1)/gm; w=r^2*ones(1,length(t));
-T=2*pi; x=u; y=v; z=w;
-
-X=[x(1:end-1)',y(1:end-1)',z(1:end-1)'];
-% X=X+rand(size(X))*1e-2;
-
+% cd     '/people/gesla/Documents/git/mtb-work/sn-stab/sn-mod-noack';
 %
 
-z=fft(X); 
-arr=[1:nt]; a1=arr; arr=[arr,length(z)-fliplr(arr(1:end-1))+1];
+% Rossler system
+np=502; a=0.1; b=0.1; c=4; x0=[ -5.320203215582999   2.880505158028742   0.011739324367982];
+% np=502; a=0.1; b=0.1; c=1; x0=[ 1.012513517729824  -1.995409184751595   0.090662165656530];
+
+main_lorenz_ti
+%%
+
+
+z=fft(X)./length(X); nt=10;
+arr=[1:nt]; %arr(2:2:end)=[];
+a1=arr; arr=[arr,length(z)-fliplr(arr(2:end))+2];
 zcut=z*0; zcut(arr,:)=z(arr,:);
-X2=ifft(zcut);
+X2=ifft(zcut)*length(zcut);
 
 close all;
-plot(X); hold on;
-plot(X2); hold on;
+ plot(X); hold on; set(gca,"ColorOrderIndex",1);
+plot(X2,':'); hold on
 %
-z1=zcut(a1,:)./(np-1);
+z1=zcut(1:nt,:);
 om=2*pi/T;
-an=angle(sum(z1(2,1))); %this could be better
-z1=z1.*exp(-an*1i*[0:nt-1]');
-angle(sum(z1(:,1)))
-% zcut(arr,:)=zcut(arr,:).*exp(an*1i*[arr-1]');
-% X3=ifft(zcut);
-% plot(X3); hold on;
-% x=real(z1(1,1)+z1(2,1)*exp(i*om*t)+z1(3,1)*exp(2*i*om*t)+z1(2,1)'*exp(-i*om*t)+z1(3,1)'*exp(-2*i*om*t));
-% x=real(z1(1,1)+z1(2,1)*exp(1i*om*t)+z1(2,1)'*exp(-1i*om*t));
-% plot(x,'-x')
+% phase
+halfsol = @(phi) real(1i*sum([0:nt-1]'.*z1(:,1).*exp(1i*phi*[0:nt-1]).')); 
+phi=fzero(halfsol,0);
+z1=z1.*exp(i*phi*[0:nt-1]).';
+z11=z*0; z11(1:nt,:)=z1; z11(end-nt+2:end,:)=flipud(conj(z1(2:end,:)));
+X3=ifft(z11)*length(z11);
+set(gca,"ColorOrderIndex",1);plot(X3,'--'); 
 %
-% z1=zcut(a1,:);
 u=[reshape(real(z1.'),[3*nt,1]);reshape(imag(z1.'),[3*nt,1])];
 u(nt*3*2+1)=om;
-u0=u;
+uinit=u;
+% load
+% load("../lorenz-sn/uSN-lorenz-nt4.mat"); om=u(end); u=reshape(u(1:end-1),[3,4*2]); 
+% 
+% uinit=reshape(uinit(1:end-1),[3,nt*2]); uinit=uinit*0; uinit(:,1:2:nt)=u(:,1:4); uinit(:,nt+1:2:end)=u(:,5:end);
+% u=reshape(uinit,[3*nt*2,1]); u(end+1)=om/2; 
 %
 %
+%  load unt7.mat;
+%  load unt13.mat;
+%%
 for i=1:15
-[g,jac]=calculateRhsAndJac(3,nt,u,mu,gm,om1);
+[g,jac]=calculateRhsAndJac(3,nt,u,a,b,c);
 u=u-jac\g';
-fprintf("it: %d \t norm(rhs): %4.2e\n",i,norm(g))
+fprintf("it: %d \t norm(rhs): %4.2e\n",i,norm(g));
+
 if(norm(g)<1e-12)
     break; 
 end
+%     u(4:6)'
 
 end
-close all;
-semilogy(abs(reshape(u(1:3*nt)+u(3*nt+1:end-1)*1i,[3,nt])'));
-grid on; grid minor;
-% clf; spy(jac); grid on; grid minor;
-%% stability
-
-% u((end-1)/2+1:end)=-u((end-1)/2+1:end);
-% u((end-1)/2+1:end-1)=-u((end-1)/2+1:end-1);
-% [g,jac]=calculateRhsAndJac(3,nt,u,mu,gm);
-
-j2=jac(1:end-1,1:end-1);
-[evc,evs]=eig(full(j2)); evs=diag(evs);
+close all
+semilogy(abs(u(1:3:nt*3)+u(nt*3+1:3:end-1)),'x-'); hold on;
+semilogy(abs(u(2:3:nt*3)+u(nt*3+2:3:end-1)),'x-'); hold on;
+semilogy(abs(u(3:3:nt*3)+u(nt*3+3:3:end-1)),'x-'); hold on;
+grid on;
+%%
+svds(jac(1:end-1,1:end-1),5,'smallest')
 %
-close all;
-plot(evs,'x'); grid on; hold on;
-text(real(evs),imag(evs),num2str([1:length(evs)]')); 
-% w maire ok z fd
+% clf; spy(jac); grid on; grid minor;
+% [U,S,V]=svds(jac(1:end,1:end),5,'smallest');s=diag(S);
+% [U,S,V]=svds(jac(1:end-1,1:end-1),5,'smallest'); s=diag(S);
+% [U,S,V]=svds(jac(1:nt*3,1:nt*3),5,'smallest');
+% second stability
+%%
+nt2=nt;
+% l3=zeros(3,nt2*2); l3(1,1:nt2)=ones(1,nt2)*2-mod([0:nt2-1],2)*4; l3(1,1)=1; l31=reshape(l3,[3*nt2*2,1])';
+% l3=zeros(3,nt2*2); l3(2,1:nt2)=ones(1,nt2)*2-mod([0:nt2-1],2)*4; l3(2,1)=1; l32=reshape(l3,[3*nt2*2,1])';
+% l3=zeros(3,nt2*2); l3(3,1:nt2)=ones(1,nt2)*2-mod([0:nt2-1],2)*4; l3(3,1)=1; l33=reshape(l3,[3*nt2*2,1])';
 
-evsAnal=[0;(-1-sqrt(1-8*mu))/2;(-1+sqrt(1-8*mu))/2;];
-plot(real(evsAnal),imag(evsAnal),'o');
-xlim([-1 0.4]);
-% ylim([-4 4])
-% exportgraphics(gcf,"spec"+num2str(it)+".png");
+l3=zeros(3,nt2*2); l3(1,1:nt2)=ones(1,nt2)*2; l3(1,1)=1; r31=reshape(l3,[3*nt2*2,1])';
+l3=zeros(3,nt2*2); l3(2,1:nt2)=ones(1,nt2)*2; l3(2,1)=1; r32=reshape(l3,[3*nt2*2,1])';
+l3=zeros(3,nt2*2); l3(3,1:nt2)=ones(1,nt2)*2; l3(3,1)=1; r33=reshape(l3,[3*nt2*2,1])';
+
+
+jmod=full(jac(1:end-1,1:end-1));%-b*j2hm+b;
+%  ind=nt*3+1;
+%  ind=4:6:(nt-1)*3;ind=[ind,ind+nt*3]
+ ind=1*3+1;
+% jmod(ind,:)=l31;
+% jmod(ind+1,:)=l32;
+% jmod(ind+2,:)=l33;
+
+bmod=jmod*0;
+bmod(ind,:)=repmat(r31,[1,1]); %r31;
+bmod(ind+1,:)=repmat(r32,[1,1]); %r32;
+bmod(ind+2,:)=repmat(r33,[1,1]); %r33;
+
+[evc,evs]=eig(full(jmod),full(bmod)); evs=diag(evs); b=abs(evs)<Inf; evs=evs(b); evc=evc(:,b);
+
+fprintf("Result || \n");
+fprintf("Numerical fl mult:\n");
+disp((1+evs)');
+mu=log(evs+1)/pi*u(end);
+ev=max(real(mu))
 %%
 close all;
-clf;
+save("stabCMLorenz-"+num2str(nt)+".mat",'ev','nt');
+% load mua.mat; mua=[mua;max(real(mu))]; save('mua.mat','mua');
+%% naive stab - Hill
+[evc,evs]=eig(full(jac(1:end-1,1:end-1))); evs=diag(evs); %b=abs(evs)<Inf; evs=evs(b); evc=evc(:,b);
+%  b=(abs(evs)<Inf); evs=evs(b);
+ [a,b]=sort(abs(imag(evs))); 
+ fprintf("Numerical fl mult:\n");
+disp(exp(2*pi/om*evs(b(1:4))).');
+evs=evs(b(1:4)); evc=evc(:,b(1:4)); 
+load mua.mat; mua=[mua;max(real(evs))]; save('mua.mat','mua');
 %%
+% close all;
+up=u;%+[1*evc(:,3);0]; ntp=nt; 
+% up=u; ntp=nt; 
+% up=[evc(:,2);0]; ntp=nt;  up=up*0; up(4:6)=evc(4:6,2);
+% up=[evc(:,3);0]; ntp=nt; 
 up=u; ntp=nt; 
+% up=[V(:,5)]; ntp=nt; 
 zp=reshape(up(1:(end-1)/2),[3,ntp])'+1i*reshape(up((end-1)/2+1:(end-1)),[3,ntp])';
-xp=ifft([zp;conj(flipud(zp(2:end,:)))])*((length(zp)-1)*2+1);xp=real(xp);
-plot3(xp(:,1),xp(:,2),xp(:,3)); grid on; hold on; xpb=xp;
 
-plot3(xp(1,1),xp(1,2),xp(1,3),'o');plot3(xp(2,1),xp(2,2),xp(2,3),'>');
-% plot(xp)
+% up=[V(:,3);0]; ntp=nt; zp=zp+reshape(up(1:(end-1)/2),[3,ntp])'+1*1i*reshape(up((end-1)/2+1:(end-1)),[3,ntp])';
+
+
+nz=(np-1)*2-length(zp)*2+1; zp=[zp;zeros(nz,3);conj(flipud(zp(2:end,:)))]; xp=ifft(zp)*(length(zp)); xp=real(xp);
+
+% clf; 
+plot3(xp(:,1),xp(:,2),xp(:,3),"-"); grid on; hold on; xpb=xp; plot3(xp(1,1),xp(1,2),xp(1,3),'o');plot3(xp(2,1),xp(2,2),xp(2,3),'>'); plot3(xp(1:end/2,1),xp(1:end/2,2),xp(1:end/2,3),'r');
+%  clf; plot(xp); grid on; hold on;
+save("xforchebRossler"+num2str(c)+".mat","xp","t",'c','a','b','u','nt');
 %%
-close all;
-clf;
-iev=20;
-evs(iev)
-
-% up=[evc(:,iev);0]; ntp=nt; u1=up(1:end-1);
-% up=[j2*u2;0]; ntp=nt; 
-up=[u4;0]; ntp=nt; 
+a=load("unt7.mat");
+up=a.u; ntp=7; 
 zp=reshape(up(1:(end-1)/2),[3,ntp])'+1i*reshape(up((end-1)/2+1:(end-1)),[3,ntp])';
-xp=ifft([zp;conj(flipud(zp(2:end,:)))])*((length(zp)-1)*2+1);xp=real(xp); xpp=xp;
+nz=(np-1)*2-length(zp)*2+1; zp=[zp;zeros(nz,3);conj(flipud(zp(2:end,:)))]; xp=ifft(zp)*(length(zp)); xp=real(xp);
 
-xp=xpp+xpb;  
-plot3(xp(:,1),xp(:,2),xp(:,3)); grid on; hold on; 
-xp=xpb;  
-plot3(xp(:,1),xp(:,2),xp(:,3)); grid on; hold on; 
+%  plot3(xp(:,1),xp(:,2),xp(:,3),'.'); grid on; hold on; xpb=xp; plot3(xp(1,1),xp(1,2),xp(1,3),'o');plot3(xp(2,1),xp(2,2),xp(2,3),'>');
+plot(xp)
 
-% plot(xpp+xpb)
-
-%% expo counterpart
-ll=length(xp); sigma=evs(iev);
-t=0:2*pi/ll:2*pi-2*pi/ll;
-xp=xpp.*(exp(sigma*t)');
-
-z2=fft(xp)./length(xp);
-u2=z2(1:nt,:); 
-u2=[reshape(real(u2.'),[3*nt,1]);reshape(imag(u2.'),[3*nt,1])]; 
 %%
-clf; ip=1; plot(up(ip:3:end-1),'x-'); hold on; plot(u2(ip:3:end),'x-');  u3=j2*u2; plot(u3(ip:3:end),'x-')
-%%
-up=[evc(:,12);0]; ntp=nt;
-zp=reshape(up(1:(end-1)/2),[3,ntp])'+1i*reshape(up((end-1)/2+1:(end-1)),[3,ntp])';
-xp=ifft([zp;conj(flipud(zp(2:end,:)))])*((length(zp)-1)*2+1);xp=real(xp);
-xp=xp+xpb;  plot3(xp(:,1),xp(:,2),xp(:,3)); grid on; hold on; 
-
-up=[evc(:,13);0]; ntp=nt;
-zp=reshape(up(1:(end-1)/2),[3,ntp])'+1i*reshape(up((end-1)/2+1:(end-1)),[3,ntp])';
-xp=ifft([zp;conj(flipud(zp(2:end,:)))])*((length(zp)-1)*2+1);xp=real(xp);
-xp=xp+xpb; plot3(xp(:,1),xp(:,2),xp(:,3)); grid on; hold on; 
-
-% up=[evc(:,3);0]; ntp=nt2;
-% zp=reshape(up(1:(end-1)/2),[3,ntp])'+1i*reshape(up((end-1)/2+1:(end-1)),[3,ntp])';
-% xp=ifft([zp;conj(flipud(zp(2:end,:)))])*((length(zp)-1)*2+1);xp=real(xp);
-% plot3(xp(:,1),xp(:,2),xp(:,3)); grid on; xpp=xp;
-
-%% not trzeba to przemyslec
+xp=X; plot3(xp(:,1),xp(:,2),xp(:,3));

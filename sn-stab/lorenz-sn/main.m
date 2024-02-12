@@ -1,6 +1,6 @@
 clc; close all; clear;
 %
-np=52; r=24; nt=10;
+np=52; r=24; nt=20;
 main_lorenz_ti
 %
 z=fft(X); 

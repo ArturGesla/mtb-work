@@ -1,8 +1,9 @@
 i=1;
 %%
 
-uorg=u;
-
+uorg=u; 
+r=24; %; gmm=1;
+u=rand(nt*3*2+1,1);
 
 
 eps=1e-6;
@@ -13,14 +14,14 @@ up(i)=u(i)+eps;
 um(i)=u(i)-eps;
 
 u=up;
-[g,jac]=calculateRhsAndJac(3,nt,u);
+[g,jac]=calculateRhsAndJac(3,nt,u,a,b,c);
  gp=g;
 
  u=um;
-[g,jac]=calculateRhsAndJac(3,nt,u);
+[g,jac]=calculateRhsAndJac(3,nt,u,a,b,c);
  gm=g;
 
-[g,jac]=calculateRhsAndJac(3,nt,u);
+[g,jac]=calculateRhsAndJac(3,nt,u,a,b,c);
 J=full(jac);
 u=uorg;
 

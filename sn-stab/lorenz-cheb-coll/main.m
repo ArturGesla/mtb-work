@@ -4,37 +4,38 @@ clc; close all; clear; mua=[];
 %
 
 % Lorenz system
- r=24; nt=100; np=4*nt;
+%  r=24; nt=40; np=4*nt; x0=[ 9.2898   11.1031   22.2085]; T=0.6779; T= 0.6803;
+ r=160; nt=200; np=4*nt; x0=[ 39.6949   40.0409  210.9480]; T=1.1536;
 main_lorenz_ti
 %
-
+%
 %  sn=load("../lorenz-sn/xforcheb.mat");
 % sn=load("../lorenz-sn/xforcheb24.7368.mat");
 % sn=load("../lorenz-sn/xforcheb24.73.mat");
-sn=load("../lorenz-sn/xforcheb24.mat");
-X=sn.xp; t=sn.t; r=sn.r; T=t(end);
-
-
-
+% sn=load("../lorenz-sn/xforcheb24.mat");
+% X=sn.xp; t=sn.t; r=sn.r; T=t(end);
+% 
+% 
+% 
  X1=X; 
 tch=cos(0:pi/(np*1-1):pi)'; tch1=tch;
-
-%
+% 
+% %
 tch=(tch+1)/2*t(end); X=interp1(t,X,tch); X3=X*0;
-
-ax=sn.u(4:3:sn.nt*3,1);
-bx=sn.u(sn.nt*3+1+3:3:sn.nt*3*2,1);
-X3(:,1)=cos([1:sn.nt-1].*tch*sn.u(end))*ax*2-sin([1:sn.nt-1].*tch*sn.u(end))*bx*2+sn.u(1);
-
-ay=sn.u(5:3:sn.nt*3,1);
-by=sn.u(sn.nt*3+1+4:3:sn.nt*3*2,1);
-X3(:,2)=cos([1:sn.nt-1].*tch*sn.u(end))*ay*2-sin([1:sn.nt-1].*tch*sn.u(end))*by*2+sn.u(2);
-
-az=sn.u(6:3:sn.nt*3,1);
-bz=sn.u(sn.nt*3+1+5:3:sn.nt*3*2,1);
-X3(:,3)=cos([1:sn.nt-1].*tch*sn.u(end))*az*2-sin([1:sn.nt-1].*tch*sn.u(end))*bz*2+sn.u(3);
-
-X=X3;
+% 
+% ax=sn.u(4:3:sn.nt*3,1);
+% bx=sn.u(sn.nt*3+1+3:3:sn.nt*3*2,1);
+% X3(:,1)=cos([1:sn.nt-1].*tch*sn.u(end))*ax*2-sin([1:sn.nt-1].*tch*sn.u(end))*bx*2+sn.u(1);
+% 
+% ay=sn.u(5:3:sn.nt*3,1);
+% by=sn.u(sn.nt*3+1+4:3:sn.nt*3*2,1);
+% X3(:,2)=cos([1:sn.nt-1].*tch*sn.u(end))*ay*2-sin([1:sn.nt-1].*tch*sn.u(end))*by*2+sn.u(2);
+% 
+% az=sn.u(6:3:sn.nt*3,1);
+% bz=sn.u(sn.nt*3+1+5:3:sn.nt*3*2,1);
+% X3(:,3)=cos([1:sn.nt-1].*tch*sn.u(end))*az*2-sin([1:sn.nt-1].*tch*sn.u(end))*bz*2+sn.u(3);
+% 
+% X=X3;
 %
 
 y=X; v2=[y;flipud(y(2:end-1,:))]; z=real(fft(v2)./length(v2)); a=z; a(2:end,:)=2*a(2:end,:); %z are cheb coeffs
@@ -68,14 +69,14 @@ u(nt*3+1)=2*pi/T;
 % u=u*0; u(end-3)=1;
 %
 close all; uinit=u;
-semilogy(abs(reshape(u(1:end-1),[3,nt])'),'--'); hold on; grid on; grid minor;
-%
+semilogy(abs(reshape(u(1:end-1),[3,nt])'),'--'); hold on; grid on; grid minor; title("Distribution on Chebyshev modes");
+%%
 for i=1:15
 [g,jac]=calculateRhsAndJac(3,nt,u,r,1,collx);
 
 fprintf("it: %d \t norm(rhs): %4.2e\n",i,norm(g));
 
-if(norm(g)<1e-12)
+if(norm(g)<1e-9)
     break; 
 end
 u=u-jac\g;
@@ -83,9 +84,8 @@ u=u-jac\g;
 
 end
 % pause;
-set(gca,"ColorOrderIndex",1);
-semilogy(abs(reshape(u(1:end-1),[3,nt])'),'-x'); hold on; grid on;
-
+set(gca,"ColorOrderIndex",1); semilogy(abs(reshape(u(1:end-1),[3,nt])'),'-x'); hold on; grid on;
+%%
 
 % % stab
 
@@ -126,7 +126,7 @@ save("flnum-"+num2str(nt)+"-cheb-coll-lornez.mat",'nt','exponents');
 % close all;
 
 %
-%% visu
+% visu
 close all;
 up=u;
 neq=3;

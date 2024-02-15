@@ -58,10 +58,10 @@ J(iz,iz)=1; J(iz,3)=-1; g(iz)=u(iz)-u(3);
 %     g(iz+1)=(u(ixm)-u(ixp))/ds/2-60.9946;
 % 
 ip=phaseIndex;
-if (ip==1 && ip==np) warning("ip lols - fatal"); end
+% if (ip==1 && ip==np) warning("ip lols - fatal"); end
 ix=ip*neq-2;
         ixp=mod(ip*neq-2+neq-1,neq*np)+1;
-        ixm=mod(ip*neq-2-neq-1,neq*np)+1;
+        ixm=mod(ip*neq-2-neq-1,neq*np)+1-3*(ip==1);
        
 
 g(iz+1)=(u(ixm)-u(ixp))/ds/2-derX;

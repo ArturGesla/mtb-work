@@ -5,7 +5,7 @@ clc; close all; clear; mua=[];
 
 % Noack system
 np=520; %r=24; 
-nt=250; 
+nt=25; 
 
 mu=0.04; r=sqrt(mu); gm=1; %gamma
 % mu=0.04+it*0.04; r=sqrt(mu); gm=1; %gamma

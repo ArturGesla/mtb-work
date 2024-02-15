@@ -7,9 +7,9 @@ clc; close all; clear; mua=[];
 np=520; %r=24; 
 nt=30; 
 
-mu=0.04; r=sqrt(mu); gm=1; %gamma
+% mu=0.04; r=sqrt(mu); gm=1; %gamma
 % mu=0.04+it*0.04; r=sqrt(mu); gm=1; %gamma
-% mu=3/4; r=sqrt(mu); gm=1; %gamma
+mu=5; r=sqrt(mu); gm=1; %gamma
 neq=3; %np=100; np=np+2;
 
 %init
@@ -35,7 +35,7 @@ plot(tch,ycut,'-'); hold on; set(gca,"ColorOrderIndex",1);
 fprintf("cheb init approx accuracy: %4.2e\n",norm(y-ycut,"fro"));
 grid on; legend("exact x ","exact y ","exact z ","cheb")
 %
-u=[reshape(real(a(1:nt,:).'),[3*nt,1])]*0.9;
+u=[reshape(real(a(1:nt,:).'),[3*nt,1])];
 u(nt*3+1)=2*pi/t(end);
 uinit=u;
 % semilogy(abs(a(1:2:end,1)))
@@ -116,7 +116,7 @@ fprintf("Diff:\n");
 disp(sort(flnum)-sort(flmult'));
 % save("flnum-"+num2str(nt)+".mat",'nt','flnum','flmult');
 % close all;
-%% visu
+% visu
 close all;
 up=u;
 neq=3;
@@ -134,7 +134,8 @@ grid on; hold on;
 %
 
 % up=u+[V(:,5);0];
-up=uinit;
+up=u+[evc(:,2);0]+[evc(:,1);0];
+% up=uinit;
 neq=3;
 xch=X*0;
 for i=0:nt-1    

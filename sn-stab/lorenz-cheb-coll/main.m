@@ -1,11 +1,13 @@
 clc; close all; clear; mua=[];
+cd(fileparts(matlab.desktop.editor.getActiveFilename));
+
 %
 % cd     '/people/gesla/Documents/git/mtb-work/sn-stab/sn-mod-noack';
 %
 
 % Lorenz system
-%  r=24; nt=40; np=4*nt; x0=[ 9.2898   11.1031   22.2085]; T=0.6779; T= 0.6803;
- r=160; nt=200; np=4*nt; x0=[ 39.6949   40.0409  210.9480]; T=1.1536;
+ r=24; nt=30; np=4*nt; x0=[ 10.135982315094342  10.189521543725682  25.691556187487929]; T=0.6779; T= 0.6803;
+%  r=160; nt=200; np=4*nt; x0=[ 39.6949   40.0409  210.9480]; T=1.1536;
 main_lorenz_ti
 %
 %
@@ -16,7 +18,7 @@ main_lorenz_ti
 % X=sn.xp; t=sn.t; r=sn.r; T=t(end);
 % 
 % 
-% 
+%
  X1=X; 
 tch=cos(0:pi/(np*1-1):pi)'; tch1=tch;
 % 
@@ -70,7 +72,8 @@ u(nt*3+1)=2*pi/T;
 %
 close all; uinit=u;
 semilogy(abs(reshape(u(1:end-1),[3,nt])'),'--'); hold on; grid on; grid minor; title("Distribution on Chebyshev modes");
-%%
+%
+for ir=1:1;%40
 for i=1:15
 [g,jac]=calculateRhsAndJac(3,nt,u,r,1,collx);
 
@@ -84,8 +87,10 @@ u=u-jac\g;
 
 end
 % pause;
-set(gca,"ColorOrderIndex",1); semilogy(abs(reshape(u(1:end-1),[3,nt])'),'-x'); hold on; grid on;
-%%
+% set(gca,"ColorOrderIndex",1); semilogy(abs(reshape(u(1:end-1),[3,nt])'),'-x'); hold on; grid on;
+% r=r-0.1;
+end
+%
 
 % % stab
 
@@ -126,7 +131,8 @@ save("flnum-"+num2str(nt)+"-cheb-coll-lornez.mat",'nt','exponents');
 % close all;
 
 %
-% visu
+%% visu
+tch1=collx; X=zeros(nt,3);
 close all;
 up=u;
 neq=3;
@@ -140,10 +146,10 @@ end
 % plot(tch,xch,'-'); hold on; set(gca,"ColorOrderIndex",1); %same as ycut
 plot3(xch(:,1),xch(:,2),xch(:,3),'-'); hold on; plot3(xch(1,1),xch(1,2),xch(1,3),'>'); hold on; 
 grid on; hold on;
-
+xchBase=xch;
 %
 
-up=u+[evc(:,3);0];
+iev=1; up=u+[evc(:,iev);0];
 % up=uinit;
 neq=3;
 xch=X*0;
@@ -154,6 +160,9 @@ for i=0:nt-1
 end
 
 % plot(tch,xch,'-'); hold on; set(gca,"ColorOrderIndex",1); %same as ycut
-plot3(xch(:,1),xch(:,2),xch(:,3),'-'); hold on; plot3(xch(1,1),xch(1,2),xch(1,3),'>'); hold on; 
+plot3(xch(:,1),xch(:,2),xch(:,3),'.-'); hold on; plot3(xch(1,1),xch(1,2),xch(1,3),'>'); hold on; 
 grid on; hold on;
 % 
+xchBasePlusPert=xch;
+
+save("solChebLorenz-"+num2str(nt)+"-"+num2str(iev)+".mat","xchBasePlusPert","xchBase","u",'r');

@@ -6,7 +6,8 @@
 clc; clear; close all;
 %
 %parms
-mu=0.04; r=sqrt(mu); gm=1; %gamma
+% mu=0.04; r=sqrt(mu); gm=1; %gamma
+mu=8; r=sqrt(mu); gm=1; %gamma
 neq=3; np=100; np=np+2;
 
 %init
@@ -58,20 +59,20 @@ tic;
 %  r=r+(24.74-r)*0.1
 % r=r-0.1
     end
-%%
+%
 close all;
 X=reshape(u(1:end-4),[3,np-1])'; 
 plot(X(:,1),X(:,2)); hold on; plot(X(1,1),X(1,2),'o'); plot(X(2,1),X(2,2),'>'); axis equal; grid on;
 
-%% stab
+% stab
 Jc=full(J(1:end-1,1:end-1)); B=zeros(length(Jc)); B(end-2:end,1:3)=eye(3); Jc(end-2:end,1:3)=0;
 [evc,evs]=eig(Jc,B); evs=diag(evs); b=evs<Inf; evs=evs(b);
-%%
+%
 u=evc(:,1)*0
 u=evc(:,1)*0; u(end-2:end)=1e-3;
 v=Jc\u
 x3=reshape(v(1:end-3),[3,np-1])';
-%%
+%
 close all;
 
 x1=reshape(evc(1:end-3,1),[3,np-1])'; 
@@ -80,7 +81,7 @@ x2=reshape(evc(1:end-3,2),[3,np-1])';
 
 xp=X; plot3(xp(:,1),xp(:,2),xp(:,3)); hold on; grid on;
 xp=X+x1; plot3(xp(:,1),xp(:,2),xp(:,3)); hold on; grid on;
-xp=X+x2; plot3(xp(:,1),xp(:,2),xp(:,3)); hold on; grid on;
+xp=X+x2+x1; plot3(xp(:,1),xp(:,2),xp(:,3)); hold on; grid on;
 xp=X+x3; plot3(xp(:,1),xp(:,2),xp(:,3),'-x'); hold on; grid on;
 % view([0,0,1]); 
 legend(["base";num2str(evs)])

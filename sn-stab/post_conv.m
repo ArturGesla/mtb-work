@@ -108,32 +108,40 @@ clc;clear; close all; clrs={[0, 0.4470, 0.7410],[0.8500, 0.3250, 0.0980] 	   ,	[
 
 
 a=load("lorenz_fairgrieve_CN/solCNLorenz-31.mat"); iclrs=1;
-iev=1; X=reshape(a.u(1:end-1),[3,a.np])'; x=reshape(a.evc(1:end,iev),[3,a.np])'; x1=x; X1=X;
-xp=X+x*mult; plot(xp(:,1),xp(:,2),'.-',"Color",clrs{1}); hold on; a=plot(xp(1,1),xp(1,2),'sq',"Color",clrs{iclrs}); set(a,"HandleVisibility","off"); a=plot(xp(2,1),xp(2,2),'<',"Color",clrs{iclrs}); set(a,"HandleVisibility","off");
+% iev=3;
+% iev=2;
+iev=1;
+X=reshape(a.u(1:end-1),[3,a.np])'; x=reshape(a.evc(1:end,iev),[3,a.np])'; x1=x; X1=X;
+% xp=X+x*mult; plot(xp(:,1),xp(:,2),'.-',"Color",clrs{1}); hold on; a=plot(xp(1,1),xp(1,2),'sq',"Color",clrs{iclrs}); set(a,"HandleVisibility","off"); a=plot(xp(2,1),xp(2,2),'<',"Color",clrs{iclrs}); set(a,"HandleVisibility","off");
+xp=X+x*mult; plot3(xp(:,1),xp(:,2),xp(:,3),'.-',"Color",clrs{iclrs}); hold on; a=plot3(xp(1,1),xp(1,2),xp(1,3),'sq',"Color",clrs{iclrs}); set(a,"HandleVisibility","off"); a=plot3(xp(2,1),xp(2,2),xp(2,3),'<',"Color",clrs{iclrs}); set(a,"HandleVisibility","off");
 
-% a=load("lorenz-sn/solSNLorenz-15.mat");  iclrs=2;
+% a=load("lorenz-sn/solSNLorenz-15-67.mat");  iclrs=2;
 % a=load("lorenz-sn/solSNLorenz-15-66.mat");  iclrs=2;
 a=load("lorenz-sn/solSNLorenz-15-57.mat");  iclrs=2;
-iev=3; X=a.xBase; x=a.xBasePlusPert-a.xBase; x=x/(x(1,2)./x1(1,2));
-xp=X+x*mult; plot(xp(:,1),xp(:,2),'.-',"Color",clrs{2}); hold on; a=plot(xp(1,1),xp(1,2),'sq',"Color",clrs{iclrs}); set(a,"HandleVisibility","off"); a=plot(xp(2,1),xp(2,2),'<',"Color",clrs{iclrs}); set(a,"HandleVisibility","off");
+ X=a.xBase; x=a.xBasePlusPert-a.xBase; x=x/(x(1,2)./x1(1,2));
+% xp=X+x*mult; plot(xp(:,1),xp(:,2),'.-',"Color",clrs{2}); hold on; a=plot(xp(1,1),xp(1,2),'sq',"Color",clrs{iclrs}); set(a,"HandleVisibility","off"); a=plot(xp(2,1),xp(2,2),'<',"Color",clrs{iclrs}); set(a,"HandleVisibility","off");
+xp=X+x*mult; plot3(xp(:,1),xp(:,2),xp(:,3),'.-',"Color",clrs{iclrs}); hold on; a=plot3(xp(1,1),xp(1,2),xp(1,3),'sq',"Color",clrs{iclrs}); set(a,"HandleVisibility","off"); a=plot3(xp(2,1),xp(2,2),xp(2,3),'<',"Color",clrs{iclrs}); set(a,"HandleVisibility","off");
 
 % a=load("lorenz-cheb-coll/solChebLorenz-30-3.mat");  iclrs=3;
 % a=load("lorenz-cheb-coll/solChebLorenz-30-2.mat");  iclrs=3;
 a=load("lorenz-cheb-coll/solChebLorenz-30-1.mat");  iclrs=3;
-iev=3; X=a.xchBase; x=-a.xchBasePlusPert+a.xchBase; x=x/(x(1,2)./x1(1,2));
-xp=X+x*mult; plot(xp(:,1),xp(:,2),'.-',"Color",clrs{3}); hold on; a=plot(xp(1,1),xp(1,2),'sq',"Color",clrs{iclrs}); set(a,"HandleVisibility","off"); a=plot(xp(2,1),xp(2,2),'<',"Color",clrs{iclrs}); set(a,"HandleVisibility","off");
+ X=a.xchBase; x=-a.xchBasePlusPert+a.xchBase; x=x/(x(1,2)./x1(1,2));
+% xp=X+x*mult; plot(xp(:,1),xp(:,2),'.-',"Color",clrs{iclrs}); hold on; a=plot(xp(1,1),xp(1,2),'sq',"Color",clrs{iclrs}); set(a,"HandleVisibility","off"); a=plot(xp(2,1),xp(2,2),'<',"Color",clrs{iclrs}); set(a,"HandleVisibility","off");
+xp=X+x*mult; plot3(xp(:,1),xp(:,2),xp(:,3),'.-',"Color",clrs{iclrs}); hold on; a=plot3(xp(1,1),xp(1,2),xp(1,3),'sq',"Color",clrs{iclrs}); set(a,"HandleVisibility","off"); a=plot3(xp(2,1),xp(2,2),xp(2,3),'<',"Color",clrs{iclrs}); set(a,"HandleVisibility","off");
 
-
+%
 
 
  iclrs=4;
-xp=X1; plot(xp(:,1),xp(:,2),'k-'); hold on; a=plot(xp(1,1),xp(1,2),'sq',"Color",clrs{iclrs}); set(a,"HandleVisibility","off"); a=plot(xp(2,1),xp(2,2),'<',"Color",clrs{iclrs}); set(a,"HandleVisibility","off");plot(xp(1,1),xp(1,2),'ksq'); plot(xp(2,1),xp(2,2),'k<');
+% xp=X1; plot(xp(:,1),xp(:,2),'k-'); hold on; a=plot(xp(1,1),xp(1,2),'sq',"Color",clrs{iclrs}); set(a,"HandleVisibility","off"); a=plot(xp(2,1),xp(2,2),'<',"Color",clrs{iclrs}); set(a,"HandleVisibility","off");plot(xp(1,1),xp(1,2),'ksq'); plot(xp(2,1),xp(2,2),'k<');
+xp=X1; plot3(xp(:,1),xp(:,2),xp(:,3),'.-',"Color",clrs{iclrs}); hold on; a=plot3(xp(1,1),xp(1,2),xp(1,3),'sq',"Color",clrs{iclrs}); set(a,"HandleVisibility","off"); a=plot3(xp(2,1),xp(2,2),xp(2,3),'<',"Color",clrs{iclrs}); set(a,"HandleVisibility","off");
 
 legend("FD","Fourier","Chebyshev","Location","best"); xlabel("x"); ylabel("y");
 
 grid on;    
 %
 jfm_plt_aid;
-%%
-exportgraphics(gcf,"art3-lorr24-iev1.eps")
+%
+% exportgraphics(gcf,"art3-lorr24-iev1.eps")
+exportgraphics(gcf,"art3-lorr24-iev"+num2str(iev)+"-3d.png","Resolution",150);
 

@@ -144,12 +144,13 @@ for i=0:nt-1
 end
 
 % plot(tch,xch,'-'); hold on; set(gca,"ColorOrderIndex",1); %same as ycut
-plot3(xch(:,1),xch(:,2),xch(:,3),'-'); hold on; plot3(xch(1,1),xch(1,2),xch(1,3),'>'); hold on; 
+% plot3(xch(:,1),xch(:,2),xch(:,3),'-'); hold on; plot3(xch(1,1),xch(1,2),xch(1,3),'>'); hold on; 
+plot(xch(:,1),xch(:,2),'-'); hold on; plot(xch(1,1),xch(1,2),'>'); hold on; 
 grid on; hold on;
 xchBase=xch;
 %
 
-iev=1; up=u+[evc(:,iev);0];
+iev=3; up=u+[evc(:,iev);0];
 % up=uinit;
 neq=3;
 xch=X*0;
@@ -160,9 +161,11 @@ for i=0:nt-1
 end
 
 % plot(tch,xch,'-'); hold on; set(gca,"ColorOrderIndex",1); %same as ycut
-plot3(xch(:,1),xch(:,2),xch(:,3),'.-'); hold on; plot3(xch(1,1),xch(1,2),xch(1,3),'>'); hold on; 
+% plot3(xch(:,1),xch(:,2),xch(:,3),'.-'); hold on; plot3(xch(1,1),xch(1,2),xch(1,3),'>'); hold on; 
+plot(xch(:,1),xch(:,2),'.-'); hold on; plot(xch(1,1),xch(1,2),'>'); hold on; 
 grid on; hold on;
 % 
 xchBasePlusPert=xch;
 
-save("solChebLorenz-"+num2str(nt)+"-"+num2str(iev)+".mat","xchBasePlusPert","xchBase","u",'r');
+% save("solChebLorenz-"+num2str(nt)+"-"+num2str(iev)+".mat","xchBasePlusPert","xchBase","u",'r');
+% view([0 0 -1])

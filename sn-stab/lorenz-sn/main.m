@@ -15,7 +15,7 @@ X2=ifft(zcut);
 z1=zcut(a1,:)./np;
 om=2*pi/T;
 an=angle(sum(z1(2,1))); %this could be better
-z1=z1.*exp(-an*1i*[0:nt-1]');
+% z1=z1.*exp(-an*1i*[0:nt-1]');
 angle(sum(z1(:,1)));
 % zcut(arr,:)=zcut(arr,:).*exp(an*1i*[arr-1]');
 % X3=ifft(zcut);
@@ -28,19 +28,19 @@ plot(x,'-x')
 u=[reshape(real(z1.'),[3*nt,1]);reshape(imag(z1.'),[3*nt,1])];
 u(nt*3*2+1)=om;
 u0=u;
-%
+%%
 close all;
 %
 % r=r+1e-6
 for i=1:16
 [g,jac]=calculateRhsAndJac(3,nt,u,r);
 u=u-jac\g';
-fprintf("iter:%d\tnorm: %4.2e\n",i,norm(g));
+fprintf("it: %d \t norm(rhs): %4.2e \t gend: %4.2e\n",i,norm(g),g(end));
 if(norm(g)<1e-10)
     break;
 end
 end
-%
+%%
 % semilogy(abs(u(1:3:nt*3)+u(nt*3+1:3:end-1)),'x-'); hold on;
 % semilogy(abs(u(2:3:nt*3)+u(nt*3+2:3:end-1)),'x-'); hold on;
 % semilogy(abs(u(3:3:nt*3)+u(nt*3+3:3:end-1)),'x-'); hold on;
@@ -99,12 +99,13 @@ clf;
 
 % up=[evc(:,105);0]; ntp=nt; u1=up(1:end-1);
 % up=[j2*u2;0]; ntp=nt; 
-up=[u]; ntp=nt; 
+up=[u0]; ntp=nt; 
 zp=reshape(up(1:(end-1)/2),[3,ntp])'+1i*reshape(up((end-1)/2+1:(end-1)),[3,ntp])';
 xp=ifft([zp;conj(flipud(zp(2:end,:)))])*((length(zp)-1)*2+1);xp=real(xp); xpp=xp;
 % xp=xp+xpb;  
 plot3(xp(:,1),xp(:,2),xp(:,3)); grid on; hold on; xBase=xp;
 
+%%
 iev=57; up=u+[evc(:,iev);0]; ntp=nt; u1=up(1:end-1);
 % up=[j2*u2;0]; ntp=nt; 
 % up=[u]; ntp=nt; 

@@ -52,7 +52,7 @@ tic;
     
      evalJacRhs
 %      evalJacRhs_bdf2
-    %
+    g(end)
     du=-sparse(J)\g;
     
 %    [L,U] = ilu(sparse(J),struct('type','ilutp','droptol',1e-16));

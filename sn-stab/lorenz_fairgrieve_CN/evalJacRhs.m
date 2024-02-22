@@ -59,26 +59,26 @@ J(iz,iz)=1; J(iz,3)=-1; g(iz)=u(iz)-u(3);
 % 
 
 %% phase cond
-% ip=phaseIndex;
-% % if (ip==1 && ip==np) warning("ip lols - fatal"); end
-% ix=ip*neq-2;
-%         ixp=mod(ip*neq-2+neq-1,neq*np)+1;
-%         ixm=mod(ip*neq-2-neq-1,neq*np)+1-3*(ip==1);
-%        
-% 
+ip=phaseIndex;
+% if (ip==1 && ip==np) warning("ip lols - fatal"); end
+ix=ip*neq-2;
+        ixp=mod(ip*neq-2+neq-1,neq*np)+1;
+        ixm=mod(ip*neq-2-neq-1,neq*np)+1-3*(ip==1);
+       
+
 % g(iz+1)=(u(ixm)-u(ixp))/ds/2-derX;
-% % g(iz+1)=(u(ixm)-u(ixp))/ds/2+13.212372967119705;
-%     J(iz+1,ixm)=1/ds/2;
-%     J(iz+1,ixp)=-1/ds/2;
+% g(iz+1)=(u(ixm)-u(ixp))/ds/2+13.212372967119705;
+    J(iz+1,ixm)=1/ds/2;
+    J(iz+1,ixp)=-1/ds/2;
 
 %% new pc
-ip=1;
-ix=ip*neq-2; ixp=ix+neq; ixm=neq*np-2-3;
-iy=ip*neq-1; iyp=iy+neq; iym=neq*np-1-3;
-iz=ip*neq; izp=iz+neq; izm=neq*np-3;
-
-
-% g(iz+1)=(x0p-x0m)/ds/2*(u(ix)-x0);
-J(np*neq+1,ix)=(u(ixp)-u(ixm))/ds/2;
-J(np*neq+1,iy)=(u(iyp)-u(iym))/ds/2;
-J(np*neq+1,iz)=(u(izp)-u(izm))/ds/2;
+% ip=1;
+% ix=ip*neq-2; ixp=ix+neq; ixm=neq*np-2-3;
+% iy=ip*neq-1; iyp=iy+neq; iym=neq*np-1-3;
+% iz=ip*neq; izp=iz+neq; izm=neq*np-3;
+% 
+% 
+% % g(iz+1)=(x0p-x0m)/ds/2*(u(ix)-x0);
+% J(np*neq+1,ix)=(u(ixp)-u(ixm))/ds/2;
+% J(np*neq+1,iy)=(u(iyp)-u(iym))/ds/2;
+% J(np*neq+1,iz)=(u(izp)-u(izm))/ds/2;

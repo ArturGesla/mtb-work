@@ -102,8 +102,22 @@ for ik=0:2*nt-1
     
     
 end
-g(lastid)=sum(u(neq*nt+1:neq:end-1).*[0:1:nt-1]');
-aa=neq*nt+1:neq:lastid-1;
-ii=[ii,aa./aa*lastid]; jj=[jj,aa]; vv=[vv,[0:1:nt-1]];
+% g(lastid)=0;%sum(u(neq*nt+1:neq:end-1).*[0:1:nt-1]');
+
+%%
+% g(lastid)=sum(u(neq*nt+1:neq:end-1).*[0:1:nt-1]');
+% aa=neq*nt+1:neq:lastid-1;
+% ii=[ii,aa./aa*lastid]; jj=[jj,aa]; vv=[vv,[0:1:nt-1]];
+
+%%
+g(lastid)=0;%sum(u(neq*nt+1:neq:end-1).*[0:1:nt-1]');
+sx=sum(u(neq*nt+1:neq:end-1).*[0:1:nt-1]');
+sy=sum(u(neq*nt+2:neq:end-1).*[0:1:nt-1]');
+sz=sum(u(neq*nt+3:neq:end-1).*[0:1:nt-1]');
+aa=neq*nt+1:neq:lastid-1; aar=aa-neq*nt;
+ii=[ii,aa./aa*lastid]; jj=[jj,aar]; vv=[vv,aa./aa*sx];
+ii=[ii,aa./aa*lastid]; jj=[jj,aar+1]; vv=[vv,aa./aa*sy];
+ii=[ii,aa./aa*lastid]; jj=[jj,aar+2]; vv=[vv,aa./aa*sz];
+
 jac=sparse(ii,jj,vv);
 end

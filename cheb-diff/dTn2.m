@@ -1,4 +1,10 @@
 function f=dTn2(x,n)
-if (length(x)==1)
-f=n*((n+1)*Tn(x,n)-Un(x,n))/(x^2-1);
+if (abs(x)~=1)
+    f=n*((n+1)*Tn(x,n)-Un(x,n))/(x^2-1);
+elseif(x==1)
+    f=(n^4-n^2)/3;
+elseif(x==-1)
+    f=(-1)^n*(n^4-n^2)/3;
+
+end
 end

@@ -1,4 +1,4 @@
-nt = 3;
+nt = 1;
 
 filenametosave =strcat('SymbolicNSCavitDiffTTranspose_nt',num2str(nt))
 

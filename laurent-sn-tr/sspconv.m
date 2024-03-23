@@ -1,31 +1,32 @@
+
+
 function Eqk = sspconv(u,v)
 % We assume u and v have the same size and are vectors 
 % Here, we return only the 
 % central part of the convolution of the same size than u 
 
-% Ugly coding with loops  but OK for now
+% Ugly coding with loops  but OK because it is used only in
+% preprocessing. 
 
-nt = length(u);
-if mod(nt,2) == 0
-    error(' Error nt must be odd')
-end
+nt = 2*length(u)-1; %  nt is here different than in the rest of the code!
 nshift = (nt+1)/2; 
-syms Eqk [1 nt];
+syms Eqk [1 length(u)];
 ktab = -(nt-1)/2:(nt-1)/2;
 
-for knum= ktab
-    kind = knum + nshift;
+uf = [conj(fliplr(u(2:end))) u ]; 
+vf = [conj(fliplr(v(2:end))) v ];
+
+for knum= 0:(nt-1)/2 
+    kind = knum + 1;
     Eqk(kind) = 0;
     for pnum = ktab
         for lnum = ktab
             if knum==pnum+lnum
-                Eqk(kind) = Eqk(kind) + u(pnum+nshift)*v(lnum+nshift);
+                Eqk(kind) = Eqk(kind) + uf(pnum+nshift)*vf(lnum+nshift);
             end
         end
     end
 end
-% disp('Warning ssp')
-% Eqk = u.*v;
-% 
+
 return
 end

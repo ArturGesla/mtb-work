@@ -42,7 +42,7 @@ uM=[uM,u];
 uMC=[];
 % r=15;
 uinit=u;
-%%
+%
 % calc J and g
 % r=r*1.1
 % for ii=1:42

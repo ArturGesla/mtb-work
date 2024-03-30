@@ -5,12 +5,13 @@ clc; close all; clear; mua=[];
 
 % Noack system
 np=520; %r=24; 
-nt=30; 
+nt=60; 
 
 % mu=0.04; r=sqrt(mu); gm=1; %gamma
 % mu=0.04+it*0.04; r=sqrt(mu); gm=1; %gamma
 % mu=5; r=sqrt(mu); gm=1; %gamma
 mu=2.005;
+mu=1.99;
 lam=mu;
 delta=0.8*mu-0.8*2.8+1;
 z=(1-sqrt(delta))/0.4;
@@ -19,8 +20,8 @@ r=sqrt(-z*(z-lam));
 neq=3; %np=100; np=np+2;
 
 %init
-om1=1;
-t=0:2*pi/(np-1):2*pi; u=r*cos(t*om1); v=r*sin(t*om1); w=z*ones(1,length(t));
+om1=1/4;
+t=0:2*pi/(np-1):2*pi/om1; u=r*cos(t*om1); v=r*sin(t*om1); w=z*ones(1,length(t));
 T=2*pi/om1; x=u; y=v; z=w;
 
 X=[x',y',z'];
@@ -40,7 +41,7 @@ plot(tch,y,':'); hold on; set(gca,"ColorOrderIndex",1);
 plot(tch,ycut,'-'); hold on; set(gca,"ColorOrderIndex",1);
 fprintf("cheb init approx accuracy: %4.2e\n",norm(y-ycut,"fro"));
 grid on; legend("exact x ","exact y ","exact z ","cheb")
-%
+%%
 u=[reshape(real(a(1:nt,:).'),[3*nt,1])];
 u(nt*3+1)=2*pi/t(end);
 uinit=u;
@@ -82,7 +83,7 @@ semilogy(abs(reshape(u(1:end-1),[3,nt]))');
 %
 % [U,S,V]=svds(jac(1:end-1,1:end-1),5,'smallest');
 % [U,S,V]=svds(jac(1:end,1:end),5,'smallest');
-%
+%%
 
 % second stability
 
@@ -118,11 +119,13 @@ disp(sort(flmult'));
 fprintf("Numerical fl mult:\n");
 flnum=1./(1-evs)';
 disp(sort(flnum));
-fprintf("Diff:\n");
-disp(sort(flnum)-sort(flmult'));
+% fprintf("Diff:\n");
+% disp(sort(flnum)-sort(flmult'));
 % save("flnum-"+num2str(nt)+".mat",'nt','flnum','flmult');
 % close all;
-% visu
+% flexp=log(flnum)/2/pi*u(end)
+
+%% visu
 close all;
 up=u;
 neq=3;
@@ -137,7 +140,7 @@ end
 plot3(xch(:,1),xch(:,2),xch(:,3),'-'); hold on; plot3(xch(1,1),xch(1,2),xch(1,3),'>'); hold on; 
 grid on; hold on;
 
-%
+%%
 
 % up=u+[V(:,5);0];
 up=u+[evc(:,2);0]+[evc(:,1);0];

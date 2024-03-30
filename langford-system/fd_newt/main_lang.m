@@ -2,10 +2,11 @@ close all; clear; clc;
 dt=1e-1;
 nt=300/dt; %generalised does not work wtf xd
 
-t0=0;
+t0=0; mu=1.99;%2.005;
 % a=-3; b=-9.3; c=8; d=-3; e=5.98; close all;
 % a=-3; b=-1; c=-b; d=a; e=2/3; close all; x0=[1e-2;0;1e-3]; %per orbit
- mu=1.99; a=mu-3; b=-1/4; c=-b; d=a; e=mu; c2=0.2; close all; x0=[0.1;0;2]; %per orbit
+ % mu=1.99;
+ a=mu-3; b=-1/4; c=-b; d=a; e=mu; c2=0.2; close all; x0=[0.1;0;2]; %per orbit
 % a=-3; b=-8; c=8; d=-3; e=5.98; close all; x0=[0.1;0.1;0.1]; %per orbit
 % langfordG = @(t,y) [a*y(1)+b*y(2)+y(1)*y(3);
 %     c*y(1)+d*y(2)+y(2)*y(3);
@@ -44,9 +45,9 @@ semilogy(t2,exp(-0.0624*t2))
 % lam=1.5;
 % lam=(2-sqrt(1.76))/0.4;
 % mu=1.9;
-% mu=1.99;
+mu=1.99;
 % mu=2.001;
-mu=2.005;
+% mu=2.005;
 lam=mu;
 x=0;y=0; z=lam;
 delta=0.8*mu-0.8*2.8+1
@@ -97,7 +98,7 @@ close all;
 plot(X(:,1),X(:,2),'x-'); hold on;
 plot(X(1,1),X(1,2),'o-')
 
-%
+%%
 T=2*pi/-b;
 % np=np-1;
 dt=T/(np-1);

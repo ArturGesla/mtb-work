@@ -27,23 +27,26 @@ for ikl=0:nt-1
 
         g(1:neq:end-1)=g(1:neq:end-1)+1/2*(u(ixl)*u(izr))*(cos((ikl+ikr)*acos(collx))+cos(abs(ikl-ikr)*acos(collx)));
         g(2:neq:end-1)=g(2:neq:end-1)+1/2*(u(izl)*u(iyr))*(cos((ikl+ikr)*acos(collx))+cos(abs(ikl-ikr)*acos(collx)));
-        g(3:neq:end-1)=g(3:neq:end-1)-1/2*(u(ixl)*u(ixr))*(cos((ikl+ikr)*acos(collx))+cos(abs(ikl-ikr)*acos(collx)))-1/2*(u(iyl)*u(iyr))*(cos((ikl+ikr)*acos(collx))+cos(abs(ikl-ikr)*acos(collx)))-1/2*(u(izl)*u(izr))*(cos((ikl+ikr)*acos(collx))+cos(abs(ikl-ikr)*acos(collx)));
+        % g(3:neq:end-1)=g(3:neq:end-1)-1/2*(u(ixl)*u(ixr))*(cos((ikl+ikr)*acos(collx))+cos(abs(ikl-ikr)*acos(collx)))-1/2*(u(iyl)*u(iyr))*(cos((ikl+ikr)*acos(collx))+cos(abs(ikl-ikr)*acos(collx)))-1/2*(u(izl)*u(izr))*(cos((ikl+ikr)*acos(collx))+cos(abs(ikl-ikr)*acos(collx)));
+        g(3:neq:end-1)=g(3:neq:end-1)-(u(ixl)*u(ixr))*(cos((ikl)*acos(collx)).*cos((ikr)*acos(collx)))-(u(iyl)*u(iyr))*(cos((ikl)*acos(collx)).*cos((ikr)*acos(collx)))-(u(izl)*u(izr))*(cos((ikl)*acos(collx)).*cos((ikr)*acos(collx)));
 
-        ii=[ii,1:neq:nt*neq]; jj=[jj,ixl*ones([1,nt])];  vv=[vv; -1/2*(u(izr))*(cos((ikl+ikr)*acos(collx))+cos(abs(ikl-ikr)*acos(collx)))];
-        ii=[ii,1:neq:nt*neq]; jj=[jj,izr*ones([1,nt])];  vv=[vv; -1/2*(u(ixl))*(cos((ikl+ikr)*acos(collx))+cos(abs(ikl-ikr)*acos(collx)))];
+        ii=[ii,1:neq:nt*neq]; jj=[jj,ixl*ones([1,nt])];  vv=[vv; +1/2*(u(izr))*(cos((ikl+ikr)*acos(collx))+cos(abs(ikl-ikr)*acos(collx)))];
+        ii=[ii,1:neq:nt*neq]; jj=[jj,izr*ones([1,nt])];  vv=[vv; +1/2*(u(ixl))*(cos((ikl+ikr)*acos(collx))+cos(abs(ikl-ikr)*acos(collx)))];
 
-        ii=[ii,2:neq:nt*neq]; jj=[jj,izl*ones([1,nt])];  vv=[vv; -1/2*(u(iyr))*(cos((ikl+ikr)*acos(collx))+cos(abs(ikl-ikr)*acos(collx)))];
-        ii=[ii,2:neq:nt*neq]; jj=[jj,iyr*ones([1,nt])];  vv=[vv; -1/2*(u(izl))*(cos((ikl+ikr)*acos(collx))+cos(abs(ikl-ikr)*acos(collx)))];
+        ii=[ii,2:neq:nt*neq]; jj=[jj,izl*ones([1,nt])];  vv=[vv; +1/2*(u(iyr))*(cos((ikl+ikr)*acos(collx))+cos(abs(ikl-ikr)*acos(collx)))];
+        ii=[ii,2:neq:nt*neq]; jj=[jj,iyr*ones([1,nt])];  vv=[vv; +1/2*(u(izl))*(cos((ikl+ikr)*acos(collx))+cos(abs(ikl-ikr)*acos(collx)))];
 
-        ii=[ii,3:neq:nt*neq]; jj=[jj,ixl*ones([1,nt])];  vv=[vv; 1/2*(u(ixr))*(cos((ikl+ikr)*acos(collx))+cos(abs(ikl-ikr)*acos(collx)))];
-        ii=[ii,3:neq:nt*neq]; jj=[jj,ixr*ones([1,nt])];  vv=[vv; 1/2*(u(ixl))*(cos((ikl+ikr)*acos(collx))+cos(abs(ikl-ikr)*acos(collx)))];
-        ii=[ii,3:neq:nt*neq]; jj=[jj,iyr*ones([1,nt])];  vv=[vv; 1/2*(u(iyl))*(cos((ikl+ikr)*acos(collx))+cos(abs(ikl-ikr)*acos(collx)))];
-        ii=[ii,3:neq:nt*neq]; jj=[jj,iyl*ones([1,nt])];  vv=[vv; 1/2*(u(iyr))*(cos((ikl+ikr)*acos(collx))+cos(abs(ikl-ikr)*acos(collx)))];
+        ii=[ii,3:neq:nt*neq]; jj=[jj,ixl*ones([1,nt])];  vv=[vv; -1/2*(u(ixr))*(cos((ikl+ikr)*acos(collx))+cos(abs(ikl-ikr)*acos(collx)))];
+        ii=[ii,3:neq:nt*neq]; jj=[jj,ixr*ones([1,nt])];  vv=[vv; -1/2*(u(ixl))*(cos((ikl+ikr)*acos(collx))+cos(abs(ikl-ikr)*acos(collx)))];
+        ii=[ii,3:neq:nt*neq]; jj=[jj,iyr*ones([1,nt])];  vv=[vv; -1/2*(u(iyl))*(cos((ikl+ikr)*acos(collx))+cos(abs(ikl-ikr)*acos(collx)))];
+        ii=[ii,3:neq:nt*neq]; jj=[jj,iyl*ones([1,nt])];  vv=[vv; -1/2*(u(iyr))*(cos((ikl+ikr)*acos(collx))+cos(abs(ikl-ikr)*acos(collx)))];
+        ii=[ii,3:neq:nt*neq]; jj=[jj,izl*ones([1,nt])];  vv=[vv; -1/2*(u(izr))*(cos((ikl+ikr)*acos(collx))+cos(abs(ikl-ikr)*acos(collx)))];
+        ii=[ii,3:neq:nt*neq]; jj=[jj,izr*ones([1,nt])];  vv=[vv; -1/2*(u(izl))*(cos((ikl+ikr)*acos(collx))+cos(abs(ikl-ikr)*acos(collx)))];
 
     end
 end
 
-%triple nonlinearity
+% %triple nonlinearity
 for ikl=0:nt-1
     for ikr=0:nt-1
         for ikm=0:nt-1
@@ -51,9 +54,19 @@ for ikl=0:nt-1
         ixr=abs(ikr)*neq+1;  ixl=abs(ikl)*neq+1; iyr=abs(ikr)*neq+2;  iyl=abs(ikl)*neq+2; izr=abs(ikr)*neq+3;  izl=abs(ikl)*neq+3; ixm=abs(ikm)*neq+1;   iym=abs(ikm)*neq+2;  izm=abs(ikm)*neq+3; 
 
         %no projection of product to cheb modes - actually not so usefull on collocation
-        g(1:neq:end-1)=g(1:neq:end-1)-(u(ixl)*u(izr)*u(izm))*(cos((ikl)*acos(collx)).*cos((ikr)*acos(collx)).*cos((ikm)*acos(collx)));
-        g(2:neq:end-1)=g(2:neq:end-1)-(u(iyl)*u(izr)*u(izm))*(cos((ikl)*acos(collx)).*cos((ikr)*acos(collx)).*cos((ikm)*acos(collx)));
+        g(1:neq:end-1)=g(1:neq:end-1)-0.2*(u(ixl)*u(izr)*u(izm))*(cos((ikl)*acos(collx)).*cos((ikr)*acos(collx)).*cos((ikm)*acos(collx)));
+        g(2:neq:end-1)=g(2:neq:end-1)-0.2*(u(iyl)*u(izr)*u(izm))*(cos((ikl)*acos(collx)).*cos((ikr)*acos(collx)).*cos((ikm)*acos(collx)));
         % g(3:neq:end-1)=g(3:neq:end-1)-1/2*(u(ixl)*u(ixr))*(cos((ikl+ikr)*acos(collx))+cos(abs(ikl-ikr)*acos(collx)))-1/2*(u(iyl)*u(iyr))*(cos((ikl+ikr)*acos(collx))+cos(abs(ikl-ikr)*acos(collx)))-1/2*(u(izl)*u(izr))*(cos((ikl+ikr)*acos(collx))+cos(abs(ikl-ikr)*acos(collx)));
+
+ii=[ii,1:neq:nt*neq]; jj=[jj,ixl*ones([1,nt])];  vv=[vv; -0.2*(u(izr)*u(izm))*(cos((ikl)*acos(collx)).*cos((ikr)*acos(collx)).*cos((ikm)*acos(collx)))];
+ii=[ii,1:neq:nt*neq]; jj=[jj,izr*ones([1,nt])];  vv=[vv; -0.2*(u(ixl)*u(izm))*(cos((ikl)*acos(collx)).*cos((ikr)*acos(collx)).*cos((ikm)*acos(collx)))];
+ii=[ii,1:neq:nt*neq]; jj=[jj,izm*ones([1,nt])];  vv=[vv; -0.2*(u(ixl)*u(izr))*(cos((ikl)*acos(collx)).*cos((ikr)*acos(collx)).*cos((ikm)*acos(collx)))];
+
+ii=[ii,2:neq:nt*neq]; jj=[jj,iyl*ones([1,nt])];  vv=[vv; -0.2*(u(izr)*u(izm))*(cos((ikl)*acos(collx)).*cos((ikr)*acos(collx)).*cos((ikm)*acos(collx)))];
+ii=[ii,2:neq:nt*neq]; jj=[jj,izr*ones([1,nt])];  vv=[vv; -0.2*(u(iyl)*u(izm))*(cos((ikl)*acos(collx)).*cos((ikr)*acos(collx)).*cos((ikm)*acos(collx)))];
+ii=[ii,2:neq:nt*neq]; jj=[jj,izm*ones([1,nt])];  vv=[vv; -0.2*(u(iyl)*u(izr))*(cos((ikl)*acos(collx)).*cos((ikr)*acos(collx)).*cos((ikm)*acos(collx)))];
+
+
         end
     end
 end

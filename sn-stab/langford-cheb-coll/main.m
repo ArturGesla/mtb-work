@@ -5,13 +5,13 @@ clc; close all; clear; mua=[];
 
 % Noack system
 np=520; %r=24; 
-nt=60; 
+nt=30; 
 
 % mu=0.04; r=sqrt(mu); gm=1; %gamma
 % mu=0.04+it*0.04; r=sqrt(mu); gm=1; %gamma
 % mu=5; r=sqrt(mu); gm=1; %gamma
 mu=2.005;
-mu=1.99;
+% mu=1.99;
 lam=mu;
 delta=0.8*mu-0.8*2.8+1;
 z=(1-sqrt(delta))/0.4;
@@ -25,7 +25,7 @@ t=0:2*pi/(np-1):2*pi/om1; u=r*cos(t*om1); v=r*sin(t*om1); w=z*ones(1,length(t));
 T=2*pi/om1; x=u; y=v; z=w;
 
 X=[x',y',z'];
-%%
+%
 
  X1=X;
 tch=cos(0:pi/(np*1-1):pi)'; tch1=tch;
@@ -41,7 +41,7 @@ plot(tch,y,':'); hold on; set(gca,"ColorOrderIndex",1);
 plot(tch,ycut,'-'); hold on; set(gca,"ColorOrderIndex",1);
 fprintf("cheb init approx accuracy: %4.2e\n",norm(y-ycut,"fro"));
 grid on; legend("exact x ","exact y ","exact z ","cheb")
-%%
+%
 u=[reshape(real(a(1:nt,:).'),[3*nt,1])];
 u(nt*3+1)=2*pi/t(end);
 uinit=u;
@@ -64,7 +64,7 @@ collx=-cos(0:pi/(nt*1-1):pi)';
 %
 close all;
 semilogy(abs(reshape(uinit(1:end-1),[3,nt])'),'--'); hold on; grid on;
-%%
+%
 % u=u*0; u(end-3)=1;
 for i=1:10
 [g,jac]=calculateRhsAndJac(3,nt,u,lam,om1,collx);
@@ -119,15 +119,25 @@ disp(sort(flmult'));
 fprintf("Numerical fl mult:\n");
 flnum=1./(1-evs)';
 disp(sort(flnum));
+abs(flnum)
 % fprintf("Diff:\n");
 % disp(sort(flnum)-sort(flmult'));
 % save("flnum-"+num2str(nt)+".mat",'nt','flnum','flmult');
 % close all;
 % flexp=log(flnum)/2/pi*u(end)
 
+% fprintf("%4.4f\t%4.4f\t%4.4f\t%4.4f\n",real(flnum(1)),imag(flnum(1)),real(flnum(3)),imag(flnum(3)))
+%%
+delta=0.8*lam-0.8*2.8+1;
+z=(1-sqrt(delta))/0.4;
+r=sqrt(-z*(z-lam));
+mu=1/2*(lam-2*z+sqrt((lam-2*z)^2-8*r*(r-0.4*r*z)));
+exp(mu*2*pi/0.25)
+abs(exp(mu*2*pi/0.25))
+
 %% visu
 close all;
-up=u;
+up=u+1e-3*sum([evc(:,1:2);0,0],2);
 neq=3;
 xch=X*0;
 for i=0:nt-1    
@@ -137,7 +147,20 @@ for i=0:nt-1
 end
 
 % plot(tch,xch,'-'); hold on; set(gca,"ColorOrderIndex",1); %same as ycut
-plot3(xch(:,1),xch(:,2),xch(:,3),'-'); hold on; plot3(xch(1,1),xch(1,2),xch(1,3),'>'); hold on; 
+plot3(xch(:,1),xch(:,2),xch(:,3),'-'); hold on; %cd mecaplot3(xch(1,1),xch(1,2),xch(1,3),'>'); hold on; 
+grid on; hold on;
+
+up=u;%+1e-3*sum([evc(:,1:2);0,0],2);
+neq=3;
+xch=X*0;
+for i=0:nt-1    
+    xch(:,1)=xch(:,1)+up(i*neq+1).*cos(i*acos(tch1));
+    xch(:,2)=xch(:,2)+up(i*neq+2).*cos(i*acos(tch1));
+    xch(:,3)=xch(:,3)+up(i*neq+3).*cos(i*acos(tch1));
+end
+
+% plot(tch,xch,'-'); hold on; set(gca,"ColorOrderIndex",1); %same as ycut
+plot3(xch(:,1),xch(:,2),xch(:,3),'-'); hold on; %plot3(xch(1,1),xch(1,2),xch(1,3),'>'); hold on; 
 grid on; hold on;
 
 %%

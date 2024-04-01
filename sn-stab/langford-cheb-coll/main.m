@@ -119,21 +119,22 @@ disp(sort(flmult'));
 fprintf("Numerical fl mult:\n");
 flnum=1./(1-evs)';
 disp(sort(flnum));
-abs(flnum)
+% abs(flnum)
 % fprintf("Diff:\n");
 % disp(sort(flnum)-sort(flmult'));
 % save("flnum-"+num2str(nt)+".mat",'nt','flnum','flmult');
 % close all;
-% flexp=log(flnum)/2/pi*u(end)
+format shortE
+flexp=log(flnum)/2/pi/4
 
 % fprintf("%4.4f\t%4.4f\t%4.4f\t%4.4f\n",real(flnum(1)),imag(flnum(1)),real(flnum(3)),imag(flnum(3)))
 %%
 delta=0.8*lam-0.8*2.8+1;
 z=(1-sqrt(delta))/0.4;
 r=sqrt(-z*(z-lam));
-mu=1/2*(lam-2*z+sqrt((lam-2*z)^2-8*r*(r-0.4*r*z)));
-exp(mu*2*pi/0.25)
-abs(exp(mu*2*pi/0.25))
+mu=1/2*(lam-2*z+sqrt((lam-2*z)^2-8*r*(r-0.4*r*z)))
+% exp(mu*2*pi/0.25)
+% abs(exp(mu*2*pi/0.25))
 
 %% visu
 close all;

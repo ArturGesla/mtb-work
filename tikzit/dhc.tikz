@@ -1,0 +1,25 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=none] (0) at (5, 5) {};
+		\node [style=none] (1) at (0, 0) {};
+		\node [style=none] (2) at (5, 0) {};
+		\node [style=none] (3) at (58.75, -27.5) {};
+		\node [style=none] (4) at (0, 5) {};
+		\node [style=none] (5) at (6, 0) {};
+		\node [style=none] (6) at (0, 6) {};
+		\node [style=none] (7) at (-1.5, 2.5) {$\theta=0.5$};
+		\node [style=none] (8) at (6.75, 2.5) {$\theta=-0.5$};
+		\node [style=none] (9) at (2.5, 5.5) {$\theta=0.5-x$};
+		\node [style=none] (10) at (2.5, -0.75) {$\theta=0.5-x$};
+		\node [style=none] (11) at (6.5, 0) {$x$};
+		\node [style=none] (12) at (-0.75, 6) {$y$};
+		\node [style=none] (13) at (5, -0.5) {1};
+		\node [style=none] (14) at (-0.5, 5) {1};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw (4.center) to (0.center);
+		\draw (0.center) to (2.center);
+		\draw [style=new edge style 1] (1.center) to (5.center);
+		\draw [style=new edge style 1, in=270, out=90] (1.center) to (6.center);
+	\end{pgfonlayer}
+\end{tikzpicture}

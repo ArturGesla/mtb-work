@@ -2,7 +2,7 @@ clc; clear; close all;
 cd(fileparts(matlab.desktop.editor.getActiveFilename));
 %
 % neq=3; r=28; b=8/3; sigma=10; T=1.5586; np=70; %valid points, no repeats
-neq=3; r=24; b=8/3; sigma=10; np=30; np=np+2;%valid points, no repeats
+neq=3; r=24; b=8/3; sigma=10; np=20; np=np+2;%valid points, no repeats
 % neq=3; r=160; b=8/3; sigma=10; T=1.1521; np=240; %valid points, no repeats
 % neq=3; r=140; b=8/3; sigma=10; T=1.5586;
 % neq=3; r=145; b=8/3; sigma=10; T=1.5586;
@@ -26,7 +26,7 @@ u=zeros(neq*np+1,1)+T;
 % ustab=zeros(neq*np,1);
 
 
-amp=0;
+amp=0.0;
 x=X(:,1); x=x+rand(1,length(x))'.*x*amp;
 y=X(:,2); y=y+rand(1,length(y))'.*y*amp;
 z=X(:,3); y=y+rand(1,length(y))'.*y*amp;
@@ -41,6 +41,7 @@ uM=[];
 uM=[uM,u];
 uMC=[];
 % r=15;
+uinit=u;
 %
 % calc J and g
 % r=r*1.1
@@ -51,7 +52,7 @@ tic;
     
      evalJacRhs
 %      evalJacRhs_bdf2
-    %
+    g(end)
     du=-sparse(J)\g;
     
 %    [L,U] = ilu(sparse(J),struct('type','ilutp','droptol',1e-16));
@@ -72,7 +73,7 @@ tic;
 %  r=r+(24.74-r)*0.1
 % r=r-0.1
 end
-%% %%
+%
 % hold on; close all;
 % % u=u-du2;
 % plot(u(1:neq:end-1),u(2:neq:end-1),'-x'); hold on;
@@ -123,7 +124,11 @@ axis equal;
 plot(u(1:neq:end-1),u(2:neq:end-1)); 
 % plot(u(1:neq:3),u(2:neq:2*neq),'o');
 plot(u(end-3),u(end-2),'sq');
-%
+
+plot(uinit(1:neq:end-1),uinit(2:neq:end-1)); 
+% plot(u(1:neq:3),u(2:neq:2*neq),'o');
+plot(uinit(end-3),uinit(end-2),'sq');
+%%
 % ie=2;
 % plot(u(1:2:end-1)+evc(1:2:end-1,ie),u(2:2:end-1)+evc(2:2:end-1,ie));
 % evc=evc*3e3;
@@ -135,5 +140,5 @@ ie=3;
 plot3(u(1:neq:end-1)+mult*real(evc(1:neq:end,ie)),u(2:neq:end-1)+mult*real(evc(2:neq:end,ie)),u(3:neq:end-1)+mult*real(evc(3:neq:end,ie)));
 
 title("Lorenz | r: "+num2str(r)+" fl mult: "+num2str(lam(ie)))
-
+%%
 save("solCNLorenz-"+num2str(np)+".mat","exp1","np","evc","u",'r');

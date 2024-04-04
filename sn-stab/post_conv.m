@@ -1,5 +1,5 @@
 clc; clear;
-%%
+%
 cd     '/people/gesla/Documents/git/mtb-work/sn-stab'/lorenz_fairgrieve_CN/;
 %
 ll=importdata("list");
@@ -34,7 +34,7 @@ cd /people/gesla/Documents/git/mtb-work/sn-stab/lorenz-cheb-coll/;
 %
 ll=importdata("list");
 nta=[]; eva=[];
-for i=1:length(ll)
+for i=2:length(ll)
     a=load(ll{i}); nta=[nta;a.nt ]; eva=[eva;max(a.exponents) ];    i;
 end
 [a,b]=sort(nta); nta=nta(b); eva=eva(b);
@@ -84,12 +84,13 @@ legend(leg,"Location","east","Position",[0.654500610783936   0.243501807464159  
 xlabel("1D dof");% title("Abs err in 0.0465 Fl exponent"); 
 ylabel("abslute error");
 
-jfm_plt_aid;
+% jfm_plt_aid;
 
 exportgraphics(gcf,"art3-conv.eps")
 
 %%
 close all; clear;
+cd     '/people/gesla/Documents/git/mtb-work/sn-stab';
 a=load("./lorenz_fairgrieve_CN/stabCNLorenz-21.mat"); plot(real(a.exp1),imag((a.exp1)),'x'); hold on;
 a=load("./lorenz-sn/spectrumSNLorenz-10.mat"); plot(real(a.evs),imag((a.evs))/a.om,'o');
 a=load("./lorenz-cheb-coll/flnum-20-cheb-coll-lornez.mat"); plot(real(a.exponents),imag((a.exponents)),'+');
@@ -98,7 +99,7 @@ xlim([-0.025489432551145   0.065670429159882]); ylim([-10.698402747491688 10.698
 xlabel("$\mu_r$"); ylabel("$\mu_i/ \omega$");
 legend("FD","Fourier","Chebyshev","Location","best")
 
-jfm_plt_aid;
+% jfm_plt_aid;
 
 
 exportgraphics(gcf,"art3-spec.eps")

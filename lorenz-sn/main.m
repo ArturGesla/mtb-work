@@ -3,7 +3,7 @@ clc; close all; clear;
 np=100; r=24;
 main_lorenz_ti
 %
-z=fft(X); nt=3;
+z=fft(X); nt=18;
 arr=[1:nt]; a1=arr; arr=[arr,length(z)-fliplr(arr(1:end-1))+1];
 zcut=z*0; zcut(arr,:)=z(arr,:);
 X2=ifft(zcut);
@@ -74,6 +74,21 @@ plot(evs,'x'); grid on;
 om=2*pi/T;
 om=u(end);
  plot(real(evs),imag(evs)/om,'o'); grid on; hold on;
+
+ %% visu evc
+ close all; leg=[];
+ iip=0;
+ for ip=1:length(B)
+ ep=evc(:,ip);
+ if(evs(ip)>0.04)
+ % if(1)
+     plot(iip+abs(ep(1:3:end/2))); hold on;
+      title(num2str(evs(ip)));
+iip=iip+0.1;
+leg=[leg;string(num2str(evs(ip)))];
+ end
+ end
+ legend(leg);
  %% new idea
  
 %%

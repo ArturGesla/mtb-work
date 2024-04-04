@@ -2,7 +2,7 @@ clc; clear; close all;
 cd(fileparts(matlab.desktop.editor.getActiveFilename));
 %
 % neq=3; r=28; b=8/3; sigma=10; T=1.5586; np=70; %valid points, no repeats
-neq=3; r=24; b=8/3; sigma=10; np=30; np=np+2;%valid points, no repeats
+neq=3; r=24; b=8/3; sigma=10; np=20; np=np+2;%valid points, no repeats
 % neq=3; r=160; b=8/3; sigma=10; T=1.1521; np=240; %valid points, no repeats
 % neq=3; r=140; b=8/3; sigma=10; T=1.5586;
 % neq=3; r=145; b=8/3; sigma=10; T=1.5586;
@@ -73,7 +73,7 @@ tic;
 %  r=r+(24.74-r)*0.1
 % r=r-0.1
 end
-%% %%
+%
 % hold on; close all;
 % % u=u-du2;
 % plot(u(1:neq:end-1),u(2:neq:end-1),'-x'); hold on;

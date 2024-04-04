@@ -1,6 +1,13 @@
 clc; close all; clear;
+cd(fileparts(matlab.desktop.editor.getActiveFilename));
+
 %
 np=52; r=24; nt=15;
+
+%  r=24; nt=20; np=4*nt; x0=[ 10.135982315094342  10.189521543725682  25.691556187487929]; T=0.6779; T= 0.6803;
+%  r=28; nt=20; np=4*nt; x0=[ 15.46726314426282  15.467263144262825  36.545259643893161]; T=1.558652210716179;
+ r=160; nt=28; np=400*nt; x0=[ 39.6949   40.0409  210.9480]; T=1.1536;
+ 
 main_lorenz_ti
 %
 z=fft(X); 
@@ -28,7 +35,7 @@ plot(x,'-x')
 u=[reshape(real(z1.'),[3*nt,1]);reshape(imag(z1.'),[3*nt,1])];
 u(nt*3*2+1)=om;
 u0=u;
-%%
+%
 close all;
 %
 % r=r+1e-6
@@ -40,7 +47,7 @@ if(norm(g)<1e-10)
     break;
 end
 end
-%%
+%
 % semilogy(abs(u(1:3:nt*3)+u(nt*3+1:3:end-1)),'x-'); hold on;
 % semilogy(abs(u(2:3:nt*3)+u(nt*3+2:3:end-1)),'x-'); hold on;
 % semilogy(abs(u(3:3:nt*3)+u(nt*3+3:3:end-1)),'x-'); hold on;
@@ -87,10 +94,13 @@ om=u(end);
  plot(real(evs),imag(evs)/om,'+'); grid on; hold on;
  text(real(evs),imag(evs)/om,num2str([1:length(evs)]'));
 
- b=(abs(evs)<Inf); evs=evs(b);
+ b=(abs(evs)<Inf); evs=evs(b); evc=evc(:,b);
  [a,b]=sort(abs(imag(evs))); 
  fprintf("Numerical fl mult:\n");
-disp(exp(2*pi/om*evs(b(1:3))).');
+disp(exp(2*pi/om*evs(b(1:3))).'); evc=evc(:,b(1:3));
+ fprintf("Numerical fl exp:\n");
+% disp((evs(b(1:3)))');
+fprintf("&%4.4e\t",sort((evs(b(1:3)))'))
 save("spectrumSNLorenz-"+num2str(nt)+".mat","evs","nt","om");
 
 %%
@@ -106,7 +116,16 @@ xp=ifft([zp;conj(flipud(zp(2:end,:)))])*((length(zp)-1)*2+1);xp=real(xp); xpp=xp
 plot3(xp(:,1),xp(:,2),xp(:,3)); grid on; hold on; xBase=xp;
 
 %%
-iev=57; up=u+[evc(:,iev);0]; ntp=nt; u1=up(1:end-1);
+
+iev=3; up=u+[evc(:,iev);0]*0; ntp=nt; u1=up(1:end-1);
+% up=[j2*u2;0]; ntp=nt; 
+% up=[u]; ntp=nt; 
+zp=reshape(up(1:(end-1)/2),[3,ntp])'+1i*reshape(up((end-1)/2+1:(end-1)),[3,ntp])';
+xp=ifft([zp;conj(flipud(zp(2:end,:)))])*((length(zp)-1)*2+1);xp=real(xp); xpp=xp;
+% xp=xp+xpb;  
+plot3(xp(:,1),xp(:,2),xp(:,3)); grid on; hold on; xBasePlusPert=xp;
+
+iev=3; up=u+[evc(:,iev);0]; ntp=nt; u1=up(1:end-1);
 % up=[j2*u2;0]; ntp=nt; 
 % up=[u]; ntp=nt; 
 zp=reshape(up(1:(end-1)/2),[3,ntp])'+1i*reshape(up((end-1)/2+1:(end-1)),[3,ntp])';
@@ -119,10 +138,10 @@ plot3(xp(:,1),xp(:,2),xp(:,3)); grid on; hold on; xBasePlusPert=xp;
 % x for  cheb
 xp=[xp;xp(1,:)];
 t=linspace(0,2*pi/u(end),length(xp));
-% save("xforcheb"+num2str(r)+".mat","xp","t",'r','u','nt');
+save("xforcheb"+num2str(r)+".mat","xp","t",'r','u','nt');
 
 %
-save("solSNLorenz-"+num2str(nt)+"-"+num2str(iev)+".mat","xBasePlusPert","xBase","u",'r');
+% save("solSNLorenz-"+num2str(nt)+"-"+num2str(iev)+".mat","xBasePlusPert","xBase","u",'r');
 
 %% expo counterpart
 ll=length(xp); sigma=evs(105)*1;

@@ -124,7 +124,7 @@ disp(sort(flnum));
 % disp(sort(flnum)-sort(flmult'));
 % save("flnum-"+num2str(nt)+".mat",'nt','flnum','flmult');
 % close all;
-format shortE
+format long
 flexp=log(flnum)/2/pi/4
 
 % fprintf("%4.4f\t%4.4f\t%4.4f\t%4.4f\n",real(flnum(1)),imag(flnum(1)),real(flnum(3)),imag(flnum(3)))

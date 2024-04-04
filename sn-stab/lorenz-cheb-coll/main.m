@@ -1,4 +1,5 @@
-clc; close all; clear; mua=[];
+clc; close all; 
+clear; mua=[];
 cd(fileparts(matlab.desktop.editor.getActiveFilename));
 
 %
@@ -6,17 +7,19 @@ cd(fileparts(matlab.desktop.editor.getActiveFilename));
 %
 
 % Lorenz system
- % r=24; nt=20; np=4*nt; x0=[ 10.135982315094342  10.189521543725682  25.691556187487929]; T=0.6779; T= 0.6803;
- r=28; nt=100; np=4*nt; x0=[ 15.46726314426282  15.467263144262825  36.545259643893161]; T=1.558652210716179;
- % r=160; nt=200; np=4*nt; x0=[ 39.6949   40.0409  210.9480]; T=1.1536;
+ r=24; nt=120; np=4*nt; x0=[ 10.135982315094342  10.189521543725682  25.691556187487929]; T=0.6779; T= 0.6803;
+%  r=28; nt=60; np=1*nt; x0=[ 15.46726314426282  15.467263144262825  36.545259643893161]; T=1.558652210716179;
+%  r=160; nt=150; np=40*nt; x0=[ 39.6949   40.0409  210.9480]; T=1.1536;
 main_lorenz_ti
 %
 %
 %  sn=load("../lorenz-sn/xforcheb.mat");
 % sn=load("../lorenz-sn/xforcheb24.7368.mat");
 % sn=load("../lorenz-sn/xforcheb24.73.mat");
-% sn=load("../lorenz-sn/xforcheb24.mat"); X=sn.xp; t=sn.t; r=sn.r; T=t(end);
-%% 
+% sn=load("../lorenz-sn/xforcheb28.mat");
+% sn=load("../lorenz-sn/xforcheb160.mat");
+sn=load("../lorenz-sn/xforcheb24.mat"); X=sn.xp; t=sn.t; r=sn.r; T=t(end);
+%
 % 
 %
  X1=X; 
@@ -24,22 +27,22 @@ tch=cos(0:pi/(np*1-1):pi)'; tch1=tch;
 % 
 % %
 tch=(tch+1)/2*t(end); X=interp1(t,X,tch); X3=X*0;
-% 
-% 
-% ax=sn.u(4:3:sn.nt*3,1);
-% bx=sn.u(sn.nt*3+1+3:3:sn.nt*3*2,1);
-% X3(:,1)=cos([1:sn.nt-1].*tch*sn.u(end))*ax*2-sin([1:sn.nt-1].*tch*sn.u(end))*bx*2+sn.u(1);
-% 
-% ay=sn.u(5:3:sn.nt*3,1);
-% by=sn.u(sn.nt*3+1+4:3:sn.nt*3*2,1);
-% X3(:,2)=cos([1:sn.nt-1].*tch*sn.u(end))*ay*2-sin([1:sn.nt-1].*tch*sn.u(end))*by*2+sn.u(2);
-% 
-% az=sn.u(6:3:sn.nt*3,1);
-% bz=sn.u(sn.nt*3+1+5:3:sn.nt*3*2,1);
-% X3(:,3)=cos([1:sn.nt-1].*tch*sn.u(end))*az*2-sin([1:sn.nt-1].*tch*sn.u(end))*bz*2+sn.u(3);
-% 
-% X=X3;
-%
+
+
+ax=sn.u(4:3:sn.nt*3,1);
+bx=sn.u(sn.nt*3+1+3:3:sn.nt*3*2,1);
+X3(:,1)=cos([1:sn.nt-1].*tch*sn.u(end))*ax*2-sin([1:sn.nt-1].*tch*sn.u(end))*bx*2+sn.u(1);
+
+ay=sn.u(5:3:sn.nt*3,1);
+by=sn.u(sn.nt*3+1+4:3:sn.nt*3*2,1);
+X3(:,2)=cos([1:sn.nt-1].*tch*sn.u(end))*ay*2-sin([1:sn.nt-1].*tch*sn.u(end))*by*2+sn.u(2);
+
+az=sn.u(6:3:sn.nt*3,1);
+bz=sn.u(sn.nt*3+1+5:3:sn.nt*3*2,1);
+X3(:,3)=cos([1:sn.nt-1].*tch*sn.u(end))*az*2-sin([1:sn.nt-1].*tch*sn.u(end))*bz*2+sn.u(3);
+
+X=X3;
+
 
 y=X; v2=[y;flipud(y(2:end-1,:))]; z=real(fft(v2)./length(v2)); a=z; a(2:end,:)=2*a(2:end,:); %z are cheb coeffs
 zcut=z*0; zcut([1:nt,end-nt+2:end],:)=z([1:nt,end-nt+2:end],:); ycut=ifft(zcut).*length(zcut); ycut=ycut(1:end/2+1,:);
@@ -54,7 +57,7 @@ fprintf("cheb init approx accuracy: %4.2e\n",norm(y-ycut,"fro"));
 
 collx=-cos(0:pi/(nt*1-1):pi)';
 
-%%
+%
 u=[reshape(real(a(1:nt,:).'),[3*nt,1])];
 u(nt*3+1)=2*pi/T;
 % % plot
@@ -73,7 +76,7 @@ u(nt*3+1)=2*pi/T;
 %
 close all; uinit=u;
 semilogy(abs(reshape(u(1:end-1),[3,nt])'),'--'); hold on; grid on; grid minor; title("Distribution on Chebyshev modes");
-%%
+%
 for ir=1:1;%40
 for i=1:15
 [g,jac]=calculateRhsAndJac(3,nt,u,r,1,collx);
@@ -91,6 +94,7 @@ end
 % set(gca,"ColorOrderIndex",1); semilogy(abs(reshape(u(1:end-1),[3,nt])'),'-x'); hold on; grid on;
 % r=r-0.1;
 end
+plot(abs(u(1:3:end-1)))
 %
 
 % % stab
@@ -129,11 +133,17 @@ fprintf("Numerical fl exp:\n"); exponents=log(flnum)/2/pi*u(end); disp(sort(expo
 % fprintf("Diff:\n");
 % disp(sort(flnum)-sort(flmult'));
 save("flnum-"+num2str(nt)+"-cheb-coll-lornez.mat",'nt','exponents');
+
+% fprintf("&%4.4e\t",sort(exponents));
+fprintf("&%4.4e\t",sort(real(exponents)));
 % close all;
 
 %
 %% visu
-tch1=collx; X=zeros(nt,3);
+tch1=collx; tch1=linspace(-1,1,1000)';
+
+X=zeros(length(tch1),3);
+
 close all;
 up=u;
 neq=3;
@@ -146,12 +156,12 @@ end
 
 % plot(tch,xch,'-'); hold on; set(gca,"ColorOrderIndex",1); %same as ycut
 % plot3(xch(:,1),xch(:,2),xch(:,3),'-'); hold on; plot3(xch(1,1),xch(1,2),xch(1,3),'>'); hold on; 
-plot(xch(:,1),xch(:,2),'-'); hold on; plot(xch(1,1),xch(1,2),'>'); hold on; 
+plot(xch(:,1),xch(:,2),'-'); hold on; %plot(xch(1,1),xch(1,2),'>'); hold on; 
 grid on; hold on;
 xchBase=xch;
 %
 
-iev=3; up=u+[evc(:,iev);0];
+iev=3; up=u+[evc(:,iev);0]*10;
 % up=uinit;
 neq=3;
 xch=X*0;
@@ -163,7 +173,7 @@ end
 
 % plot(tch,xch,'-'); hold on; set(gca,"ColorOrderIndex",1); %same as ycut
 % plot3(xch(:,1),xch(:,2),xch(:,3),'.-'); hold on; plot3(xch(1,1),xch(1,2),xch(1,3),'>'); hold on; 
-plot(xch(:,1),xch(:,2),'.-'); hold on; plot(xch(1,1),xch(1,2),'>'); hold on; 
+plot(xch(:,1),xch(:,2),'-'); %hold on; plot(xch(1,1),xch(1,2),'>'); hold on; 
 grid on; hold on;
 % 
 xchBasePlusPert=xch;

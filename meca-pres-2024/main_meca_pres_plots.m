@@ -1,5 +1,10 @@
-addpath     'C:\Users\Izabela\Documents\git\rotst2\scripts\source_for_mtb'
-cd     'C:\Users\Izabela\Documents\git\mtb-work\meca-pres-2024'
+% addpath     'C:\Users\Izabela\Documents\git\rotst2\scripts\source_for_mtb'
+% cd     'C:\Users\Izabela\Documents\git\mtb-work\meca-pres-2024'
+
+clc; clear; close all;
+addpath /people/gesla/Documents/git/rotst2/scripts/source_for_mtb;
+cd /people/gesla/Documents/plq_ti/;
+
 
 %% hopf ti
 
@@ -111,8 +116,9 @@ langford = @(t,y) [(l-3)*y(1)-1/4*y(2)+y(1)*(y(3)+0.2*(1-y(3)^2));
  fnts=10; jfm_plt_aid_comm; size_sq23;
 
  %%
- exportgraphics(gcf,"langford1.png","Resolution",300)
+%  exportgraphics(gcf,"langford1.png","Resolution",300)
 
+ exportgraphics(gcf,"langford1.eps","Resolution",300)
  %% lang cheb
  load lang.mat;
 
@@ -141,9 +147,13 @@ end
 
 % plot(tch,xch,'-'); hold on; set(gca,"ColorOrderIndex",1); %same as ycut
 plot3(xch(:,1),xch(:,2),xch(:,3),'-'); hold on; %plot3(xch(1,1),xch(1,2),xch(1,3),'>'); hold on; 
+
+plot3(xch(1,1),xch(1,2),xch(1,3),'g.','MarkerSize',20); 
+plot3(xch(end,1),xch(end,2),xch(end,3),'r.','MarkerSize',20); zlabel('z');
 grid on; hold on;
 
 grid; xlabel('x'); ylabel('y'); zlabel('z'); %legend("$\lambda=1.99$","$\lambda=2.005$","Location","northwest")
  fnts=10; jfm_plt_aid_comm; size_sq23; grid;
 %%
-exportgraphics(gcf,"langford2.png","Resolution",300)
+% exportgraphics(gcf,"langford2.png","Resolution",300)
+exportgraphics(gcf,"langford2.eps","Resolution",300)

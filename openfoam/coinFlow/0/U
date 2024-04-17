@@ -16,7 +16,7 @@ FoamFile
 
 dimensions      [0 1 -1 0 0 0 0];
 
-internalField   uniform (0 0 -1e-2);
+internalField   uniform (0 0 -1);
 
 boundaryField
 {
@@ -24,12 +24,13 @@ boundaryField
     {
         type            fixedValue;
         value           uniform (0 0 0);
+	//type slip;
     }
 
     inlet
     {
         type            fixedValue;
-        value           uniform (0 0 -1e-2);
+        value           uniform (0 0 -1);
     }
 
     outlet
@@ -43,6 +44,7 @@ boundaryField
     {
         type            fixedValue;
         value           uniform (0 0 0);
+	//type slip;
     }
     cylinder
     {

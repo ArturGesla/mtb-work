@@ -47,6 +47,12 @@ runTimeModifiable true;
 
 functions
 {
+//yPlus1
+//{
+    // Mandatory entries (unmodifiable)
+   // type            yPlus;
+   // libs            (fieldFunctionObjects);
+//}
 //    #includeFunc streamlines
 }
 

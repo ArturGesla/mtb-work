@@ -18,7 +18,7 @@ FoamFile
 // Which of the steps to run
 castellatedMesh true;
 snap            true;
-addLayers       false;
+addLayers       true;
 
 
 // Geometry. Definition of all surfaces. All surfaces are of class
@@ -80,7 +80,7 @@ castellatedMeshControls
     (
         {
             file "cylinder.eMesh";
-            level 1;
+            level 2;
         }
     );
 
@@ -140,7 +140,7 @@ castellatedMeshControls
     // after refinement.
     // This is an outside point locationInMesh (-0.033 -0.033 0.0033);
 //    locationInMesh (0.2 0.001 0.002); // Inside point
-    locationInMesh (0.0 0.0 2.0); // Inside point
+    locationInMesh (0.0 0.0 10.0); // Inside point
 
     // Whether any faceZones (as specified in the refinementSurfaces)
     // are only on the boundary of corresponding cellZones or also allow

@@ -143,6 +143,6 @@ grid on;
 %
 jfm_plt_aid;
 %
-% exportgraphics(gcf,"art3-lorr24-iev1.eps")
-exportgraphics(gcf,"art3-lorr24-iev"+num2str(iev)+"-3d.png","Resolution",150);
+exportgraphics(gcf,"art3-lorr24-iev1.eps")
+% exportgraphics(gcf,"art3-lorr24-iev"+num2str(iev)+"-3d.png","Resolution",150);
 

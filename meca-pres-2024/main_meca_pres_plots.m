@@ -4,6 +4,7 @@
 clc; clear; close all;
 addpath /people/gesla/Documents/git/rotst2/scripts/source_for_mtb;
 cd /people/gesla/Documents/plq_ti/;
+cd     '/people/gesla/Documents/git/mtb-work/meca-pres-2024'
 
 
 %% hopf ti
@@ -43,8 +44,9 @@ exportgraphics(gcf,"hopforb24-coll.eps")
 
 %% lorenz sn
 
-close all;
-
+% close all;
+clf; 
+nt=15;
 % up=[evc(:,105);0]; ntp=nt; u1=up(1:end-1);
 % up=[j2*u2;0]; ntp=nt; 
 u0=load("uSN-lorenz-nt15.mat"); u0=u0.u;
@@ -57,11 +59,21 @@ xp=ifft([zp;conj(flipud(zp(2:end,:)))])*((length(zp)-1)*2+1);xp=real(xp); xpp=xp
 plot(xp(:,1),xp(:,2)); grid on; hold on; xBase=xp;
 xlabel("x"); ylabel("y"); grid on;
 
-plot(X2(:,1),X2(:,2)); legend("nt = 1","exact","Location","best")
+
+
+zp=reshape(up(1:(end-1)/2),[3,ntp])'+1i*reshape(up((end-1)/2+1:(end-1)),[3,ntp])';
+zp=[zp(1:3,:);zeros(1000,3)];
+xp=ifft([zp;conj(flipud(zp(2:end,:)))])*((length(zp)-1)*2+1);xp=real(xp); xpp=xp;
+plot(xp(:,1),xp(:,2)); grid on; hold on; xBase=xp;
+
+plot(X2(:,1),X2(:,2)); 
+
+legend("nt = 1","nt = 2","exact","Location","best")
 
 fnts=10; jfm_plt_aid_comm; size_sq23;
 %%
-exportgraphics(gcf,"hopforb24-sn-1.eps")
+% exportgraphics(gcf,"hopforb24-sn-1.eps")
+exportgraphics(gcf,"hopforb24-sn-1-2.eps")
 %% harmonics
 close all;
 

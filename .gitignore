@@ -2,3 +2,5 @@
 *.asv
 *.png
 *.out
+*.mat
+*.dat

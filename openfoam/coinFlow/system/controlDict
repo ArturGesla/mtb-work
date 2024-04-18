@@ -47,7 +47,13 @@ runTimeModifiable true;
 
 functions
 {
-    #includeFunc streamlines
+//yPlus1
+//{
+    // Mandatory entries (unmodifiable)
+   // type            yPlus;
+   // libs            (fieldFunctionObjects);
+//}
+//    #includeFunc streamlines
 }
 
 // ************************************************************************* //

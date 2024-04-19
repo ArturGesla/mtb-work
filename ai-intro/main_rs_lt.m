@@ -30,15 +30,20 @@ f=0;
 %     end
 % end
 
-for ikx=-ntx:ntx
-    for ikz=-ntz:ntz
-        % f=f+cos(x/lx*2*pi*ikx).*cos(z/lz*2*pi*ikz)*an(ikz+1,ikx+1);
-        f=f+(an(abs(ikz)+1,abs(ikx)+1)+bn(abs(ikz)+1,abs(ikx)+1)*1i*(1-2*(ikx<0))*(1-2*(ikz<0)))*exp(1i*ikx*x/lx*2*pi).*exp(1i*ikz*z/lz*2*pi);
-    end
-end
+% for ikx=-ntx:ntx
+%     for ikz=-ntz:ntz
+%         % f=f+cos(x/lx*2*pi*ikx).*cos(z/lz*2*pi*ikz)*an(ikz+1,ikx+1);
+%         f=f+(an(abs(ikz)+1,abs(ikx)+1)+bn(abs(ikz)+1,abs(ikx)+1)*1i*(1-2*(ikx<0))*(1-2*(ikz<0)))*exp(1i*ikx*x/lx*2*pi).*exp(1i*ikz*z/lz*2*pi);
+%     end
+% end
+
+cn=an+1i*bn;
+zn=[cn,fliplr(cn(:,2:end))]; zn=[zn;flipud(zn(2:end,:))];
+f=ifft2(zn)   ;
 
 
-pcolor(x,z,real(f)); shading interp; axis equal; xlim([0 10]); ylim([0 1]); colormap(parula(8)); colorbar();
+
+% pcolor(x,z,real(f)); shading interp; axis equal; xlim([0 10]); ylim([0 1]); colormap(parula(8)); colorbar();
 % mesh(x,z,f); shading interp;  xlim([0 10]); ylim([0 1]); colormap(parula(8));
 
 %harder than I thought

@@ -75,9 +75,9 @@ int main()
 {
 
     // Discretisation
-    // int nx = 5, ny = 4, nn = nx * ny;
+    int nx = 5, ny = 4, nn = nx * ny;
     //  int nx = 30, ny = 25, nn = nx * ny;
-       int nx = 95, ny = 79, nn = nx * ny;
+    //    int nx = 95, ny = 79, nn = nx * ny;
            float h = 1.5 / (nx + 1);
 
 //  int nx = 5, ny = 4, nn = nx * ny;
@@ -98,7 +98,7 @@ int main()
 
     // Pour la r�solution SOR
     int kmax = 1000, kech = 20;
-    float eps = 1.e-3, omega = 1.9, nores = 1.;
+    float eps = 1.e-6, omega = 1.9, nores = 1.;
     float Q[MAX], dQ[MAX];
 
     // Champ solution 2D

@@ -1,10 +1,9 @@
-k = 0, r�sidu = 1.085358e+01
-k = 20, r�sidu = 1.592137e+00
-k = 40, r�sidu = 4.633006e-01
-k = 60, r�sidu = 1.590610e-01
-k = 80, r�sidu = 5.655574e-02
-k = 100, r�sidu = 2.096912e-02
-k = 120, r�sidu = 8.369942e-03
-k = 140, r�sidu = 3.639952e-03
-k = 160, r�sidu = 1.715839e-03
-converegnce en k = 179 iterations, r�sidu = 9.834506e-04
+k = 0, r�sidu = 2.720294e+00
+k = 20, r�sidu = 5.445095e-01
+k = 40, r�sidu = 6.109571e-02
+k = 60, r�sidu = 7.029503e-03
+k = 80, r�sidu = 9.977152e-04
+k = 100, r�sidu = 1.151141e-04
+k = 120, r�sidu = 1.297476e-05
+k = 140, r�sidu = 2.233385e-06
+converegnce en k = 148 iterations, r�sidu = 9.920190e-07

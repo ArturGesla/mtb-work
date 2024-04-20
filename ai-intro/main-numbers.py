@@ -28,19 +28,21 @@ plt.imshow(np.reshape(df[i,1:],[28,28]))
 plt.title(str(df[i,0]))
 # %%
 m,n=df.shape
-np.random.shuffle(df)
-#%%
+# np.random.shuffle(df)
+#%
 test=df[0:1000,:].T
 y=test[0,:]
 X=test[1:,:]/255
 
-train=df[1000:10000,:].T
+train=df[1000:,:].T
 ytr=train[0,:]
 Xtr=train[1:,:]/255
 
 #%%
 
+# np.random.seed(1)
 def init_par():
+    np.random.seed(1)
     W1=np.random.rand(10,784)-0.5
     b1=np.random.rand(10,1)-0.5
     W2=np.random.rand(10,10)-0.5
@@ -51,7 +53,9 @@ def ReLU(Z):
     return np.maximum(0,Z)
 
 def softmax(Z):
-    return np.exp(Z)/np.sum(np.exp(Z))
+    # bb=(np.exp(Z)/np.sum(np.exp(Z)))
+    bb=(np.exp(Z)/sum(np.exp(Z)))
+    return bb
 
 def forward_propagation(W1,b1,W2,b2,X):
     Z1=W1.dot(X)+b1
@@ -70,12 +74,13 @@ def der_ReLU(Z):
     return Z>0
 
 def back_propagation(Z1,A1,Z2,A2,W2,X,Y):
-    m=Y.size
+    # m=Y.size
+    # print(m)
     ohY=one_hot(Y)
     dZ2=A2-ohY
     dW2=1/m*dZ2.dot(A1.T)
     db2=1/m*np.sum(dZ2)
-    dZ1=W2.T.dot(dZ2)+der_ReLU(Z1)
+    dZ1=W2.T.dot(dZ2)*der_ReLU(Z1)
 
     dW1=1/m*dZ1.dot(X.T)
     db1=1/m*np.sum(dZ1)
@@ -107,6 +112,7 @@ def gradient_descent(X,Y,iterations, alpha):
             print('Accuracy: ',get_accuracy(get_predictions(A2),Y))
     return W1,b1,W2,b2
 
+#%%
 gradient_descent(Xtr,ytr,100,0.1)
 
 

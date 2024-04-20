@@ -9,7 +9,7 @@ data = pd.read_csv('mnist_train.csv')
 #%%
 data = np.array(data)
 m, n = data.shape
-np.random.shuffle(data) # shuffle before splitting into dev and training sets
+# np.random.shuffle(data) # shuffle before splitting into dev and training sets
 
 data_dev = data[0:1000].T
 Y_dev = data_dev[0]
@@ -24,6 +24,7 @@ _,m_train = X_train.shape
 
 #%%
 def init_params():
+    np.random.seed(1)
     W1 = np.random.rand(10, 784) - 0.5
     b1 = np.random.rand(10, 1) - 0.5
     W2 = np.random.rand(10, 10) - 0.5
@@ -89,4 +90,5 @@ def gradient_descent(X, Y, alpha, iterations):
             print(get_accuracy(predictions, Y))
     return W1, b1, W2, b2
 
+#%%
 W1, b1, W2, b2 = gradient_descent(X_train, Y_train, 0.10, 500)

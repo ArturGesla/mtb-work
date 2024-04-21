@@ -54,12 +54,14 @@ def ReLU(Z):
 
 def softmax(Z):
     # bb=(np.exp(Z)/np.sum(np.exp(Z)))
+    # print(Z.max()) #overflows
     bb=(np.exp(Z)/sum(np.exp(Z)))
     return bb
 
 def forward_propagation(W1,b1,W2,b2,X):
     Z1=W1.dot(X)+b1
     A1=ReLU(Z1)
+    # A1=Z1
     Z2=W2.dot(A1)+b2
     A2=softmax(Z2)
     return Z1,A1,Z2,A2
@@ -74,7 +76,7 @@ def der_ReLU(Z):
     return Z>0
 
 def back_propagation(Z1,A1,Z2,A2,W2,X,Y):
-    # m=Y.size
+    m=Y.size
     # print(m)
     ohY=one_hot(Y)
     dZ2=A2-ohY
@@ -84,6 +86,7 @@ def back_propagation(Z1,A1,Z2,A2,W2,X,Y):
 
     dW1=1/m*dZ1.dot(X.T)
     db1=1/m*np.sum(dZ1)
+
 
     return dW1, db1, dW2, db2
 
@@ -112,8 +115,8 @@ def gradient_descent(X,Y,iterations, alpha):
             print('Accuracy: ',get_accuracy(get_predictions(A2),Y))
     return W1,b1,W2,b2
 
-#%%
-gradient_descent(Xtr,ytr,100,0.1)
+#%
+W1,b1,W2,b2=gradient_descent(Xtr,ytr,501,0.1)
 
 
 

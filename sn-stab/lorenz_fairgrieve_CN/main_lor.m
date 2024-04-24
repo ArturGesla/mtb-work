@@ -2,7 +2,7 @@ clc; clear; close all;
 cd(fileparts(matlab.desktop.editor.getActiveFilename));
 %
 % neq=3; r=28; b=8/3; sigma=10; T=1.5586; np=70; %valid points, no repeats
-neq=3; r=24; b=8/3; sigma=10; np=20; np=np+2;%valid points, no repeats
+neq=3; r=24; b=8/3; sigma=10; np=30; np=np+2;%valid points, no repeats
 % neq=3; r=160; b=8/3; sigma=10; T=1.1521; np=240; %valid points, no repeats
 % neq=3; r=140; b=8/3; sigma=10; T=1.5586;
 % neq=3; r=145; b=8/3; sigma=10; T=1.5586;
@@ -103,7 +103,7 @@ B(np*neq+1,np*neq+1)=0; B=B(1:end-1,1:end-1); %B=sparse(B);
 b2=abs(evs)<Inf; evs=evs(b2); evc=evc(:,b2); 
 lam=1./(1-evs); % one of lambda should be 1
 exp1=1./T*log(abs(lam));
-save("stabCNLorenz-"+num2str(np)+".mat","exp1","np");
+save("stabCNLorenz-"+num2str(np)+".mat","exp1","np",'evs','u','evc');
 close all;
 %%
 v=evc(:,2);

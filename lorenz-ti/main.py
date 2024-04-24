@@ -17,8 +17,8 @@ ytr=y
 Xtr=x
 #%%
 data=np.loadtxt('lorenzdata.dat')
-ytr=data[0:500,3]
-Xtr=data[0:500,0:3].T
+ytr=data[0:,3]
+Xtr=data[0:,0:3].T
 
 ytst=data[500:1500,3]
 Xtst=data[500:1500,0:3].T
@@ -134,7 +134,7 @@ ax.plot3D(x[0,:].T, x[1,:].T, A2[0,:].T,'.')
 
 from sklearn.neural_network import MLPRegressor
 
-regr = MLPRegressor(random_state=1, max_iter=5000,
+regr = MLPRegressor(random_state=3, max_iter=5000,
 verbose=True,hidden_layer_sizes=(20,20,20),tol=1e-4,
  n_iter_no_change=100).fit(Xtr.T, ytr.T)
 pr=regr.predict(Xtr.T)

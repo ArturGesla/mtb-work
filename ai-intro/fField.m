@@ -1,4 +1,5 @@
-addpath('C:\Users\Artur\Documents\GitHub\rotst2\scripts\source_for_mtb')
+% addpath('C:\Users\Artur\Documents\GitHub\rotst2\scripts\source_for_mtb')
+addpath('/people/gesla/Documents/git/rotst2/scripts/source_for_mtb')
 %%
 clf; clc; clear;
 n=2; m=10; 
@@ -15,7 +16,7 @@ ifig=0;
 % as=rand(n,1)+rand(n,1)*1i;
 % ae=rand(1,m)+rand(1,m)*1i;
 % ane=rand(n,m)+rand(n,m)*1i;
-rng(ifig)
+% rng(ifig)
 a00=0; %rand(1); 
 ase=exp(1i*rand(n,m)*2*pi);
 as=exp(1i*rand(n,1)*2*pi); %rand(n,1)+rand(n,1)*1i;

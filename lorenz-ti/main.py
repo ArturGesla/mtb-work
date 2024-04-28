@@ -13,8 +13,29 @@ y=x[0,:]**2 # +x[1,:]**6
 y=np.sin(x[0,:]*2*3.14)
 # np.random.shuffle(df)
 
+x=np.array([np.linspace(0,1,100)]); y=5*x # +x[1,:]**6    
+x=np.array([np.linspace(0,1,100)]); y=5*x-3; y=np.abs(y) # +x[1,:]**6    
+x=np.array([np.linspace(0,1,100)]); y=5*x-3; y=np.abs(y); y=y-1; y=np.abs(y); rnsd=11 # +x[1,:]**6    
+x=np.array([np.linspace(0,1,100)]); y=2+np.sin(x*2*3.14) # +x[1,:]**6    
+
+
 ytr=y
 Xtr=x
+
+plt.plot(Xtr[0,:],ytr.T,'x')
+
+#%% 2d
+ns=10000
+np.random.seed(3); X=np.random.rand(ns,2); x=X[:,0]; y=X[:,1]
+z=x*(1-x)*np.cos(4*3.14*x)*np.sin(4*3.14*y**2)**2
+plt.scatter(x,y,c=z)
+y=z
+
+ytr=y.T
+Xtr=X.T
+
+
+
 #%%
 data=np.loadtxt('lorenzdata.dat')
 ytr=data[0:,3]
@@ -25,22 +46,31 @@ Xtst=data[500:1500,0:3].T
 
 #%%
 
-nnodes=50
-nvar=3
+nnodes=40
+nvar=2
 
 # np.random.seed(1)
 def init_par():
+    # np.random.seed(rnsd)
     np.random.seed(10)
     W1=np.random.rand(nnodes,nvar)-0.5
     b1=np.random.rand(nnodes,1)-0.5
     W2=np.random.rand(1,nnodes)-0.5
     b2=np.random.rand(1,1)-0.5
+    # W1=10*W1
+    # b1=10*b1
+    # W2=10*W2
+    # b2=10*b2
     # b1=0
     # b2=0
     return W1,b1,W2,b2
 
 def ReLU(Z):
     return np.maximum(0,Z)
+    # return Z
+def der_ReLU(Z):
+    return Z>0
+    # return 1
 
 def softmax(Z):
     # bb=(np.exp(Z)/np.sum(np.exp(Z)))
@@ -63,8 +93,7 @@ def forward_propagation(W1,b1,W2,b2,X):
 #     ohY=ohY.T
 #     return ohY
 
-def der_ReLU(Z):
-    return Z>0
+
 
 def back_propagation(Z1,A1,Z2,A2,W2,X,Y):
     m=Y.size
@@ -109,13 +138,13 @@ def gradient_descent(X,Y,iterations, alpha):
 
         resid[i]=get_accuracy(get_predictions(A2),Y)
 
-        if i%np.round(iterations/10) ==0:
+        if i%np.round(iterations/100) ==0:
             print('iteration: ', i)
             print('rms err: ',get_accuracy(get_predictions(A2),Y))
-    return W1,b1,W2,b2,A2,resid
+    return W1,b1,W2,b2,A2,resid,A1
 
 #%
-W1,b1,W2,b2,A2,resid=gradient_descent(Xtr,ytr,1001,0.1)
+W1,b1,W2,b2,A2,resid,A1=gradient_descent(Xtr,ytr,1001,0.1/2)
 #%%
 plt.plot(Xtr[0,:],ytr.T,'x')
 plt.plot(Xtr[0,:],A2.T,'x')

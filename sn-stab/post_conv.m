@@ -100,7 +100,7 @@ xlabel("$\mu_r$"); ylabel("$\mu_i/ \omega$");
 legend("FD","Fourier","Chebyshev","Location","best")
 
 % jfm_plt_aid;
-
+jfm_
 
 exportgraphics(gcf,"art3-spec.eps")
 

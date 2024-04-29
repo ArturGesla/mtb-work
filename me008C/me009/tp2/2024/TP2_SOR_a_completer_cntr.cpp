@@ -105,10 +105,7 @@ int main()
 {
 
     // Discretisation
-    // int nx = 5, ny = 4, nn = nx * ny;
-    int nx = 11, ny = 9, nn = nx * ny;
-    // int nx = 23, ny = 19, nn = nx * ny;
-    // int nx = 47, ny = 39, nn = nx * ny;
+    int nx = 5, ny = 4, nn = nx * ny;
     //  int nx = 30, ny = 25, nn = nx * ny;
     //    int nx = 95, ny = 79, nn = nx * ny;
     float h = 1.5 / (nx + 1);
@@ -129,8 +126,8 @@ int main()
     float As[MAX], Aw[MAX], Ap[MAX], Ae[MAX], An[MAX], b[MAX], r[MAX];
 
     // Pour la r�solution SOR
-    int kmax = 10000, kech = 20;
-    float eps = 1.e-5, omega = 1.09, nores = 1.;
+    int kmax = 1000, kech = 20;
+    float eps = 1.e-6, omega = 1.9, nores = 1.;
     float Q[MAX], dQ[MAX];
 
     // Champ solution 2D
@@ -176,7 +173,7 @@ int main()
     FILE *fichier = NULL;
     fichier = fopen("res_sor.dat", "w");
 
-    printf("nx = %d, ny = %d\t h=%e\n", nx, ny,h);
+    printf("nx = %d, ny = %d\n", nx, ny);
 
     // impression de la matrice et du second membre
     if (nx == 5)
@@ -236,8 +233,8 @@ int main()
 
         if ((k % kech) == 0)
         {
-            // printf("k = %d, residu = %e\n", k, nores);
-            fprintf(fichier, "k = %d, residu = %e\n", k, nores);
+            printf("k = %d, r�sidu = %e\n", k, nores);
+            fprintf(fichier, "k = %d, r�sidu = %e\n", k, nores);
             /*k d�signe ici le nombre d'it�rations, nores d�signe ici la norme du r�sidue*/
         }
 
@@ -257,8 +254,8 @@ int main()
         k += 1;
     }
 
-    printf("converegnce en k = %d iterations, residu = %e\n", k, nores);
-    fprintf(fichier, "converegnce en k = %d iterations, residu = %e\n", k, nores);
+    printf("converegnce en k = %d iterations, r�sidu = %e\n", k, nores);
+    fprintf(fichier, "converegnce en k = %d iterations, r�sidu = %e\n", k, nores);
 
     if (nx == 5)
     {
@@ -271,22 +268,6 @@ int main()
     ecritureContour(Q, nx, ny, h, gs, gw, ge, gn);
 
     // Calcul de flux QH et QV
-
-    {
-        QH = 0;
-        int ix = (nx - 1) / 2;
-        int iy = -1;
-        QH += 1 / 4.0 * (Q[ix + iy * nx + 1 + nx] - Q[ix + iy * nx - 1 + nx]);
-        for (iy = 0; iy < ny - 1; iy++)
-        {
-            QH += 1 / 4.0 * (Q[ix + iy * nx + 1] - Q[ix + iy * nx - 1] + Q[ix + iy * nx + 1 + nx] - Q[ix + iy * nx - 1 + nx]);
-        }
-        iy = ny - 1;
-        QH += 1 / 4.0 * (Q[ix + iy * nx + 1] - Q[ix + iy * nx - 1]);
-        QH = -QH ;
-        IH=QH;
-        QH=QH*(T2-T1)*lambda;
-    }
 
     printf("IH = %f, IV = %f\n", IH, IV);
     printf("QH = %f, QV = %f\n", QH, QV);

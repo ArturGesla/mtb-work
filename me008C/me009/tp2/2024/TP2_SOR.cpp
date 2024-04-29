@@ -15,11 +15,13 @@ float norme2_vect(float x[MAX], int n) {
     return sqrt(var);
 }
 
-void ecriture (float Q[MAX], float P[NMAX][NMAX], float x[NMAX], float y[NMAX], int nx, int ny, float h, float gs, float gw, float ge, float gn ) {
+
+void ecriture (float Q[MAX], float P[NMAX][NMAX], float x[NMAX], float y[NMAX], int nx, int ny, float h,
+ float gs, float gw, float ge, float gn ) {
 
     int i, j, JJ;
 
-    // remplissage des coordonées du maillage x, y et de solution P à chaque point du maillage
+    // remplissage des coordonï¿½es du maillage x, y et de solution P ï¿½ chaque point du maillage
 
     FILE* fichier1;
     fichier1 = fopen("isoP_sor.dat", "w");
@@ -58,7 +60,7 @@ void ecriture (float Q[MAX], float P[NMAX][NMAX], float x[NMAX], float y[NMAX], 
         }
     }
 
-    // ecriture du maillage et du résultat dans un fichier
+    // ecriture du maillage et du rï¿½sultat dans un fichier
 
     fprintf(fichier1, "%d, %d\n", nx+2, ny+2);
     for (i = 0; i <= nx + 1; i++) {
@@ -74,9 +76,9 @@ void ecriture (float Q[MAX], float P[NMAX][NMAX], float x[NMAX], float y[NMAX], 
 int main() {
 
     // discretisation 
-//	int nx = 5, ny = 4, nn = nx * ny;
+	int nx = 5, ny = 4, nn = nx * ny;
 //    int nx = 30, ny = 25, nn = nx * ny;
-    int nx = 95, ny = 79, nn = nx * ny;
+    // int nx = 95, ny = 79, nn = nx * ny;
     float h = 1.5 / (nx + 1);
 
     // condition aux limites
@@ -86,7 +88,7 @@ int main() {
     // matrice et second membre
     float As[MAX], Aw[MAX], Ap[MAX], Ae[MAX], An[MAX], b[MAX], r[MAX];
 
-    // pour la résolution SOR
+    // pour la rï¿½solution SOR
     int kmax = 5000, kech = 20; 
     float eps = 1.e-6, omega = 1.9, nores = 1.;
     float Q[MAX], dQ[MAX];
@@ -94,7 +96,7 @@ int main() {
     // solution
     float P[NMAX][NMAX];
     
-    // coordonées du maillage
+    // coordonï¿½es du maillage
     float x[NMAX], y[NMAX];
  
     // pour le calcul de flux
@@ -158,7 +160,7 @@ int main() {
         printf("\n");
     }
     
-    // Résolution par SOR
+    // Rï¿½solution par SOR
 
     // initialisation
     
@@ -200,9 +202,9 @@ int main() {
         nores = norme2_vect(r, nn);
     
         if ((k % kech) == 0) {
-             printf("k = %d, résidu = %e\n", k, nores);
-             fprintf(fichier, "k = %d, résidu = %e\n", k, nores);
-             /*k désigne ici le nombre d'itération, nores désigne ici la norme du résidue*/
+             printf("k = %d, rï¿½sidu = %e\n", k, nores);
+             fprintf(fichier, "k = %d, rï¿½sidu = %e\n", k, nores);
+             /*k dï¿½signe ici le nombre d'itï¿½ration, nores dï¿½signe ici la norme du rï¿½sidue*/
         }
         
         for (i = 0; i < nn; i++) {
@@ -227,8 +229,8 @@ int main() {
         k += 1;
      }
  
-    printf("converegnce en k = %d iterations, résidu = %e\n", k, nores);
-    fprintf(fichier, "converegnce en k = %d iterations, résidu = %e\n", k, nores);
+    printf("converegnce en k = %d iterations, rï¿½sidu = %e\n", k, nores);
+    fprintf(fichier, "converegnce en k = %d iterations, rï¿½sidu = %e\n", k, nores);
     
     if (nx == 5) {
         for (i = 0; i < nn; i++) printf(" %e", Q[i]);

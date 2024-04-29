@@ -30,18 +30,25 @@ y=z
 #%
 #%% lorenz
 # data=np.loadtxt('lorenzdata.dat')
-data=np.loadtxt('lorenzdata3d.dat')
-# np.random.shuffle(data)
+# data=np.loadtxt('lorenzdata3d.dat')
+# # np.random.shuffle(data)
+# y=data[0:,3]
+# X=data[0:,0:3]
+# # X=data[0:,2:3]
+# # X=data[0:,2:3]
+# plt.plot(X,y,'.')
+
+data=np.loadtxt('lorenzdata2d.dat')
 y=data[0:,3]
-X=data[0:,0:3]
-# X=data[0:,2:3]
-# X=data[0:,2:3]
-plt.plot(X,y,'.')
+X=data[0:,0:2]
+plt.scatter(X[:,0],X[:,1],c=y)
+plt.colorbar()
+plt.savefig('foo.png', bbox_inches='tight')
 
 # # #%
-b=y<40
-y=y[b]
-X=X[b,:]
+# b=y<40
+# y=y[b]
+# X=X[b,:]
 # plt.plot(X,y,'.')
 
 
@@ -73,7 +80,7 @@ Xtst = scaler.transform(Xtst)
 #%%
 
 
-regr = MLPRegressor(random_state=1, max_iter=50000,
+regr = MLPRegressor(random_state=1, max_iter=5000,
 verbose=True,hidden_layer_sizes=(20,20),tol=1e-4,
 activation='relu',
 n_iter_no_change=1000).fit(Xtr, ytr)
@@ -97,5 +104,14 @@ plt.plot(Xtr[:,0],ytr,'o'); plt.plot(Xtr[:,0],prtr,'x')
 # plt.plot(Xtr,ytr,'.'); plt.plot(Xtr,prtr,'x')
 # plt.plot(ytst,'-o'); plt.plot(prtst,'-x')
 #%%
-plt.plot(Xtr[0:10,0],ytr[0:10],'+'); plt.plot(Xtr[0:10,0],prtr[0:10],'x')
+ip=0
+plt.plot(Xtr[0+ip:10+ip,0],ytr[0+ip:10+ip],'+')
+plt.plot(Xtr[0+ip:10+ip,0],prtr[0+ip:10+ip],'x')
 plt.legend("train","predict")
+#%%
+plt.scatter(Xtr[:,0],Xtr[:,1],c=np.abs(ytr-prtr))
+plt.colorbar()
+
+#%%
+
+plt.semilogy(ytr,np.abs(ytr-prtr)/ytr,'x')

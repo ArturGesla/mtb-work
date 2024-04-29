@@ -13,13 +13,15 @@ c2=[-sqrt(b*(r-1));-sqrt(b*(r-1));r-1];
 
 % en=min(vecnorm(y-c2,1),vecnorm(y-c1,1));
 
-np=2000;
+np=20000;
 enArr=zeros(np,nt+1);
 
 rng(1);
 x0a=[];
 for i=1:np
-    x0=c1+(rand(3,1)-0.5)*20;
+%     x0=c1+(rand(3,1)-0.5)*20;
+%     x0=c1+[(rand(2,1)-0.5)*20;0];
+    x0=c1+[(rand(2,1)-0.5)*20*5;0];
 %     x0=c1+([0;0;30+rand(1,1)-0.5]);
 %     x0=c1+([0;0;rand(1,1)-0.5]*12+[0;0;14]);
 %     x0=[c1(1:2);32+2/np*i];
@@ -63,10 +65,20 @@ plot3(c2(1),c2(2),c2(3),'r+');
 
 %%
 % dlmwrite('lorenzdata.dat',[x0a,lt'],'delimiter',' ');
-dlmwrite('lorenzdata3d.dat',[x0a,lt'],'delimiter',' ');
+% dlmwrite('lorenzdata3d.dat',[x0a,lt'],'delimiter',' ');
+dlmwrite('lorenzdata2d.dat',[x0a,lt'],'delimiter',' ');
 %%
 close all;
 [a,b]=sort(x0a(:,3));
 plot(x0a(b,3),lt(b),'.-');
 xlabel("z0"); ylabel("lifetime"); title("Lorenz r=21 | Lifetimes with different z pert")
 % exportgraphics(gcf,"ltlor3.png")
+%%
+% plot3(x0a(:,1),x0a(:,2),x0a(:,3),'x')
+plot3(x0a(:,1),x0a(:,2),lt,'x')
+%%
+scatter(x0a(:,1),x0a(:,2),100,lt,'.')
+xlim([min(x0a(:,1)) max(x0a(:,1))])
+ylim([min(x0a(:,2)) max(x0a(:,2))])
+axis off
+exportgraphics(gcf,"lor.png",'Resolution',300);

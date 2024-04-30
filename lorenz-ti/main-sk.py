@@ -111,7 +111,7 @@ activation='relu',
 n_iter_no_change=1000).fit(Xtr, ytr)
 #%
 plt.semilogy(regr.loss_curve_)
-np.savetxt("loss-rs-"+str(rs)+"-nn-"+str(nn)+"-dpth-"+str(dpth)".dat",regr.loss_curve_)
+np.savetxt("loss-rs-"+str(rs)+"-nn-"+str(nn)+"-dpth-"+str(dpth)+".dat",regr.loss_curve_)
 #%%
 #%%
 prtr=regr.predict(Xtr)

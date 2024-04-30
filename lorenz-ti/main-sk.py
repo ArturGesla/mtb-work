@@ -105,7 +105,7 @@ Xtst = scaler.transform(Xtst)
 # rs=3; nn=30; 
 depth=tuple(30 for i in range(0,dpth))
 
-regr = MLPRegressor(random_state=rs, max_iter=100,
+regr = MLPRegressor(random_state=rs, max_iter=5000,
 verbose=True,hidden_layer_sizes=depth,tol=1e-4,
 activation='relu',
 n_iter_no_change=1000).fit(Xtr, ytr)

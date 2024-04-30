@@ -1,6 +1,7 @@
 #%%
 rs=5
 nn=30
+dpth=1
 from turtle import color
 import numpy as np
 import matplotlib.pyplot as plt
@@ -44,6 +45,10 @@ from sklearn.neural_network import MLPRegressor
 data=np.loadtxt('lorenzdata2d.dat')
 y=data[0:,3]
 X=data[0:,0:2]
+
+y=data[0:2000,3]
+X=data[0:2000,0:2]
+
 #%%
 plt.scatter(X[:,0],X[:,1],c=y)
 plt.plot(7.3,7.3,'r+')
@@ -97,15 +102,16 @@ Xtst = scaler.transform(Xtst)
 
 #%%
 
-rs=3; nn=30
+# rs=3; nn=30; 
+depth=tuple(30 for i in range(0,dpth))
 
-regr = MLPRegressor(random_state=rs, max_iter=5000,
-verbose=True,hidden_layer_sizes=(nn,nn),tol=1e-4,
+regr = MLPRegressor(random_state=rs, max_iter=100,
+verbose=True,hidden_layer_sizes=depth,tol=1e-4,
 activation='relu',
 n_iter_no_change=1000).fit(Xtr, ytr)
 #%
 plt.semilogy(regr.loss_curve_)
-np.savetxt("loss-rs-"+str(rs)+"-nn-"+str(nn)+".dat",regr.loss_curve_)
+np.savetxt("loss-rs-"+str(rs)+"-nn-"+str(nn)+"-dpth-"+str(dpth)".dat",regr.loss_curve_)
 #%%
 #%%
 prtr=regr.predict(Xtr)
@@ -113,7 +119,7 @@ prtst=regr.predict(Xtst)
 print("score train:",regr.score(Xtr, ytr),"mean err:", np.mean(np.abs(ytr-prtr)))
 print("score test :",regr.score(Xtst, ytst),"mean err:", np.mean(np.abs(ytst-prtst)))
 #%%
-# exit()
+exit()
 #%%
 # plt.scatter(Xtr[:,0],Xtr[:,1],c=ytr)
 plt.scatter(Xtr[:,0],Xtr[:,1],c=prtr)

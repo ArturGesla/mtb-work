@@ -1,4 +1,7 @@
 #%%
+rs=5
+nn=30
+from turtle import color
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -8,22 +11,22 @@ from sklearn.neural_network import MLPRegressor
 #%%
 # x=np.array([np.linspace(0,1,100),np.linspace(0,1,100)]).T
 # np.random.seed(3); x=np.random.rand(100,2); y=np.sin(x[:,0]*2*3.14)
-np.random.seed(3); x=np.random.rand(100,1); y=5*x; y=y-2; y=np.abs(y) #np.sin(x*2*3.14)
-np.random.seed(3); x=np.random.rand(100,1); y=np.sin(2*3.14*x)+2; 
-x[:,0]=np.linspace(0,1,100); y=np.sin(2*3.14*x)+2 
-# y=x[:,0]**4 # +x[1,:]**6    
+# np.random.seed(3); x=np.random.rand(100,1); y=5*x; y=y-2; y=np.abs(y) #np.sin(x*2*3.14)
+# np.random.seed(3); x=np.random.rand(100,1); y=np.sin(2*3.14*x)+2; 
+# x[:,0]=np.linspace(0,1,100); y=np.sin(2*3.14*x)+2 
+# # y=x[:,0]**4 # +x[1,:]**6    
 
-X=x
-# np.random.shuffle(df)
-plt.plot(x,y,'.')
+# X=x
+# # np.random.shuffle(df)
+# plt.plot(x,y,'.')
 
-#%% 2D
-ns=10000
-np.random.seed(3); X=np.random.rand(ns,2); x=X[:,0]; y=X[:,1]
-z=x*(1-x)*np.cos(4*3.14*x)*np.sin(4*3.14*y**2)**2
-plt.scatter(x,y,c=z)
-y=z
-#%
+# #%% 2D
+# ns=10000
+# np.random.seed(3); X=np.random.rand(ns,2); x=X[:,0]; y=X[:,1]
+# z=x*(1-x)*np.cos(4*3.14*x)*np.sin(4*3.14*y**2)**2
+# plt.scatter(x,y,c=z)
+# y=z
+# #%
 
 # ytr=y
 # Xtr=x
@@ -41,10 +44,25 @@ y=z
 data=np.loadtxt('lorenzdata2d.dat')
 y=data[0:,3]
 X=data[0:,0:2]
+#%%
 plt.scatter(X[:,0],X[:,1],c=y)
+plt.plot(7.3,7.3,'r+')
+plt.text(10,7.3,"C1",color='red')
 plt.colorbar()
-plt.savefig('foo.png', bbox_inches='tight')
-
+plt.xlabel('x')
+plt.ylabel('y')
+plt.title("Lifetime as the function of an initial condition")
+plt.savefig('lt-x0.png',dpi=300)
+#%%
+lts=np.sort(y)[::-1]
+bb2=np.arange(1,len(lts)+1)
+plt.semilogy(lts,bb2/len(bb2),'-x')
+plt.ylabel('P(T>t)')
+plt.xlabel('t')
+plt.title("Lifetime CDF")
+plt.grid()
+plt.savefig('lt-cdf.png')
+#%%
 # # #%
 # b=y<40
 # y=y[b]
@@ -79,20 +97,23 @@ Xtst = scaler.transform(Xtst)
 
 #%%
 
+rs=3; nn=30
 
-regr = MLPRegressor(random_state=1, max_iter=5000,
-verbose=True,hidden_layer_sizes=(20,20),tol=1e-4,
+regr = MLPRegressor(random_state=rs, max_iter=5000,
+verbose=True,hidden_layer_sizes=(nn,nn),tol=1e-4,
 activation='relu',
 n_iter_no_change=1000).fit(Xtr, ytr)
-#%%
+#%
 plt.semilogy(regr.loss_curve_)
-
+np.savetxt("loss-rs-"+str(rs)+"-nn-"+str(nn)+".dat",regr.loss_curve_)
+#%%
 #%%
 prtr=regr.predict(Xtr)
 prtst=regr.predict(Xtst)
 print("score train:",regr.score(Xtr, ytr),"mean err:", np.mean(np.abs(ytr-prtr)))
 print("score test :",regr.score(Xtst, ytst),"mean err:", np.mean(np.abs(ytst-prtst)))
-
+#%%
+# exit()
 #%%
 # plt.scatter(Xtr[:,0],Xtr[:,1],c=ytr)
 plt.scatter(Xtr[:,0],Xtr[:,1],c=prtr)
@@ -115,3 +136,64 @@ plt.colorbar()
 #%%
 
 plt.semilogy(ytr,np.abs(ytr-prtr)/ytr,'x')
+
+#%% table
+
+
+prtr=regr.predict(Xtr)
+prtst=regr.predict(Xtst)
+print("score train:",regr.score(Xtr, ytr),"mean err:", np.mean(np.abs(ytr-prtr)))
+print("score test :",regr.score(Xtst, ytst),"mean err:", np.mean(np.abs(ytst-prtst)))
+print("smaples:",len(ytst)+len(ytr))
+print("mean lt:",np.mean(y))
+#%%
+
+# btr=(ytr>20)*(ytr<80)
+# Xtr2=Xtr[btr,:]
+# ytr2=ytr[btr]
+
+# btst=(ytst>20)*(ytst<40)
+# Xtst2=Xtst[btst,:]
+# ytst2=ytst[btst]
+
+# prtr=regr.predict(Xtr2)
+# prtst=regr.predict(Xtst2)
+# print("score train:",regr.score(Xtr2, ytr2),"mean err:", np.mean(np.abs(ytr2-prtr)))
+# print("score test :",regr.score(Xtst2, ytst2),"mean err:", np.mean(np.abs(ytst2-prtst)))
+# print("smaples:",len(ytst2)+len(ytr2))
+# print("mean lt:",np.mean(ytr2))
+
+
+#%%
+
+plt.scatter(Xtr[:,0],Xtr[:,1],c=ytr)
+plt.colorbar()
+plt.xlabel('x_norm')
+plt.ylabel('y_norm')
+plt.title("Lifetime of real train data | samples:"+str(len(ytr)))
+plt.savefig('lt-x0-tr.png',dpi=300)
+plt.clf()
+
+plt.scatter(Xtr[:,0],Xtr[:,1],c=prtr)
+plt.colorbar()
+plt.xlabel('x_norm')
+plt.ylabel('y_norm')
+plt.title("Lifetime of predicted train data | samples:"+str(len(ytr)))
+plt.savefig('lt-x0-tr-pr.png',dpi=300)
+plt.clf()
+
+plt.scatter(Xtst[:,0],Xtst[:,1],c=ytst)
+plt.colorbar()
+plt.xlabel('x_norm')
+plt.ylabel('y_norm')
+plt.title("Lifetime of predicted test data | samples:"+str(len(ytst)))
+plt.savefig('lt-x0-tst.png',dpi=300)
+plt.clf()
+
+plt.scatter(Xtst[:,0],Xtst[:,1],c=prtst)
+plt.colorbar()
+plt.xlabel('x_norm')
+plt.ylabel('y_norm')
+plt.title("Lifetime of predicted train data | samples:"+str(len(ytst)))
+plt.savefig('lt-x0-tst-pr.png',dpi=300)
+plt.clf()

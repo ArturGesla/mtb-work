@@ -6,6 +6,8 @@ d=d*1e3;
 h=h*1e3;
 
 
+
+
 fid=fopen('cylinder.stl','w');
 fprintf(fid,'solid cylinder \n');
 nt=100;

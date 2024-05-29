@@ -21,6 +21,7 @@ close all;
 lbda = 1.8; xyz_init = [0.76  0.0  1.38197]; Period = 25.13; %8*pi; %25.13;
 
 lbda = 1.97
+lambda=2
 % lbda = 2.01
 
 %% Lorenz 

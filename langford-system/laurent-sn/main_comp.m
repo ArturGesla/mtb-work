@@ -12,12 +12,12 @@ load("eve.mat"); fl1=evE;
 cd     '/people/gesla/Documents/git/mtb-work/langford-system/fd_newt'
 
 load("exp-fd-nt-11.mat"); fl11=exp;
-load("exp-fd-nt-21.mat"); fl21=exp;
-load("exp-fd-nt-31.mat"); fl31=exp;
-load("exp-fd-nt-51.mat"); fl51=exp;
-load("exp-fd-nt-101.mat"); fl101=exp;
-load("exp-fd-nt-201.mat"); fl201=exp;
-load("exp-fd-nt-401.mat"); fl401=exp;
+% load("exp-fd-nt-21.mat"); fl21=exp;
+% load("exp-fd-nt-31.mat"); fl31=exp;
+% load("exp-fd-nt-51.mat"); fl51=exp;
+% load("exp-fd-nt-101.mat"); fl101=exp;
+% load("exp-fd-nt-201.mat"); fl201=exp;
+% load("exp-fd-nt-401.mat"); fl401=exp;
 %%
 close all;
 

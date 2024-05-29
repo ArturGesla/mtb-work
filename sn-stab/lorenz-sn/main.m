@@ -2,9 +2,9 @@ clc; close all; clear;
 cd(fileparts(matlab.desktop.editor.getActiveFilename));
 
 %
-np=52; r=24; nt=15;
+% np=52; r=24; nt=15;
 
- r=24; nt=20; np=4*nt; x0=[ 10.135982315094342  10.189521543725682  25.691556187487929]; T=0.6779; T= 0.6803;
+ r=24; nt=12; np=4*nt; x0=[ 10.135982315094342  10.189521543725682  25.691556187487929]; T=0.6779; T= 0.6803;
 %  r=28; nt=20; np=4*nt; x0=[ 15.46726314426282  15.467263144262825  36.545259643893161]; T=1.558652210716179;
  % r=160; nt=28; np=400*nt; x0=[ 39.6949   40.0409  210.9480]; T=1.1536;
  
@@ -101,7 +101,7 @@ disp(exp(2*pi/om*evs(b(1:3))).'); evc=evc(:,b(1:3)); evs2=evs(b(1:3));
  fprintf("Numerical fl exp:\n");
 % disp((evs(b(1:3)))');
 fprintf("&%4.4e\t",sort((evs(b(1:3)))'))
-save("spectrumSNLorenz-"+num2str(nt)+".mat","evs2","nt","om","u","evc");
+save("spectrumSNLorenz-"+num2str(nt)+".mat","evs2","nt","om","u","evc","evs");
 
 %%
 close all;

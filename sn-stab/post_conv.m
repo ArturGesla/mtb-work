@@ -76,15 +76,16 @@ loglog(ntaCN,abs(evaCN-evEx),'x-'); leg=[leg; "FD"]; hold on; grid on;
 loglog(ntaSN*2,abs(evaSN-evEx),'o-'); leg=[leg; "Fourier"]; hold on; grid on;
 % loglog(ntaCM,abs(evaCM-evEx),'x-'); leg=[leg; "CM "]; hold on; grid on;
 loglog(ntaCH,abs(evaCH-evEx),'+-'); leg=[leg; "Chebyshev "]; hold on; grid on;
-loglog(ntaCN,20*ntaCN.^(-2),'k-'); leg=[leg; "2nd order"];
+loglog(ntaCN,20*ntaCN.^(-2),'k-'); leg=[leg; "slope -2"];
 
 
 
 legend(leg,"Location","east","Position",[0.654500610783936   0.243501807464159   0.308621007101280   0.227797829115004]);
 xlabel("1D dof");% title("Abs err in 0.0465 Fl exponent"); 
+xlabel("np,2nt,cnt");% title("Abs err in 0.0465 Fl exponent"); 
 ylabel("abslute error");
 
-% jfm_plt_aid;
+fnts=10; jfm_plt_aid_comm; size_sq23;
 
 exportgraphics(gcf,"art3-conv.eps")
 
@@ -97,12 +98,14 @@ a=load("./lorenz-cheb-coll/flnum-20-cheb-coll-lornez.mat"); plot(real(a.exponent
 
 xlim([-0.025489432551145   0.065670429159882]); ylim([-10.698402747491688 10.698402747491688]); grid on;
 xlabel("$\mu_r$"); ylabel("$\mu_i/ \omega$");
-legend("FD","Fourier","Chebyshev","Location","best")
+legend("FD np = 21","Fourier nt = 10","Chebyshev cnt = 20","Location","best")
 
 % jfm_plt_aid;
-jfm_
+fnts=10; jfm_plt_aid_comm; size_sq23;
 
-exportgraphics(gcf,"art3-spec.eps")
+% annotation
+
+exportgraphics(gcf,"art3-spec.eps");
 
 %%
 clc;clear; close all; clrs={[0, 0.4470, 0.7410],[0.8500, 0.3250, 0.0980] 	   ,	[0.9290, 0.6940, 0.1250],[0 0 0]}; mult=1;

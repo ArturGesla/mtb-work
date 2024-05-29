@@ -6,14 +6,15 @@ kr=0;
 Re=1000;
 L=1;
 zw=(0:1/160:L)';
-zw=(1-cos(zw*pi))/2;
-zw=[zw; zw(end)*2-zw(end-1)]; zc=[(3*zw(1)-zw(2))/2; zw(1:end-1)+diff(zw)/2;];
+% zw=(1-cos(zw*pi))/2;
+% zw=[zw; zw(end)*2-zw(end-1)];
+zc=[(3*zw(1)-zw(2))/2; zw(1:end-1)+diff(zw)/2;];
 nz=length(zw);
 u=rand(nz*4+1,1)*0;
 u(3:4:end)=-1*(u(3:4:end)+1);
 % u(3:4:end)=flipud(-log(zc+0.1)).*sin(zw);
 % 
-%%
+%
 % Re=Re+300;
 for i=1:10
 tic; [rhs,jac,B]=calculateJacAndRhs(zc,zw,u,Re,ra,kr,L); %toc; 
@@ -23,7 +24,7 @@ u=u+du;
 % norm(rhs)
 fprintf("i: %1.0d norm du: %4.2e norm rhs %4.2e\n",i,norm(du),norm(rhs))
 end
-%%
+%
 % uPlot=uEvReal;
 % uPlot=uEvImag;
 uPlot=u;
@@ -40,6 +41,7 @@ legend(leg,"Location","northwest"); grid on; grid minor;
 title("Re: "+num2str(Re)+" | k^{1/2}: "+num2str(sqrt(u(end))));
 xlim([0 1])
 exportgraphics(gcf,"baseFlow-"+num2str(Re)+".png","Resolution",150);
+save("selfsim-re"+num2str(Re)+".mat",'u','zc','Re')
 
 %% evplot
 

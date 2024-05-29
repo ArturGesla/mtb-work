@@ -12,10 +12,10 @@ clc; clear; close all;
 %
 %parms
 % it=it+1;
-mu=0.04; r=sqrt(mu); gm=1; %gamma
+% mu=0.04; r=sqrt(mu); gm=1; %gamma
 % mu=0.04+it*0.04; r=sqrt(mu); gm=1; %gamma
-% mu=3/4; r=sqrt(mu); gm=1; %gamma
-neq=3; np=100; np=np+2; om1=5; nt=15;
+mu=3/4; r=sqrt(mu); gm=1; %gamma
+neq=3; np=100; np=np+2; om1=1; nt=15;
 
 %init
 t=0:2*pi/(np-1):2*pi; u=r*cos(t*om1); v=r*sin(t*om1)/gm; w=r^2*ones(1,length(t));
@@ -99,12 +99,13 @@ plot3(xp(1,1),xp(1,2),xp(1,3),'o');plot3(xp(2,1),xp(2,2),xp(2,3),'>');
 %%
 close all;
 clf;
-iev=20;
+iev=86;
 evs(iev)
 
-% up=[evc(:,iev);0]; ntp=nt; u1=up(1:end-1);
+up=[evc(:,iev);0]; ntp=nt; u1=up(1:end-1);
+up=[sum(evc(:,86:87),2);0]; ntp=nt; u1=up(1:end-1);
 % up=[j2*u2;0]; ntp=nt; 
-up=[u4;0]; ntp=nt; 
+% up=[u4;0]; ntp=nt; 
 zp=reshape(up(1:(end-1)/2),[3,ntp])'+1i*reshape(up((end-1)/2+1:(end-1)),[3,ntp])';
 xp=ifft([zp;conj(flipud(zp(2:end,:)))])*((length(zp)-1)*2+1);xp=real(xp); xpp=xp;
 

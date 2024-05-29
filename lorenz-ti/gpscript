@@ -1,0 +1,12 @@
+plot\
+"loss-rs-3-nn-30.dat" w l,\
+"loss-rs-3-nn-30-dpth-1.dat" w l,\
+"loss-rs-3-nn-30-dpth-2.dat" w l,\
+"loss-rs-3-nn-30-dpth-3.dat" w l,\
+"loss-rs-3-nn-30-dpth-5.dat" w l,\
+"loss-rs-3-nn-30-dpth-10.dat" w l,\
+"loss-rs-3-nn-30-dpth-20.dat" w l,\
+"loss-rs-3-nn-50-dpth-2.dat" w l,\
+"loss-rs-3-nn-200-dpth-2.dat" w l;
+
+pause -1

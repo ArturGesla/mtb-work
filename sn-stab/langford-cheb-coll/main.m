@@ -5,12 +5,14 @@ clc; close all; clear; mua=[];
 
 % Noack system
 np=520; %r=24; 
-nt=30; 
+nt=18; 
 
 % mu=0.04; r=sqrt(mu); gm=1; %gamma
 % mu=0.04+it*0.04; r=sqrt(mu); gm=1; %gamma
 % mu=5; r=sqrt(mu); gm=1; %gamma
 mu=2.005;
+% mu=1.69;
+% mu=2
 % mu=1.99;
 lam=mu;
 delta=0.8*mu-0.8*2.8+1;
@@ -83,7 +85,7 @@ semilogy(abs(reshape(u(1:end-1),[3,nt]))');
 %
 % [U,S,V]=svds(jac(1:end-1,1:end-1),5,'smallest');
 % [U,S,V]=svds(jac(1:end,1:end),5,'smallest');
-%%
+%
 
 % second stability
 
@@ -127,7 +129,7 @@ disp(sort(flnum));
 format long
 flexp=log(flnum)/2/pi/4
 
-% fprintf("%4.4f\t%4.4f\t%4.4f\t%4.4f\n",real(flnum(1)),imag(flnum(1)),real(flnum(3)),imag(flnum(3)))
+fprintf("%4.4f\t%4.4f\t%4.4f\t%4.4f\n",real(flnum(1)),imag(flnum(1)),real(flnum(3)),imag(flnum(3)))
 %%
 delta=0.8*lam-0.8*2.8+1;
 z=(1-sqrt(delta))/0.4;
@@ -138,7 +140,7 @@ mu=1/2*(lam-2*z+sqrt((lam-2*z)^2-8*r*(r-0.4*r*z)))
 
 %% visu
 close all;
-up=u+1e-3*sum([evc(:,1:2);0,0],2);
+up=u*1+1e-1*sum([evc(:,1:2);0,0],2)*1;
 neq=3;
 xch=X*0;
 for i=0:nt-1    
@@ -151,6 +153,7 @@ end
 plot3(xch(:,1),xch(:,2),xch(:,3),'-'); hold on; %cd mecaplot3(xch(1,1),xch(1,2),xch(1,3),'>'); hold on; 
 grid on; hold on;
 
+%
 up=u;%+1e-3*sum([evc(:,1:2);0,0],2);
 neq=3;
 xch=X*0;

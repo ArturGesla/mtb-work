@@ -1,7 +1,7 @@
 #%%
-rs=5
+rs=3
 nn=30
-dpth=1
+dpth=10
 from turtle import color
 import numpy as np
 import matplotlib.pyplot as plt
@@ -46,8 +46,8 @@ data=np.loadtxt('lorenzdata2d.dat')
 y=data[0:,3]
 X=data[0:,0:2]
 
-y=data[0:2000,3]
-X=data[0:2000,0:2]
+#y=data[0:2000,3]
+#X=data[0:2000,0:2]
 
 #%%
 plt.scatter(X[:,0],X[:,1],c=y)
@@ -105,7 +105,7 @@ Xtst = scaler.transform(Xtst)
 # rs=3; nn=30; 
 depth=tuple(30 for i in range(0,dpth))
 
-regr = MLPRegressor(random_state=rs, max_iter=5000,
+regr = MLPRegressor(random_state=rs, max_iter=10000,
 verbose=True,hidden_layer_sizes=depth,tol=1e-4,
 activation='relu',
 n_iter_no_change=1000).fit(Xtr, ytr)

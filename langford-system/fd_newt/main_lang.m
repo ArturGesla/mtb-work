@@ -2,7 +2,7 @@ close all; clear; clc;
 dt=1e-1;
 nt=300/dt; %generalised does not work wtf xd
 
-t0=0; mu=1.99;%2.005;
+t0=0; mu=2.005;
 % a=-3; b=-9.3; c=8; d=-3; e=5.98; close all;
 % a=-3; b=-1; c=-b; d=a; e=2/3; close all; x0=[1e-2;0;1e-3]; %per orbit
  % mu=1.99;
@@ -47,7 +47,7 @@ semilogy(t2,exp(-0.0624*t2))
 % mu=1.9;
 mu=1.99;
 % mu=2.001;
-% mu=2.005;
+mu=2.005;
 lam=mu;
 x=0;y=0; z=lam;
 delta=0.8*mu-0.8*2.8+1
@@ -65,18 +65,18 @@ n=[0;1;0];
 msk=[eye(3)-n*n'];
 evE=eig(msk'*J*msk)
 %%
-a=lam-3+z+0.2*(1-z^2)
-b=x-0.2*2*x*z
-c=-2*x
-d=lam-2*z
-
-(d+sqrt(d^2+4*c*b))/2
-
-
- r-sqrt(z*(lam-z))
-1/0.4*(1-sqrt(0.8*lam-1.24))-z
-
-mu=1/2*(lam-2*z+sqrt((lam-2*z)^2-8*r*(r-0.4*r*z)))
+% a=lam-3+z+0.2*(1-z^2)
+% b=x-0.2*2*x*z
+% c=-2*x
+% d=lam-2*z
+% 
+% (d+sqrt(d^2+4*c*b))/2
+% 
+% 
+%  r-sqrt(z*(lam-z))
+% 1/0.4*(1-sqrt(0.8*lam-1.24))-z
+% 
+% mu=1/2*(lam-2*z+sqrt((lam-2*z)^2-8*r*(r-0.4*r*z)))
 
 %%
 
@@ -175,8 +175,8 @@ lam=1./(1-evs); % one of lambda should be 1
 
 exp=1./T*log((lam))
 expM=[expM,exp];
-%
-close all;
+%%
+clf; axis equal;
 plot3(u(1:3:end-1),u(2:3:end-1),u(3:3:end-1));
 
 
@@ -187,7 +187,7 @@ du=evc(:,2)+evc(:,1);
 % du=evc(:,2)+evc(:,3);
 plot3(u(1)+du(1),u(2)+du(2),u(3)+du(3),'sq');
 plot3(u(1:3:end-1)+du(1:3:end),u(2:3:end-1)+du(2:3:end),u(3:3:end-1)+du(3:3:end));
-save("exp-fd-nt-"+num2str(np),"exp");
+% save("exp-fd-nt-"+num2str(np),"exp");
 
 %%
 % plot(u(1:3:end-1));

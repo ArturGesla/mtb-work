@@ -5,7 +5,7 @@ clc; close all; clear; mua=[];
 
 % Noack system
 np=520; %r=24; 
-nt=18; 
+nt=30; 
 
 % mu=0.04; r=sqrt(mu); gm=1; %gamma
 % mu=0.04+it*0.04; r=sqrt(mu); gm=1; %gamma
@@ -17,7 +17,7 @@ mu=2.005;
 lam=mu;
 delta=0.8*mu-0.8*2.8+1;
 z=(1-sqrt(delta))/0.4;
-r=sqrt(-z*(z-lam));
+r=sqrt(-z*(z-lam)); zz=z;
 
 neq=3; %np=100; np=np+2;
 
@@ -112,15 +112,16 @@ bmod(ind+2,:)=r33;
 %
 [evc,evs]=eig(full(jmod),full(bmod)); evs=diag(evs); b=abs(evs)<Inf; evs=evs(b); evc=evc(:,b);
 
-evsAnal=[0;(-1-sqrt(1-8*mu))/2;(-1+sqrt(1-8*mu))/2;];
+% evsAnal=[0;(-1-sqrt(1-8*mu))/2;(-1+sqrt(1-8*mu))/2;];
+expAn=(lam-2*zz+sqrt((lam-2*zz)^2-8*r*(r-0.4*r*zz)))/2; evsAnal=[0; expAn; conj(expAn)];
 flmult=exp(evsAnal*T);
 
 fprintf("Result || \n");
 fprintf("Analytical fl mult:\n");
-disp(sort(flmult'));
+disp(abs(sort(flmult')));
 fprintf("Numerical fl mult:\n");
 flnum=1./(1-evs)';
-disp(sort(flnum));
+disp(sort(abs(flnum)));
 % abs(flnum)
 % fprintf("Diff:\n");
 % disp(sort(flnum)-sort(flmult'));
@@ -140,7 +141,9 @@ mu=1/2*(lam-2*z+sqrt((lam-2*z)^2-8*r*(r-0.4*r*z)))
 
 %% visu
 close all;
-up=u*1+1e-1*sum([evc(:,1:2);0,0],2)*1;
+% up=u*0+1e-1*sum([evc(:,1:2);0,0],2)*1;
+up=u*0+1e-1*[evc(:,2);0]*1;
+% up=u*0+1e-1*([evc(:,2);0]+[evc(:,1);0]);
 neq=3;
 xch=X*0;
 for i=0:nt-1    
@@ -149,6 +152,16 @@ for i=0:nt-1
     xch(:,3)=xch(:,3)+up(i*neq+3).*cos(i*acos(tch1));
 end
 
+% up=u*0+1e-1*[evc(:,1);0]*1;
+% % up=u*0+1e-1*([evc(:,2);0]+[evc(:,1);0]);
+% neq=3;
+% for i=0:nt-1    
+%     xch(:,1)=xch(:,1)+up(i*neq+1).*cos(i*acos(tch1));
+%     xch(:,2)=xch(:,2)+up(i*neq+2).*cos(i*acos(tch1));
+%     xch(:,3)=xch(:,3)+up(i*neq+3).*cos(i*acos(tch1));
+% end
+
+%%
 % plot(tch,xch,'-'); hold on; set(gca,"ColorOrderIndex",1); %same as ycut
 plot3(xch(:,1),xch(:,2),xch(:,3),'-'); hold on; %cd mecaplot3(xch(1,1),xch(1,2),xch(1,3),'>'); hold on; 
 grid on; hold on;

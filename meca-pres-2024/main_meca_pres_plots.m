@@ -132,9 +132,11 @@ langford = @(t,y) [(l-3)*y(1)-1/4*y(2)+y(1)*(y(3)+0.2*(1-y(3)^2));
 
  exportgraphics(gcf,"langford1.eps","Resolution",300)
  %% lang cheb
+ clear;
  load lang.mat;
 
- close all;
+ % close all;
+ clf; 
 up=u+1e-3*sum([evc(:,1:2);0,0],2)*0;
 neq=3;
 xch=X*0;
@@ -146,9 +148,11 @@ end
 
 % plot(tch,xch,'-'); hold on; set(gca,"ColorOrderIndex",1); %same as ycut
 plot3(xch(:,1),xch(:,2),xch(:,3),'-'); hold on; %cd mecaplot3(xch(1,1),xch(1,2),xch(1,3),'>'); hold on; 
+X0=[xch(end,1),xch(end,2),xch(end,3)];
 grid on; hold on;
 
-up=u+1e-2*sum([evc(:,1:2);0,0],2);
+up=u*1+2e-1*sum([evc(:,1:2);0,0],2);
+up=u*1+2e-1*([evc(:,1:2)*[-1;-1];0]);
 neq=3;
 xch=X*0;
 for i=0:nt-1    
@@ -160,12 +164,20 @@ end
 % plot(tch,xch,'-'); hold on; set(gca,"ColorOrderIndex",1); %same as ycut
 plot3(xch(:,1),xch(:,2),xch(:,3),'-'); hold on; %plot3(xch(1,1),xch(1,2),xch(1,3),'>'); hold on; 
 
-plot3(xch(1,1),xch(1,2),xch(1,3),'g.','MarkerSize',20); 
-plot3(xch(end,1),xch(end,2),xch(end,3),'r.','MarkerSize',20); zlabel('z');
+quiver3(X0(1),X0(2),X0(3),xch(1,1)-X0(1),xch(1,2)-X0(2),xch(1,3)-X0(3),1,"Color","r","LineWidth",2,"MaxHeadSize",200,"MarkerSize",2)
+ quiver3(X0(1),X0(2),X0(3),xch(end,1)-X0(1),xch(end,2)-X0(2),xch(end,3)-X0(3),1,"Color","g","LineWidth",2,"MaxHeadSize",200,"MarkerSize",2)
+
+ 
+% plot3(xch(1,1),xch(1,2),xch(1,3),'g.','MarkerSize',20); 
+% plot3(xch(end,1),xch(end,2),xch(end,3),'r.','MarkerSize',20); 
+
+zlabel('z');
 grid on; hold on;
 
 grid; xlabel('x'); ylabel('y'); zlabel('z'); %legend("$\lambda=1.99$","$\lambda=2.005$","Location","northwest")
- fnts=10; jfm_plt_aid_comm; size_sq23; grid;
+ fnts=10; jfm_plt_aid_comm; size_sq23; grid; set(gca,"View",[   63.2555   41.7342]);
+
+ 
 %%
 % exportgraphics(gcf,"langford2.png","Resolution",300)
 exportgraphics(gcf,"langford2.eps","Resolution",300)

@@ -2,7 +2,7 @@ clc; clear; close all;
 cd(fileparts(matlab.desktop.editor.getActiveFilename));
 %
 % neq=3; r=28; b=8/3; sigma=10; T=1.5586; np=70; %valid points, no repeats
-neq=3; r=24; b=8/3; sigma=10; np=8; np=np+2;%valid points, no repeats
+neq=3; r=24; b=8/3; sigma=10; np=300; np=np+2;%valid points, no repeats
 % neq=3; r=160; b=8/3; sigma=10; T=1.1521; np=240; %valid points, no repeats
 % neq=3; r=140; b=8/3; sigma=10; T=1.5586;
 % neq=3; r=145; b=8/3; sigma=10; T=1.5586;

@@ -1,5 +1,5 @@
 %%
-xmesh = linspace(0,20,100);
+xmesh = linspace(0,20,1000);
 solinit = bvpinit(xmesh, @guess);
 
 sol = bvp4c(@bvpfcn, @bcfcn, solinit);
@@ -7,7 +7,7 @@ sol = bvp4c(@bvpfcn, @bcfcn, solinit);
 % plot(sol.x, sol.y, '-')
 plot(sol.y(1:3,:), sol.x, '-')
 
-
+save('vk.mat')
 function dydx = bvpfcn(x,y) % equation to solve
 dydx = zeros(5,1);
 dydx = [y(4)

@@ -1,7 +1,5 @@
-k = 0, residu = 3.841874e+00
-k = 20, residu = 8.844187e-02
-k = 40, residu = 1.154093e-02
-k = 60, residu = 1.485074e-03
-k = 80, residu = 1.910196e-04
-k = 100, residu = 2.453545e-05
-converegnce en k = 110 iterations, residu = 9.758463e-06
+k = 0, residu = 7.372923e+00
+k = 20, residu = 8.110708e-03
+k = 40, residu = 1.080029e-05
+k = 60, residu = 1.502884e-08
+converegnce en k = 63 iterations, residu = 7.785296e-09

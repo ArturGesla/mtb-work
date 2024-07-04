@@ -11,7 +11,7 @@ omega=1+0.04i;
 % beta=bbar=beta/R;
 bbar=0.126;
 R=1;
-alpha=2; 
+alpha=2+0.1i; 
 
 
 

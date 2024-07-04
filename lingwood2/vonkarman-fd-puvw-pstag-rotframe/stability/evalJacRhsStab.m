@@ -82,16 +82,17 @@ for i=2:np-1
     %     dfn=(u(iifzp)-u(iif))/(z(i+1)-z(i));
     %     dfs=(u(iif)-u(iifzm))/(z(i)-z(i-1));
     
-    g(iig)=u(iig)*(1i*bbar*U(iig)-1i*omega)+u(iih)*(Gn-Gs)/(zn-zs);
-    g(iig)=g(iig)+u(iig)*1i*alpha*U(iif)+1i*alpha*pp;
+    g(iig)=u(iig)*(1i*bbar*U(iig)-1i*omega)+u(iih)*(Gn-Gs)/(zn-zs)+1i*bbar*pp;
+    g(iig)=g(iig)+u(iig)*1i*alpha*U(iif);
     
     %
     ii=[ii;iig]; jj=[jj;iig]; vv=[vv;(1i*bbar*U(iig)-1i*omega)];
     ii=[ii;iig]; jj=[jj;iih]; vv=[vv;(Gn-Gs)/(zn-zs)];
+    ii=[ii;iig]; jj=[jj;iip]; vv=[vv;bbar*1i*((zn-z(i)))/(zn-zs)];
+    ii=[ii;iig]; jj=[jj;iipzp]; vv=[vv;bbar*1i*((z(i)-zs))/(zn-zs)];
+    
     
     ii1=[ii1;iig]; jj1=[jj1;iig]; vv1=[vv1;1i*U(iif)];
-    ii1=[ii1;iig]; jj1=[jj1;iip]; vv1=[vv1;1i*((zn-z(i)))/(zn-zs)];
-    ii1=[ii1;iig]; jj1=[jj1;iipzp]; vv1=[vv1;1i*((z(i)-zs))/(zn-zs)];
     
     %zmom
     g(iih)=u(iih)*(1i*bbar*U(iig)-1i*omega)+(u(iipzp)-u(iip))/(zn-zs);

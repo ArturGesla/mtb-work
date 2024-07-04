@@ -1,13 +1,13 @@
-np=30;
-x=linspace(0,20,np);
-u=rand(np*4,1);
+% np=30;
+% x=linspace(0,20,np);
+% u=rand(np*4,1);
 eps=1e-3;
 
 a=load("../vk-np-201.mat");
 x=a.x;
 u=a.u*0;
 U=a.u;
-omega=0+0.04i;
+omega=1+0.04i;
 % beta=bbar=beta/R;
 bbar=0.126;
 R=1;

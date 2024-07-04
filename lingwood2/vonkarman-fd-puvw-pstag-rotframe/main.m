@@ -1,40 +1,47 @@
 clc; clear;
 
-np=220;
-x=linspace(0,20,np);
-x=(x/20).^1*20;
+np=300;
+x=linspace(0,20,np); x=(x/20).^1*20;
+% x=0:0.1:20; np=length(x);
 % al=0.01; x=(exp(al*x)./exp(al*20)*2-1)*20;
-u=zeros(np*3,1);
+u=zeros(np*4,1);
 
 a=load("../vonkarman-bvp4c/vk.mat");
-u(1:3:end)=interp1(a.sol.x,a.sol.y(1,:),x);
-u(2:3:end)=interp1(a.sol.x,a.sol.y(2,:),x)-1;
-u(3:3:end)=interp1(a.sol.x,a.sol.y(3,:),x);
+u(2:4:end)=interp1(a.sol.x,a.sol.y(1,:),x);
+u(3:4:end)=interp1(a.sol.x,a.sol.y(2,:),x)-1;
+u(4:4:end)=interp1(a.sol.x,a.sol.y(3,:),x);
 
 [g,jac]=evalJacRhs(u,x);
 
 norm(g)
-%%
-u=rand(np*3,1);
-
 %
+% u=rand(np*4,1);
+
+
 for i=1:15
     [g,jac]=evalJacRhs(u,x);
-    fprintf("%d i \t norm(rhs): %4.2e \t rms norm: %4.2e \n",i,norm(g),rms(g));
+    fprintf("%d i \t norm(rhs): %4.2e \t rms norm: %4.2e \n",i,norm(g),norm(g));
     u=u-jac\g;
-    if(norm(g)<1e-14) break; end;
+    if(norm(g)<1e-13) break; end;
 
 end
-save("vkrf-np-"+num2str(np),'u','np','x');
+save("vk-np-"+num2str(np),'u','np','x');
 
 %%
 % plot(x,reshape(u,[3,np])','x-')
-plot(reshape(u,[3,np])',x,'x-'); xlim([-1.5 0.5]); ylim([0 20]); pbaspect([10 3 1]);
+up=reshape(u,[4,np])';
+
+plot(up(:,2:end),x,'-'); xlim([-1.5 0.5]); ylim([0 20]); pbaspect([10 3 1]);
+% legend("P","F","G","H");
 legend("F","G","H");
-fnts=12; jfm_plt_aid_comm;
-exportgraphics(gcf,"p7-vel.eps")
+% fnts=12; jfm_plt_aid_comm;
+% exportgraphics(gcf,"p7-vel.eps")
 % save("vk-np-"+num2str(np),'u','np');
 %%
+[x(1:11)',up(1:11,2:end)]
+
+
+%% convergence
 winf=[]; npa=[]; 
 a=load("vk-np-50.mat"); winf=[winf;a.u(end)]; npa=[npa; a.np]
 a=load("vk-np-100.mat"); winf=[winf;a.u(end)]; npa=[npa; a.np]

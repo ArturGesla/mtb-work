@@ -1,6 +1,6 @@
 np=30;
 x=linspace(0,20,np);
-u=rand(np*3,1);
+u=rand(np*4,1);
 eps=1e-3;
 
 clc;

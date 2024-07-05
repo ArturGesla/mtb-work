@@ -7,9 +7,9 @@ cd(fileparts(matlab.desktop.editor.getActiveFilename));
 %
 
 % Lorenz system
- r=24; nt=50; np=4*nt; x0=[ 10.135982315094342  10.189521543725682  25.691556187487929]; T=0.6779; T= 0.6803;
-%  r=28; nt=60; np=1*nt; x0=[ 15.46726314426282  15.467263144262825  36.545259643893161]; T=1.558652210716179;
-%  r=160; nt=150; np=40*nt; x0=[ 39.6949   40.0409  210.9480]; T=1.1536;
+ % r=24; nt=50; np=4*nt; x0=[ 10.135982315094342  10.189521543725682  25.691556187487929]; T=0.6779; T= 0.6803;
+ % r=28; nt=110; np=1*nt; x0=[ 15.46726314426282  15.467263144262825  36.545259643893161]; T=1.558652210716179;
+ r=160; nt=50; np=40*nt; x0=[ 39.6949   40.0409  210.9480]; T=1.1536;
 main_lorenz_ti
 %
 %
@@ -18,30 +18,30 @@ main_lorenz_ti
 % sn=load("../lorenz-sn/xforcheb24.73.mat");
 % sn=load("../lorenz-sn/xforcheb28.mat");
 % sn=load("../lorenz-sn/xforcheb160.mat");
-sn=load("../lorenz-sn/xforcheb24.mat"); X=sn.xp; t=sn.t; r=sn.r; T=t(end);
-%
-% 
-%
+% sn=load("../lorenz-sn/xforcheb24.mat"); X=sn.xp; t=sn.t; r=sn.r; T=t(end);
+% %
+% % 
+% %
  X1=X; 
 tch=cos(0:pi/(np*1-1):pi)'; tch1=tch;
 % 
 % %
 tch=(tch+1)/2*t(end); X=interp1(t,X,tch); X3=X*0;
-
-
-ax=sn.u(4:3:sn.nt*3,1);
-bx=sn.u(sn.nt*3+1+3:3:sn.nt*3*2,1);
-X3(:,1)=cos([1:sn.nt-1].*tch*sn.u(end))*ax*2-sin([1:sn.nt-1].*tch*sn.u(end))*bx*2+sn.u(1);
-
-ay=sn.u(5:3:sn.nt*3,1);
-by=sn.u(sn.nt*3+1+4:3:sn.nt*3*2,1);
-X3(:,2)=cos([1:sn.nt-1].*tch*sn.u(end))*ay*2-sin([1:sn.nt-1].*tch*sn.u(end))*by*2+sn.u(2);
-
-az=sn.u(6:3:sn.nt*3,1);
-bz=sn.u(sn.nt*3+1+5:3:sn.nt*3*2,1);
-X3(:,3)=cos([1:sn.nt-1].*tch*sn.u(end))*az*2-sin([1:sn.nt-1].*tch*sn.u(end))*bz*2+sn.u(3);
-
-X=X3;
+% 
+% 
+% ax=sn.u(4:3:sn.nt*3,1);
+% bx=sn.u(sn.nt*3+1+3:3:sn.nt*3*2,1);
+% X3(:,1)=cos([1:sn.nt-1].*tch*sn.u(end))*ax*2-sin([1:sn.nt-1].*tch*sn.u(end))*bx*2+sn.u(1);
+% 
+% ay=sn.u(5:3:sn.nt*3,1);
+% by=sn.u(sn.nt*3+1+4:3:sn.nt*3*2,1);
+% X3(:,2)=cos([1:sn.nt-1].*tch*sn.u(end))*ay*2-sin([1:sn.nt-1].*tch*sn.u(end))*by*2+sn.u(2);
+% 
+% az=sn.u(6:3:sn.nt*3,1);
+% bz=sn.u(sn.nt*3+1+5:3:sn.nt*3*2,1);
+% X3(:,3)=cos([1:sn.nt-1].*tch*sn.u(end))*az*2-sin([1:sn.nt-1].*tch*sn.u(end))*bz*2+sn.u(3);
+% 
+% X=X3;
 
 
 y=X; v2=[y;flipud(y(2:end-1,:))]; z=real(fft(v2)./length(v2)); a=z; a(2:end,:)=2*a(2:end,:); %z are cheb coeffs

@@ -1,8 +1,8 @@
  clc; clear;
 %%
-% a=load("../vk-np-100.mat");
+a=load("../vk-np-100.mat");
 % a=load("../vk-np-200.mat");
-a=load("../vk-np-400.mat");
+% a=load("../vk-np-400.mat");
 % a=load("../vk-np-800.mat");
 x=a.x;
 u=a.u*0;
@@ -37,8 +37,8 @@ xlim([0 0.5]); ylim([-0.5 0.5])
 
 %%
 clf;
-% iev=4;
-up=reshape(real(evc(:,iev)),[4,length(x)])';
+iev=2;
+up=reshape(imag(evc(:,iev)),[4,length(x)])';
 plot(up(:,2:end),x,'x-');
 title("ev "+num2str(iev)+":"+num2str(ev(iev),'%4.2e'))
 iev=iev+1

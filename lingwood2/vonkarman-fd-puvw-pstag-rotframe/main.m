@@ -1,6 +1,6 @@
 clc; clear;
 
-np=800;
+np=100;
 x=linspace(0,20,np); x=(x/20).^2*20;
 % x=0:0.1:20; np=length(x);
 % al=0.01; x=(exp(al*x)./exp(al*20)*2-1)*20;

@@ -1,8 +1,8 @@
  clc; clear;
 %%
-% a=load("../vk-np-100.mat");
+a=load("../vk-np-100.mat");
 % a=load("../vk-np-200.mat");
-a=load("../vk-np-400.mat");
+% a=load("../vk-np-400.mat");
 % a=load("../vk-np-800.mat");
 x=a.x;
 u=a.u*0;
@@ -20,11 +20,11 @@ eva=[];
 % ev=eig(full(jac0),-full(jac1));
 
 %%
-omega=-0.0262+0.0125i;
-% omega=0.03+0.0125i;
+% omega=-0.0262+0.0125i;
+omega=0.3762+0.0125i;
 [g,jac0,jac1]=evalJacRhsStab(u,x,U,omega,bbar,R,alpha);
-% [evc,evs]=eig(full(jac0),-full(jac1)); ev=diag(evs);
-[evc,evs]=eigs((jac0),-(jac1),20,'smallestabs'); ev=diag(evs);
+[evc,evs]=eig(full(jac0),-full(jac1)); ev=diag(evs);
+% [evc,evs]=eigs((jac0),-(jac1),20,'smallestabs'); ev=diag(evs);
 eva=[eva,ev];
 %%
 clf;
@@ -37,9 +37,9 @@ xlim([0 0.5]); ylim([-0.5 0.5])
 
 %%
 clf;
-% iev=4;
+iev=383;
 up=reshape(real(evc(:,iev)),[4,length(x)])';
 plot(up(:,2:end),x,'x-');
 title("ev "+num2str(iev)+":"+num2str(ev(iev),'%4.2e'))
 iev=iev+1
-ylim([0 0.8])
+% ylim([0 0.8])

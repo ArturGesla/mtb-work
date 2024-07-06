@@ -5,7 +5,7 @@ eps=1e-3;
 
 a=load("../vk-np-50.mat");
 x=a.x;
-u=a.u*0;
+u=a.u*0; u=u(4:4:end);
 U=a.u;
 omega=1+0.04i;
 % beta=bbar=beta/R;
@@ -21,10 +21,10 @@ for i=1:length(u)
     up=u; up(i)=up(i)+eps;
     um=u; um(i)=um(i)-eps;
 
-    [g,jac0,jac1]=evalJacRhsStab(u,x,U,omega,bbar,R,alpha);
-    jac=jac0+alpha*jac1;
-    [gp,jac0,jac1]=evalJacRhsStab(up,x,U,omega,bbar,R,alpha);
-    [gm,jac0,jac1]=evalJacRhsStab(um,x,U,omega,bbar,R,alpha);
+    [g,jac0,jac1,jac2,jac3]=evalJacRhsStab(u,x,U,omega,bbar,R,alpha);
+    jac=jac0+alpha*jac1+alpha.^2*jac2+alpha.^3*jac3;
+    [gp,jac0,jac1,jac2,jac3]=evalJacRhsStab(up,x,U,omega,bbar,R,alpha);
+    [gm,jac0,jac1,jac2,jac3]=evalJacRhsStab(um,x,U,omega,bbar,R,alpha);
     
     
 %     [gp,jacp]=evalJacRhs(up,x);

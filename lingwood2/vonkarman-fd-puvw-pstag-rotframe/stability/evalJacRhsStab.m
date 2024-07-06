@@ -60,15 +60,21 @@ for i=2:np-1
     Fs=(U(iifzm)*(z(i)-zs)+U(iif)*(zs-z(i-1)))/(z(i)-z(i-1));
     pp=(u(iip)*(zn-z(i))+u(iipzp)*(z(i)-zs))/(zn-zs);
     
-    %     dfn=(u(iifzp)-u(iif))/(z(i+1)-z(i));
-    %     dfs=(u(iif)-u(iifzm))/(z(i)-z(i-1));
+        dfn=(u(iifzp)-u(iif))/(z(i+1)-z(i));
+        dfs=(u(iif)-u(iifzm))/(z(i)-z(i-1));
     
     g(iif)=u(iif)*(1i*bbar*U(iig)-1i*omega)+u(iih)*(Fn-Fs)/(zn-zs);
+    g(iif)=g(iif)-(dfn-dfs)/(zn-zs);
     g(iif)=g(iif)+u(iif)*1i*alpha*U(iif)+1i*alpha*pp;
     
     %
     ii=[ii;iif]; jj=[jj;iif]; vv=[vv;(1i*bbar*U(iig)-1i*omega)];
     ii=[ii;iif]; jj=[jj;iih]; vv=[vv;(Fn-Fs)/(zn-zs)];
+    
+    ii=[ii;iif]; jj=[jj;iif]; vv=[vv;1/(z(i+1)-z(i))/(zn-zs)];
+    ii=[ii;iif]; jj=[jj;iif]; vv=[vv;1/(z(i)-z(i-1))/(zn-zs)];
+    ii=[ii;iif]; jj=[jj;iifzp]; vv=[vv;-1/(z(i+1)-z(i))/(zn-zs)];
+    ii=[ii;iif]; jj=[jj;iifzm]; vv=[vv;-1/(z(i)-z(i-1))/(zn-zs)];
     
     ii1=[ii1;iif]; jj1=[jj1;iif]; vv1=[vv1;1i*U(iif)];
     ii1=[ii1;iif]; jj1=[jj1;iip]; vv1=[vv1;1i*((zn-z(i)))/(zn-zs)];
@@ -79,10 +85,11 @@ for i=2:np-1
     Gs=(U(iigzm)*(z(i)-zs)+U(iig)*(zs-z(i-1)))/(z(i)-z(i-1));
     pp=(u(iip)*(zn-z(i))+u(iipzp)*(z(i)-zs))/(zn-zs);
     
-    %     dfn=(u(iifzp)-u(iif))/(z(i+1)-z(i));
-    %     dfs=(u(iif)-u(iifzm))/(z(i)-z(i-1));
+        dgn=(u(iigzp)-u(iig))/(z(i+1)-z(i));
+        dgs=(u(iig)-u(iigzm))/(z(i)-z(i-1));
     
     g(iig)=u(iig)*(1i*bbar*U(iig)-1i*omega)+u(iih)*(Gn-Gs)/(zn-zs)+1i*bbar*pp;
+    g(iig)=g(iig)-(dgn-dgs)/(zn-zs);
     g(iig)=g(iig)+u(iig)*1i*alpha*U(iif);
     
     %
@@ -90,6 +97,12 @@ for i=2:np-1
     ii=[ii;iig]; jj=[jj;iih]; vv=[vv;(Gn-Gs)/(zn-zs)];
     ii=[ii;iig]; jj=[jj;iip]; vv=[vv;bbar*1i*((zn-z(i)))/(zn-zs)];
     ii=[ii;iig]; jj=[jj;iipzp]; vv=[vv;bbar*1i*((z(i)-zs))/(zn-zs)];
+    
+    ii=[ii;iig]; jj=[jj;iig]; vv=[vv;1/(z(i+1)-z(i))/(zn-zs)];
+    ii=[ii;iig]; jj=[jj;iig]; vv=[vv;1/(z(i)-z(i-1))/(zn-zs)];
+    ii=[ii;iig]; jj=[jj;iigzp]; vv=[vv;-1/(z(i+1)-z(i))/(zn-zs)];
+    ii=[ii;iig]; jj=[jj;iigzm]; vv=[vv;-1/(z(i)-z(i-1))/(zn-zs)];
+    
     
     
     ii1=[ii1;iig]; jj1=[jj1;iig]; vv1=[vv1;1i*U(iif)];

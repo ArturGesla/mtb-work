@@ -37,8 +37,13 @@ xlim([0 0.5]); ylim([-0.5 0.5])
 
 %%
 clf;
+<<<<<<< HEAD
 iev=383;
 up=reshape(real(evc(:,iev)),[4,length(x)])';
+=======
+iev=2;
+up=reshape(imag(evc(:,iev)),[4,length(x)])';
+>>>>>>> 34b7236e8b621ddb05dd3157faa1962a7cc9c2e6
 plot(up(:,2:end),x,'x-');
 title("ev "+num2str(iev)+":"+num2str(ev(iev),'%4.2e'))
 iev=iev+1

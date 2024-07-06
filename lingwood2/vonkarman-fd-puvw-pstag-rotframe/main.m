@@ -1,7 +1,7 @@
 clc; clear;
 
-np=140;
-x=linspace(0,40,np); x=(x/40).^2*40;
+np=100;
+x=linspace(0,20,np); x=(x/20).^2*20;
 % x=0:0.1:20; np=length(x);
 % al=0.01; x=(exp(al*x)./exp(al*20)*2-1)*20;
 u=zeros(np*4,1);

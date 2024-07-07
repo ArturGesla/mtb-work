@@ -1,6 +1,7 @@
  clc; clear;
 %%
 % a=load("../vk-np-140.mat");
+% a=load("../vk-np-180.mat");
 a=load("../vk-np-100.mat");
 % a=load("../vk-np-200.mat");
 % a=load("../vk-np-400.mat");
@@ -28,9 +29,9 @@ oma=-0.0692 :0.002/4:0.0262; oma3=oma+0.0133i;
 
 %%
 % omega=-0.0262+0.0125i;
-% omega=-0.0262+0.04i;
+omega=-0.0262+0.04i;
 % omega=-0.0262+0.015i;
-omega=omega-0.002;
+% omega=omega-0.002;
 [g,jac0,jac1,jac2,jac3]=evalJacRhsStab(u,x,U,omega,bbar,R,alpha);
 [evc,evs]=polyeig(jac0,jac1,jac2,jac3); ev=(evs);
 % [evc,evs]=eig(full(jac0),-full(jac1)); ev=diag(evs);
@@ -38,38 +39,50 @@ omega=omega-0.002;
 eva=[eva,ev];
 %%
 clf;
-plot(eva,'k.'); hold on;
-%  plot(ev,'x'); hold on;; text(real(ev),imag(ev),num2str([1:length(ev)]'))
+% plot(eva,'k'); hold on;r
+ plot(ev,'x'); hold on;; text(real(ev),imag(ev),num2str([1:length(ev)]'))
 % plot(ev,'o');
 xlim([0 0.45]); ylim([-0.5 0.5]); grid on;
 % xlim([-0.1 1.5]); ylim([-1 1]); grid on;
 % xlim([-0.1 0.5]*10); ylim([-0.5 0.5]*10); grid on;
 % xlim([-0.1 0.5]*40); ylim([-0.5 0.5]*40)
 
-pbaspect([5 1 1]); xlabel("a_r"); ylabel("a_i"); 
-% fnts=12; jfm_plt_aid_comm;
-% exportgraphics(gcf,"spatialbranches-c.eps")
-% exportgraphics(gcf,"spatialbranches-b.eps")
-exportgraphics(gcf,"spatialbranches-a.eps")
+% pbaspect([5 1 1]); xlabel("a_r"); ylabel("a_i"); 
+% % fnts=12; jfm_plt_aid_comm;
+% % exportgraphics(gcf,"spatialbranches-c.eps")
+% % exportgraphics(gcf,"spatialbranches-b.eps")
+% exportgraphics(gcf,"spatialbranches-a.eps")
 
 %%
 clf;
-iev=375;
+iev=1;
 up=reshape(real(evc(:,iev)),[1,length(x)])';
-plot(up(:,1:end),x,'x-');
+plot(up(:,1:end),x,'x-'); grid on;
 title("ev "+num2str(iev)+":"+num2str(ev(iev),'%4.2e'))
 iev=iev+1
 % ylim([0 0.8])
+
+%%
+plot(x,real(U(2:4:end)*ev(iev)+bbar*U(3:4:end)-omega)); hold on;  grid on;
+plot(x,imag(U(2:4:end)*ev(iev)+bbar*U(3:4:end)-omega)); hold on;  grid on;
 %%
 eva=[];
-oma=oma1;
-for i=1:length(oma)
+oma=oma2; lam1=0.25-0.5i; evaa=[lam1];
+for i=1:1;%length(oma)
 %     for i=40:length(oma)
 omega=oma(i);
 [g,jac0,jac1,jac2,jac3]=evalJacRhsStab(u,x,U,omega,bbar,R,alpha);
-[evc,evs]=polyeig(jac0,jac1,jac2,jac3); ev=(evs);
+% [evc,evs]=polyeig(jac0,jac1,jac2,jac3); ev=(evs);
+[evc,evs]=polyeigs(jac0,jac1,jac2,jac3,1,evaa(end)); ev=(evs); evaa(end+1)=ev(1);
 % [evc,evs]=eig(full(jac0),-full(jac1)); ev=diag(evs);
 % [evc,evs]=eigs((jac0),-(jac1),20,'smallestabs'); ev=diag(evs);
 eva=[eva,ev];
 i
 end
+
+%%
+
+clf;
+a=load("boma2.mat"); plot(a.eva); hold on;
+a=load("boma2-140.mat"); plot(a.eva);
+a=load("boma2-180.mat"); plot(a.eva);

@@ -7,10 +7,12 @@ cd(fileparts(matlab.desktop.editor.getActiveFilename));
 %
 
 % Lorenz system
- r=24; nt=10; np=4*nt; x0=[ 10.135982315094342  10.189521543725682  25.691556187487929]+rand(1,3)*0.1; T=0.6779; T= 0.6803;
- % r=24; nt=10; np=4*nt; x0=[ 10.12  10.1  25.76]; T= 0.68;
- % r=28; nt=110; np=1*nt; x0=[ 15.46726314426282  15.467263144262825  36.545259643893161]; T=1.558652210716179;
- % r=160; nt=50; np=40*nt; x0=[ 39.6949   40.0409  210.9480]; T=1.1536;
+%  r=24; nt=52; np=400*nt; x0=[ 10.135982315094342  10.189521543725682  25.691556187487929]+rand(1,3)*1.0; T=0.6779; T= 0.6803;
+%  r=24; nt=22; np=4*nt; x0=[ 10.12  10.1  25.76]; T= 0.68;
+%  r=24; nt=14; np=400*nt; x0=[ 10.1  10.1  25.7]; T= 0.68;
+ 
+%  r=28; nt=110; np=1*nt; x0=[ 15.46726314426282  15.467263144262825  36.545259643893161]; T=1.558652210716179;
+ r=160; nt=150; np=40*nt; x0=[ 39.6949   40.0409  210.9480]; T=1.1536;
 main_lorenz_ti
 %
 %
@@ -61,6 +63,20 @@ collx=-cos(0:pi/(nt*1-1):pi)';
 %
 u=[reshape(real(a(1:nt,:).'),[3*nt,1])];
 u(nt*3+1)=2*pi/T;
+
+% laurent init 
+
+% A=cos(acos(collx)*[0:nt-1]);
+% b=interp1(t,X1,(collx+1)/2*t(end));
+% 
+% % plot(t,X1); hold on; plot((collx+1)/2*t(end),b,':sq');
+% z=A\b;
+% reshape(u(1:end-1),[3,nt])';
+% % b=y(tch');
+% u2=reshape(z',[nt*3,1]);
+% u2(end+1)=2*pi/T;
+% u=u2;
+
 % % plot
 % neq=3;
 % xch=X*0;
@@ -74,12 +90,12 @@ u(nt*3+1)=2*pi/T;
 % plot(tch,xch,'o-'); hold on; set(gca,"ColorOrderIndex",1); %same as ycut
 %
 % u=u*0; u(end-3)=1;
-%
+%%
 close all; uinit=u;
-semilogy(abs(reshape(u(1:end-1),[3,nt])'),'--'); hold on; grid on; grid minor; title("Distribution on Chebyshev modes");
+semilogy(abs(reshape(u(1:end-1),[3,nt])'),':'); hold on; grid on; grid minor; title("Distribution on Chebyshev modes");
 %
 for ir=1:1;%40
-for i=1:12
+for i=1:1
 [g,jac]=calculateRhsAndJac(3,nt,u,r,1,collx);
 
 fprintf("it: %d \t norm(rhs): %4.2e \t gend: %4.2e\n",i,norm(g),g(end));
@@ -133,10 +149,10 @@ fprintf("Numerical fl mult:\n"); flnum=1./(1-evs)'; disp(sort(flnum));
 fprintf("Numerical fl exp:\n"); exponents=log(flnum)/2/pi*u(end); disp(sort(exponents));
 % fprintf("Diff:\n");
 % disp(sort(flnum)-sort(flmult'));
-% save("flnum-"+num2str(nt)+"-cheb-coll-lornez.mat",'nt','exponents','evs','evc','u');
+save("flnum-"+num2str(nt)+"-"+num2str(r)+"-cheb-coll-lornez.mat",'nt','exponents','evs','evc','u');
 
 % fprintf("&%4.4e\t",sort(exponents));
-fprintf("&%4.4e\t",sort(real(exponents)));
+fprintf("&%4.8e\t",sort(real(exponents)));
 % close all;
 
 %

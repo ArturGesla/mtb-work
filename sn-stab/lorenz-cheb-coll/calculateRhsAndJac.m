@@ -145,9 +145,10 @@ end
 for ikl=1:nt-1
     ixl=abs(ikl)*neq+1; %iyl=abs(ikl)*neq+2; izl=abs(ikl)*neq+3; 
   
-    g(lastid)=0;%g(lastid)+u(ixl)*ikl^2; 
+%     g(lastid)=0;%g(lastid)+u(ixl)*ikl^2; 
+    g(lastid)=g(lastid)+u(ixl)*ikl^2*(-1)^(ikl+1); 
     
-    ii(end+1)=lastid; jj(end+1)=ixl; vv(end+1)=ikl^2; 
+    ii(end+1)=lastid; jj(end+1)=ixl; vv(end+1)=ikl^2*(-1)^(ikl+1); 
                 
 end
 

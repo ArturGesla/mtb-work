@@ -55,7 +55,7 @@ xlim([0 0.45]); ylim([-0.5 0.5]); grid on;
 
 %%
 clf;
-iev=1;
+iev=262;
 up=reshape(real(evc(:,iev)),[1,length(x)])';
 plot(up(:,1:end),x,'x-'); grid on;
 title("ev "+num2str(iev)+":"+num2str(ev(iev),'%4.2e'))

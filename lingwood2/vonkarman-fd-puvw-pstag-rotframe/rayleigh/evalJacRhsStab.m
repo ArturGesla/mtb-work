@@ -96,32 +96,24 @@ ii=[ii;iih]; jj=[jj;iih]; vv=[vv;1];
 
 
 % %dirichlet at inf
-% i=np; 
-% iih=(i-1)*1+1;    iihzm=iih-1;       iihzp=iih+1;
-% g(iih)=u(iih); 
-% ii=[ii;iih]; jj=[jj;iih]; vv=[vv;1];
+i=np; 
+iih=(i-1)*1+1;    iihzm=iih-1;       iihzp=iih+1;
+g(iih)=u(iih); 
+ii=[ii;iih]; jj=[jj;iih]; vv=[vv;1];
 
 %neumann at inf
-i=np-1; 
-iih=(i-1)*1+1;    iihzm=iih-1;       iihzp=iih+1;
-hn=(u(iih)*(z(i+1)-zn)+u(iihzp)*(zn-z(i)))/(z(i+1)-z(i));
-hs=(u(iihzm)*(z(i)-zs)+u(iih)*(zs-z(i-1)))/(z(i)-z(i-1));
-zp=z(i); zn=(z(i)+z(i+1))/2; zs=(z(i)+z(i-1))/2;
+% i=np-1; 
+% iih=(i-1)*1+1;    iihzm=iih-1;       iihzp=iih+1;
+% hn=(u(iih)*(z(i+1)-zn)+u(iihzp)*(zn-z(i)))/(z(i+1)-z(i));
+% hs=(u(iihzm)*(z(i)-zs)+u(iih)*(zs-z(i-1)))/(z(i)-z(i-1));
+% zp=z(i); zn=(z(i)+z(i+1))/2; zs=(z(i)+z(i-1))/2;
+% 
+% g(iihzp)=(hn-hs)/(zn-zs); 
+% ii=[ii;iihzp]; jj=[jj;iih]; vv=[vv;(z(i+1)-zn)/(z(i+1)-z(i))/(zn-zs)];
+% ii=[ii;iihzp]; jj=[jj;iih]; vv=[vv;-(zs-z(i-1))/(z(i)-z(i-1))/(zn-zs)];
+% ii=[ii;iihzp]; jj=[jj;iihzp]; vv=[vv;(zn-z(i))/(z(i+1)-z(i))/(zn-zs)];
+% ii=[ii;iihzp]; jj=[jj;iihzm]; vv=[vv;-(z(i)-zs)/(z(i)-z(i-1))/(zn-zs)];
 
-g(iihzp)=(hn-hs)/(zn-zs); 
-ii=[ii;iihzp]; jj=[jj;iih]; vv=[vv;(z(i+1)-zn)/(z(i+1)-z(i))/(zn-zs)];
-ii=[ii;iihzp]; jj=[jj;iih]; vv=[vv;-(zs-z(i-1))/(z(i)-z(i-1))/(zn-zs)];
-ii=[ii;iihzp]; jj=[jj;iihzp]; vv=[vv;(zn-z(i))/(z(i+1)-z(i))/(zn-zs)];
-ii=[ii;iihzp]; jj=[jj;iihzm]; vv=[vv;-(z(i)-zs)/(z(i)-z(i-1))/(zn-zs)];
-
-% 
-% 
-% i=np; iif=(i-1)*4+2; iig=(i-1)*4+3; iih=(i-1)*4+4;
-% g(iif)=u(iif); g(iig)=u(iig); g(iih)=u(5);
-% 
-% ii=[ii;iih]; jj=[jj;5]; vv=[vv;1];
-% ii=[ii;iif]; jj=[jj;iif]; vv=[vv;1];
-% ii=[ii;iig]; jj=[jj;iig]; vv=[vv;1];
 
 
 jac0=sparse(ii,jj,vv);

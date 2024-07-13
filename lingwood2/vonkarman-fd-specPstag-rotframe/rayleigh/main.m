@@ -1,8 +1,8 @@
  clc; clear;
 %%
 % a=load("../vk-np-140.mat");
-a=load("../vk-np-180.mat");
-% a=load("../vk-np-100.mat");
+% a=load("../vk-np-180.mat");
+a=load("../vk-np-100.mat");
 % a=load("../vk-np-200.mat");
 % a=load("../vk-np-400.mat");
 % a=load("../vk-np-800.mat");
@@ -15,34 +15,34 @@ bbar=0.126;
 R=1;
 alpha=1; 
 
-[g,jac0,jac1,jac2]=evalJacRhsStab(u,x,U,omega,bbar,R,alpha);
+[g,jac0,jac1,jac2,jac3]=evalJacRhsStab(u,x,U,omega,bbar,R,alpha);
 
 %%
 eva=[];
-omega=0.01i; omega=0.004i; omega=0.0005i; omega=-omega*2;
-% oma=-0.0692 :0.002/4:0.0262; oma1=oma+0.04i;
-% oma=-0.0692 :0.002/4:0.0262; oma2=oma+0.015i;
-% % om0=-0.0692; om1=0.0262; omx=-1:2/50:1; omx=omx.^3; omx=(omx+1)/2*(om1-om0)+om0; oma3=omx+0.0133i;
-% oma=-0.0692 :0.002/4:0.0262; oma3=oma+0.0133i;
+omega=-0.0262+0.015i;
+oma=-0.0692 :0.002/4:0.0262; oma1=oma+0.04i;
+oma=-0.0692 :0.002/4:0.0262; oma2=oma+0.015i;
+% om0=-0.0692; om1=0.0262; omx=-1:2/50:1; omx=omx.^3; omx=(omx+1)/2*(om1-om0)+om0; oma3=omx+0.0133i;
+oma=-0.0692 :0.002/4:0.0262; oma3=oma+0.0133i;
 %
 % ev=eig(full(jac0),-full(jac1));
 
 %%
-for i=1:1;%120
-R=515; bbar=0.0117;
-% omega=0.01i;
-
-[g,jac0,jac1,jac2]=evalJacRhsStab(u,x,U,omega,bbar,R,alpha);
-% tic; [evc,evs]=polyeig(jac0,jac1,jac2); ev=(evs); toc; 
-tic; [evc,evs]=polyeigs2(jac0,jac1,jac2,20,0.25); ev=diag((evs)); toc; 
-eva=[eva,ev]; omega=omega+0.01/2/2/4/2
-end
+% omega=-0.0262+0.0125i;
+omega=-0.0262+0.04i;
+% omega=-0.0262+0.015i;
+% omega=omega-0.002;
+[g,jac0,jac1,jac2,jac3]=evalJacRhsStab(u,x,U,omega,bbar,R,alpha);
+[evc,evs]=polyeig(jac0,jac1,jac2,jac3); ev=(evs);
+% [evc,evs]=eig(full(jac0),-full(jac1)); ev=diag(evs);
+% [evc,evs]=eigs((jac0),-(jac1),20,'smallestabs'); ev=diag(evs);
+eva=[eva,ev];
 %%
 clf;
-plot(eva,'k.'); hold on;
- plot(ev,'x'); hold on; text(real(ev),imag(ev),num2str([1:length(ev)]'))
+% plot(eva,'k'); hold on;r
+ plot(ev,'x'); hold on;; text(real(ev),imag(ev),num2str([1:length(ev)]'))
 % plot(ev,'o');
-xlim([0 0.35]); ylim([-0.2 0.2]*2); grid on;
+xlim([0 0.45]); ylim([-0.5 0.5]); grid on;
 % xlim([-0.1 1.5]); ylim([-1 1]); grid on;
 % xlim([-0.1 0.5]*10); ylim([-0.5 0.5]*10); grid on;
 % xlim([-0.1 0.5]*40); ylim([-0.5 0.5]*40)
@@ -55,10 +55,9 @@ xlim([0 0.35]); ylim([-0.2 0.2]*2); grid on;
 
 %%
 clf;
-iev=7;
-up=reshape(abs(evc(:,iev)),[4,length(x)])';
-% plot(up(:,1:end),x,'x-'); grid on;
-plot(up(:,1:1),x,'x-'); grid on;
+iev=262;
+up=reshape(real(evc(:,iev)),[1,length(x)])';
+plot(up(:,1:end),x,'x-'); grid on;
 title("ev "+num2str(iev)+":"+num2str(ev(iev),'%4.2e'))
 iev=iev+1
 % ylim([0 0.8])

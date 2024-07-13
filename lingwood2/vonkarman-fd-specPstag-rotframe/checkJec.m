@@ -4,6 +4,7 @@ u=rand(np*4,1);
 eps=1e-3;
 
 clc;
+tic;
 for i=1:length(u)
 
     up=u; up(i)=up(i)+eps;
@@ -19,3 +20,4 @@ for i=1:length(u)
 
 
 end
+toc;

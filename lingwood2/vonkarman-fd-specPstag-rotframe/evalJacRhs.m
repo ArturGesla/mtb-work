@@ -21,8 +21,8 @@ zw=[2*z(1)-z(2),z(1:end-1),2*z(end-1)-z(end-2)];
 zc=(zw(1:end-1)+zw(2:end))/2;
 zw=zw(2:end);
 % plot(zc,zc,'-x'); hold on; plot(zw,zw,'-x');
-% ii=[]; jj=[]; vv=[];
-ii=ones(length(zw)*20,1)*length(zw)*4; jj=ii; vv=ii*0; iii=1;
+% ii=[; jj=[; vv=[;
+ii=ones(length(zw)*40,1)*length(zw)*4; jj=ii; vv=ii*0; iii=1;
 g=u*0;
 
 %conti
@@ -47,112 +47,118 @@ for i=2:length(zc)-1
     iip=(i-1)*4+1; iif=(i-1)*4+2; iig=(i-1)*4+3; iih=(i-1)*4+4;
     iifzm=iif-4; iigzm=iig-4; iihzm=iih-4; 
     iifzp=iif+4; iigzp=iig+4; iihzp=iih+4; 
-    iipzp=iip+4;
+    iipzp=iip+4; iipzm=iip-4;
     
-    zp=z(i); zn=(z(i)+z(i+1))/2; zs=(z(i)+z(i-1))/2;
+    zp=zc(i); zn=zw(i); zs=zw(i-1); zpm=zc(i-1); zpp=zc(i+1);
     
 
     %xmom
-    fn=(u(iif)*(z(i+1)-zn)+u(iifzp)*(zn-z(i)))/(z(i+1)-z(i));
-    fs=(u(iifzm)*(z(i)-zs)+u(iif)*(zs-z(i-1)))/(z(i)-z(i-1));
+    fn=(u(iif)*(zpp-zn)+u(iifzp)*(zn-zp))/(zpp-zp);
+    fs=(u(iifzm)*(zp-zs)+u(iif)*(zs-zpm))/(zp-zpm);
 
-    dfn=(u(iifzp)-u(iif))/(z(i+1)-z(i));
-    dfs=(u(iif)-u(iifzm))/(z(i)-z(i-1));
+    dfn=(u(iifzp)-u(iif))/(zpp-zp);
+    dfs=(u(iif)-u(iifzm))/(zp-zpm);
 
-%     g(iif)=u(iif)^2-u(iig)^2+(fn-fs)/(zn-zs)*u(iih)-(dfn-dfs)/(zn-zs);
+    g(iif)=u(iif)^2-u(iig)^2+(fn-fs)/(zn-zs)*u(iih)-(dfn-dfs)/(zn-zs);
 %     % g(iig)=g(iig)-u(iig)^2-2*u(iig)-1;
-%     g(iif)=g(iif)-2*u(iig)-1;
+    g(iif)=g(iif)-2*u(iig)-1;
 %    
 %     % 
-%     ii=[ii;iif]; jj=[jj;iif]; vv=[vv;2*u(iif)];
-%     ii=[ii;iif]; jj=[jj;iif]; vv=[vv;((z(i+1)-zn))/(z(i+1)-z(i))/(zn-zs)*u(iih)];
-%     ii=[ii;iif]; jj=[jj;iif]; vv=[vv;-((zs-z(i-1)))/(z(i)-z(i-1))/(zn-zs)*u(iih)];
-%     ii=[ii;iif]; jj=[jj;iif]; vv=[vv;(-1)/(z(i+1)-z(i))*-(1)/(zn-zs)];
-%     ii=[ii;iif]; jj=[jj;iif]; vv=[vv;(1)/(z(i)-z(i-1))*(1)/(zn-zs)];
+    ii(iii)=iif; jj(iii)=iif; vv(iii)=2*u(iif);                                 iii=iii+1;
+    ii(iii)=iif; jj(iii)=iif; vv(iii)=((zpp-zn))/(zpp-zp)/(zn-zs)*u(iih);       iii=iii+1;
+    ii(iii)=iif; jj(iii)=iif; vv(iii)=-((zs-zpm))/(zp-zpm)/(zn-zs)*u(iih);      iii=iii+1;
+    ii(iii)=iif; jj(iii)=iif; vv(iii)=(-1)/(zpp-zp)*-(1)/(zn-zs);               iii=iii+1;
+    ii(iii)=iif; jj(iii)=iif; vv(iii)=(1)/(zp-zpm)*(1)/(zn-zs);                 iii=iii+1;
+
+    ii(iii)=iif; jj(iii)=iifzp; vv(iii)=((zn-zp))/(zpp-zp)/(zn-zs)*u(iih);      iii=iii+1;
+    ii(iii)=iif; jj(iii)=iifzp; vv(iii)=(1)/(zpp-zp)*-(1)/(zn-zs);              iii=iii+1;
+    
+    ii(iii)=iif; jj(iii)=iifzm; vv(iii)=-((zp-zs))/(zp-zpm)/(zn-zs)*u(iih);     iii=iii+1;
+    ii(iii)=iif; jj(iii)=iifzm; vv(iii)=(1)/(zp-zpm)*-(1)/(zn-zs);              iii=iii+1;
 % 
-%     ii=[ii;iif]; jj=[jj;iifzp]; vv=[vv;((zn-z(i)))/(z(i+1)-z(i))/(zn-zs)*u(iih)];
-%     ii=[ii;iif]; jj=[jj;iifzp]; vv=[vv;(1)/(z(i+1)-z(i))*-(1)/(zn-zs)];
-%     
-%     ii=[ii;iif]; jj=[jj;iifzm]; vv=[vv;-((z(i)-zs))/(z(i)-z(i-1))/(zn-zs)*u(iih)];
-%     ii=[ii;iif]; jj=[jj;iifzm]; vv=[vv;(1)/(z(i)-z(i-1))*-(1)/(zn-zs)];
+    ii(iii)=iif; jj(iii)=iig; vv(iii)=-2*u(iig);                                iii=iii+1;
+    ii(iii)=iif; jj(iii)=iih; vv(iii)=(fn-fs)/(zn-zs);                          iii=iii+1;
 % 
-%     ii=[ii;iif]; jj=[jj;iig]; vv=[vv;-2*u(iig)];
-%     ii=[ii;iif]; jj=[jj;iih]; vv=[vv;(fn-fs)/(zn-zs)];
-% 
-%     ii=[ii;iif]; jj=[jj;iig]; vv=[vv;-2];
+    ii(iii)=iif; jj(iii)=iig; vv(iii)=-2;                                       iii=iii+1;
 % 
 %     %ymom
-%     gn=(u(iig)*(z(i+1)-zn)+u(iigzp)*(zn-z(i)))/(z(i+1)-z(i));
-%     gs=(u(iigzm)*(z(i)-zs)+u(iig)*(zs-z(i-1)))/(z(i)-z(i-1));
-% 
-%     dgn=(u(iigzp)-u(iig))/(z(i+1)-z(i));
-%     dgs=(u(iig)-u(iigzm))/(z(i)-z(i-1));
-% 
-%     g(iig)=2*u(iif)*u(iig)+(gn-gs)/(zn-zs)*u(iih)-(dgn-dgs)/(zn-zs);
-%     g(iig)=g(iig)+2*u(iif);
-%     
-%     ii=[ii;iig]; jj=[jj;iig]; vv=[vv;2*u(iif)];
-%     ii=[ii;iig]; jj=[jj;iig]; vv=[vv;((z(i+1)-zn))/(z(i+1)-z(i))/(zn-zs)*u(iih)];
-%     ii=[ii;iig]; jj=[jj;iig]; vv=[vv;-((zs-z(i-1)))/(z(i)-z(i-1))/(zn-zs)*u(iih)];
-%     ii=[ii;iig]; jj=[jj;iig]; vv=[vv;(-1)/(z(i+1)-z(i))*-(1)/(zn-zs)];
-%     ii=[ii;iig]; jj=[jj;iig]; vv=[vv;(1)/(z(i)-z(i-1))*(1)/(zn-zs)];
-% 
-%     ii=[ii;iig]; jj=[jj;iigzp]; vv=[vv;((zn-z(i)))/(z(i+1)-z(i))/(zn-zs)*u(iih)];
-%     ii=[ii;iig]; jj=[jj;iigzp]; vv=[vv;(1)/(z(i+1)-z(i))*-(1)/(zn-zs)];
-%     
-%     ii=[ii;iig]; jj=[jj;iigzm]; vv=[vv;-((z(i)-zs))/(z(i)-z(i-1))/(zn-zs)*u(iih)];
-%     ii=[ii;iig]; jj=[jj;iigzm]; vv=[vv;(1)/(z(i)-z(i-1))*-(1)/(zn-zs)];
-% 
-%     ii=[ii;iig]; jj=[jj;iif]; vv=[vv;2*u(iig)];
-%     ii=[ii;iig]; jj=[jj;iih]; vv=[vv;(gn-gs)/(zn-zs)];
-% 
-%     ii=[ii;iig]; jj=[jj;iif]; vv=[vv;2];
+    gn=(u(iig)*(zpp-zn)+u(iigzp)*(zn-zp))/(zpp-zp);
+    gs=(u(iigzm)*(zp-zs)+u(iig)*(zs-zpm))/(zp-zpm);
+
+    dgn=(u(iigzp)-u(iig))/(zpp-zp);
+    dgs=(u(iig)-u(iigzm))/(zp-zpm);
+
+    g(iig)=2*u(iif)*u(iig)+(gn-gs)/(zn-zs)*u(iih)-(dgn-dgs)/(zn-zs);
+    g(iig)=g(iig)+2*u(iif);
+    
+    ii(iii)=iig; jj(iii)=iig; vv(iii)=2*u(iif); iii=iii+1;
+    ii(iii)=iig; jj(iii)=iig; vv(iii)=((zpp-zn))/(zpp-zp)/(zn-zs)*u(iih);iii=iii+1;
+    ii(iii)=iig; jj(iii)=iig; vv(iii)=-((zs-zpm))/(zp-zpm)/(zn-zs)*u(iih);iii=iii+1;
+    ii(iii)=iig; jj(iii)=iig; vv(iii)=(-1)/(zpp-zp)*-(1)/(zn-zs);iii=iii+1;
+    ii(iii)=iig; jj(iii)=iig; vv(iii)=(1)/(zp-zpm)*(1)/(zn-zs);iii=iii+1;
+
+    ii(iii)=iig; jj(iii)=iigzp; vv(iii)=((zn-zp))/(zpp-zp)/(zn-zs)*u(iih);iii=iii+1;
+    ii(iii)=iig; jj(iii)=iigzp; vv(iii)=(1)/(zpp-zp)*-(1)/(zn-zs);iii=iii+1;
+    
+    ii(iii)=iig; jj(iii)=iigzm; vv(iii)=-((zp-zs))/(zp-zpm)/(zn-zs)*u(iih);iii=iii+1;
+    ii(iii)=iig; jj(iii)=iigzm; vv(iii)=(1)/(zp-zpm)*-(1)/(zn-zs);iii=iii+1;
+
+    ii(iii)=iig; jj(iii)=iif; vv(iii)=2*u(iig);iii=iii+1;
+    ii(iii)=iig; jj(iii)=iih; vv(iii)=(gn-gs)/(zn-zs);iii=iii+1;
+
+    ii(iii)=iig; jj(iii)=iif; vv(iii)=2;iii=iii+1;
 % 
 % 
 % %     %zmom WW'+P"=W''
-%     hn=(u(iih)*(z(i+1)-zn)+u(iihzp)*(zn-z(i)))/(z(i+1)-z(i));
-%     hs=(u(iihzm)*(z(i)-zs)+u(iih)*(zs-z(i-1)))/(z(i)-z(i-1));
-% 
-%     dhn=(u(iihzp)-u(iih))/(z(i+1)-z(i));
-%     dhs=(u(iih)-u(iihzm))/(z(i)-z(i-1));
-% 
-%     g(iih)=(u(iipzp)-u(iip))/(zn-zs)+(hn-hs)/(zn-zs)*u(iih)-(dhn-dhs)/(zn-zs);
-%     
-%     
-%     ii=[ii;iih]; jj=[jj;iipzp]; vv=[vv;1/(zn-zs)];
-%     ii=[ii;iih]; jj=[jj;iip]; vv=[vv;-1/(zn-zs)];
-%     
-%     ii=[ii;iih]; jj=[jj;iih]; vv=[vv;(hn-hs)/(zn-zs)];
-%     ii=[ii;iih]; jj=[jj;iih]; vv=[vv;((z(i+1)-zn))/(z(i+1)-z(i))/(zn-zs)*u(iih)];
-%     ii=[ii;iih]; jj=[jj;iih]; vv=[vv;-((zs-z(i-1)))/(z(i)-z(i-1))/(zn-zs)*u(iih)];
-%     ii=[ii;iih]; jj=[jj;iih]; vv=[vv;(-1)/(z(i+1)-z(i))*-(1)/(zn-zs)];
-%     ii=[ii;iih]; jj=[jj;iih]; vv=[vv;(1)/(z(i)-z(i-1))*(1)/(zn-zs)];
-% 
-%     ii=[ii;iih]; jj=[jj;iihzp]; vv=[vv;((zn-z(i)))/(z(i+1)-z(i))/(zn-zs)*u(iih)];
-%     ii=[ii;iih]; jj=[jj;iihzp]; vv=[vv;(1)/(z(i+1)-z(i))*-(1)/(zn-zs)];
-%     
-%     ii=[ii;iih]; jj=[jj;iihzm]; vv=[vv;-((z(i)-zs))/(z(i)-z(i-1))/(zn-zs)*u(iih)];
-%     ii=[ii;iih]; jj=[jj;iihzm]; vv=[vv;(1)/(z(i)-z(i-1))*-(1)/(zn-zs)];
+    hn=(u(iih)*(zpp-zn)+u(iihzp)*(zn-zp))/(zpp-zp);
+    hs=(u(iihzm)*(zp-zs)+u(iih)*(zs-zpm))/(zp-zpm);
+
+    dhn=(u(iihzp)-u(iih))/(zpp-zp);
+    dhs=(u(iih)-u(iihzm))/(zp-zpm);
+
+    g(iih)=(u(iip)-u(iipzm))/(zn-zs)+(hn-hs)/(zn-zs)*u(iih)-(dhn-dhs)/(zn-zs);
+    
+    
+    ii(iii)=iih; jj(iii)=iip; vv(iii)=1/(zn-zs);iii=iii+1;
+    ii(iii)=iih; jj(iii)=iipzm; vv(iii)=-1/(zn-zs);iii=iii+1;
+    
+    ii(iii)=iih; jj(iii)=iih; vv(iii)=(hn-hs)/(zn-zs);iii=iii+1;
+    ii(iii)=iih; jj(iii)=iih; vv(iii)=((zpp-zn))/(zpp-zp)/(zn-zs)*u(iih);iii=iii+1;
+    ii(iii)=iih; jj(iii)=iih; vv(iii)=-((zs-zpm))/(zp-zpm)/(zn-zs)*u(iih);iii=iii+1;
+    ii(iii)=iih; jj(iii)=iih; vv(iii)=(-1)/(zpp-zp)*-(1)/(zn-zs);iii=iii+1;
+    ii(iii)=iih; jj(iii)=iih; vv(iii)=(1)/(zp-zpm)*(1)/(zn-zs);iii=iii+1;
+
+    ii(iii)=iih; jj(iii)=iihzp; vv(iii)=((zn-zp))/(zpp-zp)/(zn-zs)*u(iih);iii=iii+1;
+    ii(iii)=iih; jj(iii)=iihzp; vv(iii)=(1)/(zpp-zp)*-(1)/(zn-zs);iii=iii+1;
+    
+    ii(iii)=iih; jj(iii)=iihzm; vv(iii)=-((zp-zs))/(zp-zpm)/(zn-zs)*u(iih);iii=iii+1;
+    ii(iii)=iih; jj(iii)=iihzm; vv(iii)=(1)/(zp-zpm)*-(1)/(zn-zs);iii=iii+1;
 
   
 end
 
-% %bc
-% i=1; iip=(i-1)*4+1; iif=(i-1)*4+2; iig=(i-1)*4+3; iih=(i-1)*4+4; 
-% g(iip)=u(iip); g(iif)=u(iif); g(iig)=u(iig); g(iih)=u(iih);
-% 
-% ii=[ii;iip]; jj=[jj;iip]; vv=[vv;1];
-% ii=[ii;iif]; jj=[jj;iif]; vv=[vv;1];
-% ii=[ii;iig]; jj=[jj;iig]; vv=[vv;1];
-% ii=[ii;iih]; jj=[jj;iih]; vv=[vv;1];
+%bc
+i=1; iip=(i-1)*4+1; iif=(i-1)*4+2; iig=(i-1)*4+3; iih=(i-1)*4+4; 
+% g(iip)=u(iip);
+g(iif)=u(iif); g(iig)=u(iig); g(iih)=u(iih);
+
+% ii(iii)=iip; jj(iii)=iip; vv(iii)=1;
+ii(iii)=iif; jj(iii)=iif; vv(iii)=1;iii=iii+1;
+ii(iii)=iig; jj(iii)=iig; vv(iii)=1;iii=iii+1;
+ii(iii)=iih; jj(iii)=iih; vv(iii)=1;iii=iii+1;
 %   
 % 
-% i=np; iif=(i-1)*4+2; iig=(i-1)*4+3; iih=(i-1)*4+4; 
-% g(iif)=u(iif); g(iig)=u(iig)+1; g(iih)=u(5);
+i=length(zw); iip=(i-1)*4+1; iif=(i-1)*4+2; iig=(i-1)*4+3; iih=(i-1)*4+4;
+iifzm=iif-4; iigzm=iig-4;
+g(iif)=(u(iif)+u(iifzm))/2; g(iig)=(u(iig)+u(iigzm))/2+1; g(iih)=u(1); g(iip)=u(iip)-u(iip-4);
 
-% ii=[ii;iih]; jj=[jj;5]; vv=[vv;1];
-% ii=[ii;iif]; jj=[jj;iif]; vv=[vv;1];
-% ii=[ii;iig]; jj=[jj;iig]; vv=[vv;1];
+ii(iii)=iih; jj(iii)=1; vv(iii)=1;iii=iii+1;
+ii(iii)=iif; jj(iii)=iif; vv(iii)=1/2;iii=iii+1;
+ii(iii)=iif; jj(iii)=iifzm; vv(iii)=1/2;iii=iii+1;
+ii(iii)=iig; jj(iii)=iig; vv(iii)=1/2;iii=iii+1;
+ii(iii)=iig; jj(iii)=iigzm; vv(iii)=1/2;iii=iii+1;
+ii(iii)=iip; jj(iii)=iip; vv(iii)=1;iii=iii+1;
+ii(iii)=iip; jj(iii)=iip-4; vv(iii)=-1;iii=iii+1;
 
 
 jac=sparse(ii,jj,vv);
@@ -164,7 +170,7 @@ end
 %        y(5)
 %        -2*y(1)
 %        y(1)^2-y(2)^2+y(4)*y(3)
-%        2*y(1)*y(2)+y(5)*y(3)];
+%        2*y(1)*y(2)+y(5)*y(3);
 % end
 % %--------------------------------
 % function res = bcfcn(ya,yb) % boundary conditions
@@ -172,5 +178,5 @@ end
 %     ya(2)-1
 %     ya(3)
 %     yb(1)
-%     yb(2) ];
+%     yb(2) ;
 % end

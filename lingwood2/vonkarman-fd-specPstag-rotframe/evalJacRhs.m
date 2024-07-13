@@ -139,13 +139,17 @@ end
 
 %bc
 i=1; iip=(i-1)*4+1; iif=(i-1)*4+2; iig=(i-1)*4+3; iih=(i-1)*4+4; 
+iifzp=iif+4;  iigzp=iig+4;  iihzp=iih+4; 
 % g(iip)=u(iip);
-g(iif)=u(iif); g(iig)=u(iig); g(iih)=u(iih);
+g(iif)=(u(iif)+u(iifzp))/2; g(iig)=(u(iig)+u(iigzp))/2; g(iih)=(u(iih)+u(iihzp))/2;
 
 % ii(iii)=iip; jj(iii)=iip; vv(iii)=1;
-ii(iii)=iif; jj(iii)=iif; vv(iii)=1;iii=iii+1;
-ii(iii)=iig; jj(iii)=iig; vv(iii)=1;iii=iii+1;
-ii(iii)=iih; jj(iii)=iih; vv(iii)=1;iii=iii+1;
+ii(iii)=iif; jj(iii)=iif; vv(iii)=1/2;iii=iii+1;
+ii(iii)=iif; jj(iii)=iifzp; vv(iii)=1/2;iii=iii+1;
+ii(iii)=iig; jj(iii)=iig; vv(iii)=1/2;iii=iii+1;
+ii(iii)=iig; jj(iii)=iigzp; vv(iii)=1/2;iii=iii+1;
+ii(iii)=iih; jj(iii)=iih; vv(iii)=1/2;iii=iii+1;
+ii(iii)=iih; jj(iii)=iihzp; vv(iii)=1/2;iii=iii+1;
 %   
 % 
 i=length(zw); iip=(i-1)*4+1; iif=(i-1)*4+2; iig=(i-1)*4+3; iih=(i-1)*4+4;

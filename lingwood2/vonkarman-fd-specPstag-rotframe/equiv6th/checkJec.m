@@ -4,13 +4,14 @@
 eps=1e-3;
 
 a=load("../vk-np-50.mat");
+% a=load("../vk-np-140.mat");
 x=a.x;
 u=a.u*0;
 U=a.u;
-omega=1+0.04i;
+omega=0.004i;
 % beta=bbar=beta/R;
-bbar=0.126;
-R=12;
+R=515; bbar=0.0117;
+
 alpha=2+0.1i; 
 
 
@@ -36,3 +37,4 @@ for i=1:length(u)
 
 
 end
+rank(full(jac))

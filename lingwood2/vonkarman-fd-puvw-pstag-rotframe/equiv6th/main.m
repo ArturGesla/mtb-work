@@ -1,7 +1,7 @@
  clc; clear;
 %%
-% a=load("../vk-np-140.mat");
-a=load("../vk-np-180.mat");
+a=load("../vk-np-140.mat");
+% a=load("../vk-np-180.mat");
 % a=load("../vk-np-100.mat");
 % a=load("../vk-np-200.mat");
 % a=load("../vk-np-400.mat");
@@ -19,7 +19,7 @@ alpha=1;
 
 %%
 eva=[];
-omega=0.01i; omega=0.004i; omega=0.0005i; omega=-omega*2;
+omega=0.01i; omega=0.004i; %omega=0.0005i; omega=-omega*2;
 % oma=-0.0692 :0.002/4:0.0262; oma1=oma+0.04i;
 % oma=-0.0692 :0.002/4:0.0262; oma2=oma+0.015i;
 % % om0=-0.0692; om1=0.0262; omx=-1:2/50:1; omx=omx.^3; omx=(omx+1)/2*(om1-om0)+om0; oma3=omx+0.0133i;
@@ -28,14 +28,15 @@ omega=0.01i; omega=0.004i; omega=0.0005i; omega=-omega*2;
 % ev=eig(full(jac0),-full(jac1));
 
 %%
-for i=1:1;%120
+for i=1:40;%120
 R=515; bbar=0.0117;
 % omega=0.01i;
 
 [g,jac0,jac1,jac2]=evalJacRhsStab(u,x,U,omega,bbar,R,alpha);
 % tic; [evc,evs]=polyeig(jac0,jac1,jac2); ev=(evs); toc; 
 tic; [evc,evs]=polyeigs2(jac0,jac1,jac2,20,0.25); ev=diag((evs)); toc; 
-eva=[eva,ev]; omega=omega+0.01/2/2/4/2
+eva=[eva,ev]; omega=omega+0.01/2/2/2%/4/2
+i
 end
 %%
 clf;

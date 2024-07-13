@@ -207,7 +207,7 @@ ii=[ii;iih]; jj=[jj;iih]; vv=[vv;1];
 i=np; iif=(i-1)*4+2; iig=(i-1)*4+3; iih=(i-1)*4+4;
 g(iif)=u(iif); g(iig)=u(iig); 
 
-% g(iih)=u(5); ii=[ii;iih]; jj=[jj;5]; vv=[vv;1];
+% g(iih)=u(5); ii=[ii;iih]; jj=[jj;5]; vv=[vv;1]; %this generates rank-1 def jacobian
 g(iih)=u(iih); ii=[ii;iih]; jj=[jj;iih]; vv=[vv;1]; %artificial contion but helped a bit, maybe we should fix p to 0 at 0,inf also
 ii=[ii;iif]; jj=[jj;iif]; vv=[vv;1];
 ii=[ii;iig]; jj=[jj;iig]; vv=[vv;1];

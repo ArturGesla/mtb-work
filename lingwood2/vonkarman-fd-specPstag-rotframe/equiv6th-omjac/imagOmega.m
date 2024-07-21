@@ -1,4 +1,4 @@
-function imOmg=imagOmega(ar,ai)
+function imOmg=imagOmega(ar,ai,bbar,R)
 
 a=load("../vk-np-120.mat");
 x=a.x;
@@ -6,7 +6,8 @@ u=a.u*0;
 U=a.u;
 
 
-R=530; beta=67; bbar=beta/R; omega=0;
+% R=530; beta=67; bbar=beta/R; 
+omega=0;
 
 
 % alpha=ar(ir)+1i*ai(ii);

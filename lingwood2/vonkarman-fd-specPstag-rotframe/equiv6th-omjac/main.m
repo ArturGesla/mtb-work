@@ -46,17 +46,22 @@ oma=linspace(om0r-ns/2*dom,om0r+ns/2*dom,ns)+om0i*1i;
 % oma=-0.0692 :0.002/4:0.0262; oma3=oma+0.0133i;
 %
 % ev=eig(full(jac0),-full(jac1));
+ 
+R=560; bbar=0.10; omegaa=[-0.1:0.01/4:0.1]+0.01i/2/2/2;
+
 
 %%
 eva=[]; im=[];
-for i=1:120;%120
-% omega=0.01i;
+% for i=1:120;%120
+    for i=1:length(omegaa);%120
+omega=omegaa(i);
 
-[g,jac0,jac1,jac2]=evalJacRhsStab(u,x,U,omega,bbar,R,alpha);
+[g,jac0,jac1,jac2,jacom]=evalJacRhsStab(u,x,U,omega,bbar,R,alpha);
 % tic; [evc,evs]=polyeig(jac0,jac1,jac2); ev=(evs); toc; 
-tic; [evc,evs]=polyeigs2(jac0,jac1,jac2,20,0.2); ev=diag((evs)); toc; 
+tic; [evc,evs]=polyeigs2(jac0+jacom*omega,jac1,jac2,20,0.2); ev=diag((evs)); toc; 
 eva=[eva;ev]; im=[im;ev*0+omega];
-omega=omega+0.01/2/2/4%/2
+% omega=omega+0.01/2/2/4%/2
+disp(omega)
 i
 end
 evaM=[evaM,eva];
@@ -69,8 +74,12 @@ ai=-0.5:0.1:0.2;
 ar=-0.05:0.01:0.45; 
 
 
-ai=-0.2:0.01:0;
-ar=0.1:1e-2:0.3;
+% ai=-0.2:0.01:0;
+% ar=0.1:1e-2:0.3;
+
+R=560; bbar=0.10;
+% ai=[0];  ar=-0.05:0.01:0.45; 
+ai=[-0.2:0.01:0];  ar=0:0.01:0.4; 
 
 
 for ii=1:length(ai) 
@@ -79,7 +88,7 @@ for ir=1:length(ar)
      [g,jac0,jac1,jac2,jacom]=evalJacRhsStab(u,x,U,omega,bbar,R,alpha);
     jac=jac0+alpha*jac1+alpha.^2*jac2;
     [ev]=eigs(jac,-jacom,5,0.1i);
-%     eva=[eva,ev];
+    eva=[eva,ev];
 %     disp(alpha);
 fprintf("ir %d\t ii %d\n",ir,ii);
     [a,b]=max(imag(ev));
@@ -87,13 +96,13 @@ fprintf("ir %d\t ii %d\n",ir,ii);
     end
 end
 %%
-save('aiarz.mat','ai','ar','z');
+save("aiarz-"+num2str(bbar)+"-"+num2str(R)+".mat",'ai','ar','z');
 %%
 plot(eva,'k.'); grid on;
 
 %%
 clf;
-contour(ar,ai,imag(z)',40); title("Imaginary part of most unstable $\omega(\alpha)$.");
+contour(ar,ai,imag(z)',400); title("Imaginary part of most unstable $\omega(\alpha)$.");
 
 % contour(ar,ai,real(z)',400); title("Real part of most unstable $\omega(\alpha)$.");
 
@@ -112,11 +121,12 @@ exportgraphics(gcf,"saddlepoint-4.eps");
 %% precise saddle
 
 clc;
-x=[0.25;-0.05];
+% x=[0.25;-0.05];
 % x=[0.2;0.2];
+x=[0.2;-0.1];
 xa=[x];
 eps=1e-6;
-zh=@(x,y) imagOmega(x,y);
+zh=@(x,y) imagOmega(x,y,bbar,R);
 
 %%
 
@@ -131,14 +141,52 @@ xa=[xa,x];
 det(jac)
 norm(g)
 
+%% 3dof
+
+clc;
+% x=[0.25;-0.05];
+% x=[0.2;0.2];
+x=[0.2;-0.1;0.1];
+xa=[x];
+eps=1e-6;
+
+zh=@(x,y,bbar) imagOmega(x,y,bbar,R);
+%%
+
+
+d2fdx2=(zh(x(1)+eps,x(2),x(3))-2*zh(x(1),x(2),x(3))+zh(x(1)-eps,x(2),x(3)))/eps^2;
+d2fdxdy=(zh(x(1)+eps,x(2)+eps,x(3))+zh(x(1)-eps,x(2)-eps,x(3))-zh(x(1)+eps,x(2)-eps,x(3))-zh(x(1)-eps,x(2)+eps,x(3)))/eps^2/4;
+d2fdy2=(zh(x(1),x(2)+eps,x(3))-2*zh(x(1),x(2),x(3))+zh(x(1),x(2)-eps,x(3)))/eps^2;
+
+d2fdxdb=(zh(x(1)+eps,x(2),x(3)+eps)+zh(x(1)-eps,x(2),x(3)-eps)-zh(x(1)+eps,x(2),x(3)-eps)-zh(x(1)-eps,x(2),x(3)+eps))/eps^2/4;
+d2fdydb=(zh(x(1),x(2)+eps,x(3)+eps)+zh(x(1),x(2)-eps,x(3)-eps)-zh(x(1),x(2)+eps,x(3)-eps)-zh(x(1),x(2)-eps,x(3)+eps))/eps^2/4;
+
+dfdx=(zh(x(1)+eps,x(2),x(3))-zh(x(1)-eps,x(2),x(3)))/eps/2;
+dfdy=(zh(x(1),x(2)+eps,x(3))-zh(x(1),x(2)-eps,x(3)))/eps/2;
+dfdb=(zh(x(1),x(2),x(3)+eps)-zh(x(1),x(2),x(3)-eps))/eps/2;
+
+jac=[d2fdx2,d2fdxdy,d2fdxdb;
+    d2fdxdy, d2fdy2,d2fdydb;
+    dfdx,dfdy,dfdb];
+
+% g=[(zh(x(1)+eps,x(2))-zh(x(1)-eps,x(2)))/2/eps;(zh(x(1),x(2)+eps)-zh(x(1),x(2)-eps))/2/eps];
+
+g=[dfdx;dfdy;zh(x(1),x(2),x(3))];
+
+x=x-jac\g;
+xa=[xa,x];
+det(jac)
+norm(g)
+
+
 %%
 hold on;
 plot(xa(1,:),xa(2,:),'-x')
-
-%%
+title("imag ev last point "+num2str(zh(xa(1,end),xa(2,end)),'%4.2e'));
+%% alplot
 
 clf;
-% plot(eva,'k.'); hold on;
+plot(eva,'k.'); hold on;
 % plot(eva,'k.'); hold on; text(real(eva),imag(eva),num2str(im))
 plot(evaM,'.'); hold on;
 % plot(eva,'x'); hold on;

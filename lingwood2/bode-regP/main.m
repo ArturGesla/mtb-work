@@ -1,6 +1,6 @@
 clc; clear;
 
-np=50; x=linspace(0,20,np); x=(x/20).^2*20;
+np=400; x=linspace(0,20,np); x=(x/20).^2*20;
 % L=40; np=100+L; x=linspace(0,L,np); x=(x/L).^2*L;
 % x=0:0.1:20; np=length(x);
 % al=0.01; x=(exp(al*x)./exp(al*20)*2-1)*20;
@@ -74,3 +74,7 @@ upp=reshape(up,[3,np])';
 % semilogx(x,upp(:,1),'x-');
 semilogx(x,upp,'x-');
 title("sing val: "+num2str(ss(ii),'%4.2e'))
+
+%%
+
+a=load("../bode-specP/vk-np-100.mat")

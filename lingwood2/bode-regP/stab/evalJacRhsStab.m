@@ -1,14 +1,16 @@
-%vonK code
-
-% z^    ----- p,      | continuity
-%  |    | . | u,v,w | x,y,z mom
-%  |    -----
-%  |    | . |
-%  |    -----
-%  |    | . |
-%  |----------------->
-%          | . | 
+   %vonK code 
+%          ----- ghost w
+   %       | . | ghost u,v,p
+   % z^    ----- w,      | z mom
+   %  |    | . | u,v,p | x,y mom, cont
+   %  |    -----
+   %  |    | . |
+   %  |    -----
+   %  |    | . |
+   %  |-----------------> ghost w
+%          | . | ghost u,v,p
 %          -----
+
 
 
 

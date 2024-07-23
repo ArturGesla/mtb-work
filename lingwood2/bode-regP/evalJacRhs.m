@@ -1,6 +1,5 @@
    %vonK code 
-  %p at wall for the p bc which is at wall
-%          ----- ghost w
+   %          ----- ghost w
    %       | . | ghost u,v,p
    % z^    ----- w,      | z mom
    %  |    | . | u,v,p | x,y mom, cont

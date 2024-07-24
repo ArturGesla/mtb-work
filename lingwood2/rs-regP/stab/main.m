@@ -10,8 +10,7 @@
 
 % a=load("../vk-np-110.mat");
 % a=load("../vk-np-120.mat");
-% a=load("../vk-np-130-k-1.mat");
-a=load("../vk-np-130-k-0.313.mat");
+a=load("../vk-np-130.mat");
 % a=load("../vk-np-140.mat");
 % a=load("../vk-np-180.mat");
 
@@ -22,7 +21,6 @@ z=x;
 zw=[2*z(1)-z(2),z(1:end-1),2*z(end-1)-z(end-2)];
 zc=(zw(1:end-1)+zw(2:end))/2;
 zw=zw(2:end);
-k=a.k;
 % omega=0+0.04i;
 % % beta=bbar=beta/R;
 % bbar=0.126;
@@ -34,17 +32,28 @@ k=a.k;
 % R=515; bbar=0.0117;
 % beta=0; bbar=beta/R;
 
-up=reshape(a.u,[4,length(a.u)/4])';
-plot(up(:,1:end),a.x,'k-'); 
+
 %%
 
 evaM=[];
 %%
- 
-R=27.4;  bbar=0.1152; beta=bbar*R; 
-omegaa=[-0.1:0.01/4:0.1]+0.01i/2/2/4/4; alpha=0;
+% omega=0.01i/2/2; 
 
-R=R/sqrt(k); bbar=beta/R;  omegaa=omegaa.*k^(3/2); %ar=ar.*sqrt(k);
+% R=515; bbar=0.0117; omega=-0.025+0.004i; omega=-0.025+0.0005i; omega=-0.025-0.001i;
+% R=530; beta=67; bbar=beta/R; omega=-0.025*2+0.1i/2/2/2/2/2/2/2; %omega=-0.025+0.0005i; omega=-0.025-0.001i;
+
+R=530; beta=67; bbar=beta/R; omega=-0.025*2+0.1i/2/2/2/2/2/2/2; %omega=-0.025+0.0005i; omega=-0.025-0.001i;
+
+ns=100; dom=0.01/2/2/4; om0r=-0.03125; om0i=4e-4; a0r=0.22; a0i=-0.14;
+oma=linspace(om0r-ns/2*dom,om0r+ns/2*dom,ns)+om0i*1i;
+% oma=-0.0692 :0.002/4:0.0262; oma1=oma+0.04i;
+% oma=-0.0692 :0.002/4:0.0262; oma2=oma+0.015i;
+% % om0=-0.0692; om1=0.0262; omx=-1:2/50:1; omx=omx.^3; omx=(omx+1)/2*(om1-om0)+om0; oma3=omx+0.0133i;
+% oma=-0.0692 :0.002/4:0.0262; oma3=oma+0.0133i;
+%
+% ev=eig(full(jac0),-full(jac1));
+ 
+R=27.4; bbar=0.1152; omegaa=[-0.1:0.01/4:0.1]+0.01i/2/2/4/4; alpha=0;
 
 
 %%
@@ -62,20 +71,15 @@ disp(omega)
 i
 end
 evaM=[evaM,eva];
-%%
-save("eva-omline-k-"+num2str(k)+".mat",'eva','k');
-%%
-clf; grid on; 
-a=load("eva-omline-k-1.mat"); plot(a.eva,'r.'); hold on;
-a=load("eva-omline-k-0.313.mat"); plot(a.eva/k^(1/2),'bsq');
+
 %% alplot
 
 clf;
 plot(eva,'k.'); hold on;
 % plot(eva,'k.'); hold on; text(real(eva),imag(eva),num2str(im))
-% plot(evaM,'.'); hold on;
+plot(evaM,'.'); hold on;
 % plot(eva,'x'); hold on;
-%  plot(ev,'x'); hold on; text(real(ev),imag(ev),num2str([1:length(ev)]'))
+ plot(ev,'x'); hold on; text(real(ev),imag(ev),num2str([1:length(ev)]'))
 % plot(ev,'o');
 % xlim([0 0.35]);
 ylim([-0.2 0.2]*2); 
@@ -105,8 +109,6 @@ iev=iev+1
 ylim([0 max(zw)])
 
 %%
-omega=0;
-shift=0.1i+0.1;
 ai=0;
 eva=[];
 z=[];
@@ -122,10 +124,10 @@ ar=-0.05:0.01:0.45;
 % % ai=[0];  ar=-0.05:0.01:0.45; 
 % ai=[-0.2:0.01:0];  ar=0:0.01:0.4; 
 
-R=27.4; bbar=0.1152; beta=bbar*R;
+R=27.4; bbar=0.1152;
 ai=[0];  ar=-0.5:0.01:1.5; 
 % ai=[-0.5:0.01:0.5];  ar=0:0.01:1; 
-R=R/sqrt(k); bbar=beta/R;ar=ar.*sqrt(k); shift=shift/k^(3/2);
+
 
 
 for ii=1:length(ai) 
@@ -133,7 +135,7 @@ for ir=1:length(ar)
     alpha=ar(ir)+1i*ai(ii);
      [g,jac0,jac1,jac2,jacom]=evalJacRhsStab(u,x,U,omega,bbar,R,alpha);
     jac=jac0+alpha*jac1+alpha.^2*jac2;
-    [ev]=eigs(jac,-jacom,30,shift);
+    [ev]=eigs(jac,-jacom,5,0.1i);
     eva=[eva,ev];
 %     disp(alpha);
 fprintf("ir %d\t ii %d\n",ir,ii);
@@ -146,14 +148,6 @@ end
 save("aiarz-"+num2str(bbar)+"-"+num2str(R)+".mat",'ai','ar','z');
 %%
 plot(eva,'k.'); grid on;
-hold on; axis equal;
-plot(shift,'rx')
-%%
-save("eva-areal-k-"+num2str(k)+".mat",'eva','k');
-%%
-clf; grid on; 
-a=load("eva-areal-k-1.mat"); plot(a.eva,'r.'); hold on;
-a=load("eva-areal-k-0.313.mat"); plot(a.eva/k^(3/2),'b.'); 
 
 %%
 clf;

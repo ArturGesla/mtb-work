@@ -13,7 +13,7 @@
 
 
 
-function [g,jac]=evalJacRhs(u,z,k)
+function [g,jac,zc,zw]=evalJacRhs(u,z,k)
 % k=0.313;
 % np=length(z);
 zw=[2*z(1)-z(2),z(1:end-1),2*z(end-1)-z(end-2)];

@@ -1,8 +1,8 @@
 clc; clear;
 %
 % np=400; x=linspace(0,20,np); x=(x/20).^2*20;
-% L=1; np=100+L; x=linspace(0,L,np); x=(x/L).^1*L; Re=900; s="x";
-L=55; np=100+L; x=linspace(0,L,np); x=(x/L).^1*L; Re=1; s="x"; reh=L.^2;
+L=1; np=100+L; x=linspace(0,L,np); x=(x/L).^1*L; Re=1000; s="x"; reh=Re;
+% L=round(sqrt(1000)); np=100+L; x=linspace(0,L,np); x=(x/L).^1*L; Re=1; s="x"; reh=L.^2;
 disp("Reh: "+num2str(reh));
 % x=0:0.1:20; np=length(x);
 % al=0.01; x=(exp(al*x)./exp(al*20)*2-1)*20;
@@ -39,6 +39,7 @@ end
 % save("vk-np-"+num2str(np),'u','np','x');
 
 %%
+clf;
 % plot(x,reshape(u,[3,np])','x-')
 up=reshape(u,[4,np])';
 % hold on;
@@ -47,45 +48,33 @@ plot(up(:,1:end),x,'x-');
 % xlim([-1.5 0.5]); 
 % ylim([0 20]); pbaspect([10 3 1]);
 % legend("P","F","G","H");
-legend("F","G","H");
+legend("P","F","G","H");
 % fnts=12; jfm_plt_aid_comm;
 % exportgraphics(gcf,"p7-vel.eps")
 % save("vk-np-"+num2str(np),'u','np');
 
-%%
-a=load("../bode-regP/vk-np-130.mat");
+%% comp Re
+
+clf;
+% plot(x,reshape(u,[3,np])','x-')
+up=reshape(u,[4,np])';
+plot(up(:,3),x,'x-');
+
+a=load("../bode-regP/vk-np-130-k-1.mat");
 hold on; 
 up=reshape(a.u,[4,length(a.u)/4])';
-plot(up(:,1:end),a.x,'k-'); 
+% plot(0.313*up(:,1:end),a.x/sqrt(Re*0.313),'k-'); 
+plot(0.313*up(:,3),a.x/sqrt(Re*0.313),'k+-'); 
+xlim([0,1]); ylim([0,1]); grid on;
+title("Rotor-stator solution Re=1000");
+ylabel("z"); xlabel("G(z)");
+legend("rotor-stator","rescaled B\"+'"'+"odewadt","Location","best");
+fnts=12; jfm_plt_aid_comm; size_sq23;
+exportgraphics(gcf,"p4-rs-vs-bode.eps")
+
+%% comp reh
+a=load("../bode-regP/vk-np-130-k-1.mat");
+hold on; 
+up=reshape(a.u,[4,length(a.u)/4])';
+plot(0.313*up(:,1:end),a.x/sqrt(0.313),'k-'); 
 %%
-[x(1:11)',up(1:11,2:end)]
-
-
-%% convergence
-winf=[]; npa=[]; 
-a=load("vk-np-50.mat"); winf=[winf;a.u(end)]; npa=[npa; a.np]
-a=load("vk-np-100.mat"); winf=[winf;a.u(end)]; npa=[npa; a.np]
-a=load("vk-np-200.mat"); winf=[winf;a.u(end)]; npa=[npa; a.np]
-a=load("vk-np-400.mat"); winf=[winf;a.u(end)]; npa=[npa; a.np]
-a=load("vk-np-800.mat"); winf=[winf;a.u(end)]; npa=[npa; a.np]
-a=load("vk-np-1600.mat"); winf=[winf;a.u(end)]; npa=[npa; a.np]
-
-orders=log((winf(1:end-2)-winf(2:end-1))./(winf(2:end-1)-winf(3:end)))/log(2)
-
-%%
-[U,S,V]=svd(full(jac));
-max(diag(S))/min(diag(S))
-cond(full(jac)) 
-ss=diag(S);
-%%
-ii=1;
-up=V(:,ii); %kernel
-% up=U(:,ii);  %image
-upp=reshape(up,[3,np])';
-% semilogx(x,upp(:,1),'x-');
-semilogx(x,upp,'x-');
-title("sing val: "+num2str(ss(ii),'%4.2e'))
-
-%%
-
-a=load("../bode-specP/vk-np-100.mat")

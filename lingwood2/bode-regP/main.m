@@ -23,10 +23,10 @@ u(4:4:end)=1;
 %
 % u=rand(np*4,1);
 k=1;
-k=0.313;
+% k=0.313;
 
 for i=1:15
-    [g,jac]=evalJacRhs(u,x,k);
+    [g,jac,~,~]=evalJacRhs(u,x,k);
     fprintf("%d i \t norm(rhs): %4.2e \t rms norm: %4.2e \n",i,norm(g),norm(g));
     u=u-jac\g;
     if(norm(g)<1e-13) break; end;
@@ -34,6 +34,7 @@ for i=1:15
 end
 %
 save("vk-np-"+num2str(np)+"-k-"+num2str(k)+".mat",'u','np','x','k');
+    [g,jac,zc,zw]=evalJacRhs(u,x,k);
 
 %%
 % plot(x,reshape(u,[3,np])','x-')
@@ -47,6 +48,18 @@ legend("P","F","G","H");
 % fnts=12; jfm_plt_aid_comm;
 % exportgraphics(gcf,"p7-vel.eps")
 % save("vk-np-"+num2str(np),'u','np');
+
+%%
+clf;
+plot(up(:,1:end-1),zc,'+-'); hold on; 
+plot(up(:,end),zw,'+-'); 
+legend("P","F","G","H","Location","best");
+ylim([0 30]); grid on;
+title("B\"+'"'+"odewadt layer solution");
+ylabel("z"); xlabel("$\phi(z)$");
+fnts=12; jfm_plt_aid_comm; size_sq23;
+exportgraphics(gcf,"p4-bode.eps")
+
 %%
 [x(1:11)',up(1:11,2:end)]
 

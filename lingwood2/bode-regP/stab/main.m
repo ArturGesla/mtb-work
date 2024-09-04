@@ -11,9 +11,13 @@
 % a=load("../vk-np-110.mat");
 % a=load("../vk-np-120.mat");
 % a=load("../vk-np-130-k-1.mat");
-a=load("../vk-np-130-k-0.313.mat");
+% a=load("../vk-np-130-k-0.313.mat");
 % a=load("../vk-np-140.mat");
 % a=load("../vk-np-180.mat");
+
+a=load("../vk-np-120-k-1.mat");
+% a=load("../vk-np-130-k-1.mat");
+% a=load("../vk-np-140-k-1.mat");
 
 x=a.x;
 u=a.u*0;
@@ -42,9 +46,9 @@ evaM=[];
 %%
  
 R=27.4;  bbar=0.1152; beta=bbar*R; 
-omegaa=[-0.1:0.01/4:0.1]+0.01i/2/2/4/4; alpha=0;
+omegaa=[-0.1:0.01/4/4:0.1]+0.01i/2/2/4/4*0; alpha=0;
 
-R=R/sqrt(k); bbar=beta/R;  omegaa=omegaa.*k^(3/2); %ar=ar.*sqrt(k);
+% R=R/sqrt(k); bbar=beta/R;  omegaa=omegaa.*k^(3/2); %ar=ar.*sqrt(k);
 
 
 %%
@@ -63,7 +67,7 @@ i
 end
 evaM=[evaM,eva];
 %%
-save("eva-omline-k-"+num2str(k)+".mat",'eva','k');
+save("eva-omline-k-"+num2str(k)+"-l-"+num2str(length(x))+".mat",'eva','k','x');
 %%
 clf; grid on; 
 a=load("eva-omline-k-1.mat"); plot(a.eva,'r.'); hold on;
@@ -83,6 +87,11 @@ grid on;
 % xlim([-0.1 1.5]); ylim([-1 1]); grid on;
 % xlim([-0.1 0.5]*10); ylim([-0.5 0.5]*10); grid on;
 % xlim([-0.1 0.5]*40); ylim([-0.5 0.5]*40)
+
+xlim([0 1]); ylim([-0.6 0.6 ]); xlabel("$a_r$"); ylabel("$a_i$"); 
+title("Re="+num2str(R)+", $\beta$="+num2str(bbar)+", $\omega\in$("+num2str(min(omegaa))+", "+num2str(max(omegaa))+")");
+size_sq23; fnts=10; jfm_plt_aid_comm;
+% exportgraphics(gcf,"p4-lw97fig6-1.eps")%lw97 fig 6
 
 % pbaspect([5 1 1]); xlabel("a_r"); ylabel("a_i"); 
 % % fnts=12; jfm_plt_aid_comm;
@@ -111,7 +120,7 @@ ai=0;
 eva=[];
 z=[];
 
-ai=-0.5:0.1:0.2;
+% ai=-0.5:0.1:0.2;
 ar=-0.05:0.01:0.45; 
 
 
@@ -145,11 +154,17 @@ end
 %%
 save("aiarz-"+num2str(bbar)+"-"+num2str(R)+".mat",'ai','ar','z');
 %%
+clf;
 plot(eva,'k.'); grid on;
 hold on; axis equal;
 plot(shift,'rx')
+
+xlim([-0.08 0.04]); ylim([-0.08 0.01 ]); xlabel("$\omega_r$"); ylabel("$\omega_i$"); 
+title("Re="+num2str(R)+", $\beta$="+num2str(bbar)+", $\alpha\in$("+num2str(min(ar))+", "+num2str(max(ar))+")");
+size_sq23; fnts=10; jfm_plt_aid_comm;
+% exportgraphics(gcf,"p4-lw97fig6-2.eps")%lw97 fig 6
 %%
-save("eva-areal-k-"+num2str(k)+".mat",'eva','k');
+save("eva-areal-k-"+num2str(k)+"-l-"+num2str(length(x))+"+.mat",'eva','k','x');
 %%
 clf; grid on; 
 a=load("eva-areal-k-1.mat"); plot(a.eva,'r.'); hold on;

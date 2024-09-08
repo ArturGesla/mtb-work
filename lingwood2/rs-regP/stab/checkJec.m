@@ -3,7 +3,7 @@
 % u=rand(np*4,1);
 eps=1e-3;
 
-a=load("../vk-np-50.mat");
+a=load("../rs-np-132-k-1-L-32.mat");
 % a=load("../vk-np-140.mat");
 x=a.x;
 u=a.u*0;

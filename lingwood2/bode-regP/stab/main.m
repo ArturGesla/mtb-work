@@ -10,8 +10,8 @@
 
 % a=load("../vk-np-110.mat");
 % a=load("../vk-np-120.mat");
-% a=load("../vk-np-130-k-1.mat");
-a=load("../vk-np-130-k-0.313.mat");
+a=load("../vk-np-130-k-1.mat");
+% a=load("../vk-np-130-k-0.313.mat");
 % a=load("../vk-np-140.mat");
 % a=load("../vk-np-180.mat");
 
@@ -55,6 +55,9 @@ evaM=[];
 R=27.4;  bbar=0.1152; beta=bbar*R; 
 omegaa=[-0.1:0.01/4/4:0.1]+0.01i/2/2/4/4*0; alpha=0;
 
+R=21.6; bbar=-0.1174; beta=bbar*R; %critical
+omegaa=[-0.25:0.01/10:-0.15]+1i*0.006; %alpha=0;
+
 % R=R/sqrt(k); bbar=beta/R;  omegaa=omegaa.*k^(3/2); %ar=ar.*sqrt(k);
 
 
@@ -82,9 +85,9 @@ a=load("eva-omline-k-0.313.mat"); plot(a.eva/k^(1/2),'bsq');
 %% alplot
 
 clf;
-plot(eva,'k.'); hold on;
+% plot(eva,'k.'); hold on;
 % plot(eva,'k.'); hold on; text(real(eva),imag(eva),num2str(im))
-% plot(evaM,'.'); hold on;
+plot(evaM,'.'); hold on;
 % plot(eva,'x'); hold on;
 %  plot(ev,'x'); hold on; text(real(ev),imag(ev),num2str([1:length(ev)]'))
 % plot(ev,'o');
@@ -110,7 +113,7 @@ size_sq23; fnts=10; jfm_plt_aid_comm;
 
 %%
 clf;
-% iev=1;
+iev=28;
 up=reshape(real(evc(:,iev)),[4,length(x)])';
 plot(up(:,[1:3]),zc,'x-'); grid on;
 hold on;
@@ -119,6 +122,9 @@ plot(up(:,4),zw,'x-');
 title("ev "+num2str(iev)+":"+num2str(ev(iev),'%4.2e'))
 iev=iev+1
 ylim([0 max(zw)])
+
+xlabel("$vel$"); ylabel("$z$"); legend("P","F","G","H");
+size_sq23; fnts=10; jfm_plt_aid_comm;
 
 %%
 omega=0;
@@ -140,7 +146,10 @@ ar=-0.05:0.01:0.45;
 % ai=[-0.2:0.01:0];  ar=0:0.01:0.4; 
 
 R=27.4; bbar=0.1152; beta=bbar*R;
+R=21.6; bbar=-0.1174; beta=bbar*R; %critical
 ai=[0];  ar=-0.5:0.01:1.5; %ar=0.5;
+ai=0:0.1/10:0.2; ar=0:0.01:1; ai=0.0819;
+ai=0.0819; ar=0.3403;
 % ai=[-0.5:0.01:0.5];  ar=0:0.01:1; 
 R=R/sqrt(k); bbar=beta/R;ar=ar*sqrt(k); shift=shift/k^(3/2); %ar=ar./sqrt(k);
 %
@@ -197,7 +206,7 @@ a=load("eva-areal-k-1-np-1600-L-480.mat"); plot(a.eva,'rx'); hold on; ev=a.eva; 
 % a=load("eva-areal-k-1-np-200-L-60.mat"); up=reshape(abs(a.evc(:,18)),[4,length(a.x)])'; plot(up(:,[1:4]),a.x,'b-'); grid on;
 %%
 clf;
-contour(ar,ai,imag(z)',40); title("Imaginary part of most unstable $\omega(\alpha)$.");
+contour(ar,ai,imag(z)',40); title("Imag $\omega(\alpha)$ "+"Re="+num2str(R)+", $\beta$="+num2str(bbar));
 hold on; contour(ar,ai,imag(z)',[0 0],'-k');
 % contour(ar,ai,real(z)',400); title("Real part of most unstable $\omega(\alpha)$.");
 
@@ -210,7 +219,7 @@ size_sq; colorbar(); colormap(hsv(8));
 
 %%
 
-exportgraphics(gcf,"saddlepoint-4.eps");
+exportgraphics(gcf,"saddlepoint-bodecrit.eps");
 
 
 %% precise saddle
@@ -218,7 +227,7 @@ exportgraphics(gcf,"saddlepoint-4.eps");
 clc;
 % x=[0.25;-0.05];
 % x=[0.2;0.2];
-x=[0.2;-0.1];
+x=[0.3;0.05]; %init guess
 xa=[x];
 eps=1e-6;
 zh=@(x,y) imagOmega(x,y,bbar,R);

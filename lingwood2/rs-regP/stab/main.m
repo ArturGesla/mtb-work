@@ -1,7 +1,5 @@
  clc; clear;
- 
- 
- addpath C:\Users\Artur\Documents\GitHub\rotst2\scripts\source_for_mtb;
+  addpath C:\Users\Artur\Documents\GitHub\rotst2\scripts\source_for_mtb;
 %%
 % a=load("../vk-np-50.mat");
 % a=load("../vk-np-100.mat");

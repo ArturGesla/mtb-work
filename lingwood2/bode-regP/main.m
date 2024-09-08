@@ -1,7 +1,7 @@
 clc; clear;
 
 % np=400; x=linspace(0,20,np); x=(x/20).^2*20;
-L=40; np=100+L; x=linspace(0,L,np); x=(x/L).^2*L;
+L=30*16; np=1600; x=linspace(0,L,np); x=(x/L).^1*L;
 % x=0:0.1:20; np=length(x);
 % al=0.01; x=(exp(al*x)./exp(al*20)*2-1)*20;
 u=zeros(np*4,1);
@@ -33,7 +33,7 @@ for i=1:15
 
 end
 %
-save("vk-np-"+num2str(np)+"-k-"+num2str(k)+".mat",'u','np','x','k');
+save("vk-np-"+num2str(np)+"-k-"+num2str(k)+"-L-"+num2str(L)+".mat",'u','np','x','k');
     [g,jac,zc,zw]=evalJacRhs(u,x,k);
 
 %%

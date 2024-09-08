@@ -1,8 +1,8 @@
 clc; clear;
 %
 % np=400; x=linspace(0,20,np); x=(x/20).^2*20;
-L=1; np=100+L; x=linspace(0,L,np); x=(x/L).^1*L; Re=1000; s="x"; reh=Re;
-% L=round(sqrt(1000)); np=100+L; x=linspace(0,L,np); x=(x/L).^1*L; Re=1; s="x"; reh=L.^2;
+%L=1; np=100+L; x=linspace(0,L,np); x=(x/L).^1*L; Re=1000; s="x"; reh=Re;
+ L=round(sqrt(1000)); np=100+L; x=linspace(0,L,np); x=(x/L).^1*L; Re=1; s="x"; reh=L.^2;
 disp("Reh: "+num2str(reh));
 % x=0:0.1:20; np=length(x);
 % al=0.01; x=(exp(al*x)./exp(al*20)*2-1)*20;
@@ -51,7 +51,9 @@ plot(up(:,1:end),x,'x-');
 legend("P","F","G","H");
 % fnts=12; jfm_plt_aid_comm;
 % exportgraphics(gcf,"p7-vel.eps")
-% save("vk-np-"+num2str(np),'u','np');
+k=1;
+save("rs-np-"+num2str(np)+"-k-"+num2str(k)+"-L-"+num2str(L)+".mat",'u','np','x','k');
+
 
 %% comp Re
 

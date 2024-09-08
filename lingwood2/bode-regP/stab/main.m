@@ -11,13 +11,20 @@
 % a=load("../vk-np-110.mat");
 % a=load("../vk-np-120.mat");
 % a=load("../vk-np-130-k-1.mat");
-% a=load("../vk-np-130-k-0.313.mat");
+a=load("../vk-np-130-k-0.313.mat");
 % a=load("../vk-np-140.mat");
 % a=load("../vk-np-180.mat");
 
-a=load("../vk-np-120-k-1.mat");
+% a=load("../vk-np-120-k-1.mat");
 % a=load("../vk-np-130-k-1.mat");
 % a=load("../vk-np-140-k-1.mat");
+
+% a=load("../vk-np-130-k-1-L-30.mat");
+% a=load("../vk-np-140-k-1-L-30.mat");
+% a=load("../vk-np-130-k-1-L-60.mat");
+% a=load("../vk-np-100-k-1-L-30.mat");
+% a=load("../vk-np-200-k-1-L-60.mat");
+% a=load("../vk-np-1600-k-1-L-480.mat");
 
 x=a.x;
 u=a.u*0;
@@ -103,7 +110,7 @@ size_sq23; fnts=10; jfm_plt_aid_comm;
 
 %%
 clf;
-iev=1;
+% iev=1;
 up=reshape(real(evc(:,iev)),[4,length(x)])';
 plot(up(:,[1:3]),zc,'x-'); grid on;
 hold on;
@@ -116,6 +123,7 @@ ylim([0 max(zw)])
 %%
 omega=0;
 shift=0.1i+0.1;
+shift=0;
 ai=0;
 eva=[];
 z=[];
@@ -132,18 +140,18 @@ ar=-0.05:0.01:0.45;
 % ai=[-0.2:0.01:0];  ar=0:0.01:0.4; 
 
 R=27.4; bbar=0.1152; beta=bbar*R;
-ai=[0];  ar=-0.5:0.01:1.5; 
+ai=[0];  ar=-0.5:0.01:1.5; %ar=0.5;
 % ai=[-0.5:0.01:0.5];  ar=0:0.01:1; 
-R=R/sqrt(k); bbar=beta/R;ar=ar.*sqrt(k); shift=shift/k^(3/2);
-
+R=R/sqrt(k); bbar=beta/R;ar=ar*sqrt(k); shift=shift/k^(3/2); %ar=ar./sqrt(k);
+%
 
 for ii=1:length(ai) 
 for ir=1:length(ar) 
     alpha=ar(ir)+1i*ai(ii);
      [g,jac0,jac1,jac2,jacom]=evalJacRhsStab(u,x,U,omega,bbar,R,alpha);
     jac=jac0+alpha*jac1+alpha.^2*jac2;
-    [ev]=eigs(jac,-jacom,30,shift);
-    eva=[eva,ev];
+%     [ev]=eigs(jac,-jacom,30,shift); eva=[eva,ev];
+    [evc,ev]=eigs(jac,-jacom,30,shift); ev=diag(ev); eva=[eva,ev];
 %     disp(alpha);
 fprintf("ir %d\t ii %d\n",ir,ii);
     [a,b]=max(imag(ev));
@@ -155,7 +163,9 @@ end
 save("aiarz-"+num2str(bbar)+"-"+num2str(R)+".mat",'ai','ar','z');
 %%
 clf;
-plot(eva,'k.'); grid on;
+plot(eva,'k.'); grid on; hold on;
+plot(ev,'r.'); hold on; text(real(ev),imag(ev),string(num2str([1:length(ev)]')));
+%%
 hold on; axis equal;
 plot(shift,'rx')
 
@@ -164,12 +174,27 @@ title("Re="+num2str(R)+", $\beta$="+num2str(bbar)+", $\alpha\in$("+num2str(min(a
 size_sq23; fnts=10; jfm_plt_aid_comm;
 % exportgraphics(gcf,"p4-lw97fig6-2.eps")%lw97 fig 6
 %%
-save("eva-areal-k-"+num2str(k)+"-l-"+num2str(length(x))+"+.mat",'eva','k','x');
+% save("eva-areal-k-"+num2str(k)+"-l-"+num2str(length(x))+"+.mat",'eva','k','x');
+save("eva-areal-k-"+num2str(k)+"-np-"+num2str(length(x))+"-L-"+num2str(x(end))+".mat",'eva','k','x','evc','ev');
 %%
 clf; grid on; 
-a=load("eva-areal-k-1.mat"); plot(a.eva,'r.'); hold on;
-a=load("eva-areal-k-0.313.mat"); plot(a.eva/k^(3/2),'b.'); 
+a=load("eva-areal-k-1-np-130-L-30.mat"); plot(a.eva,'r.'); hold on;
+a=load("eva-areal-k-0.313-np-130-L-30.mat"); plot(a.eva/k^(3/2),'bo'); 
+%%
+clf;
+% a=load("eva-areal-k-1.mat"); plot(a.eva,'k.'); hold on;
+a=load("eva-areal-k-1-np-140-L-30.mat"); plot(a.eva,'rx'); hold on;
+a=load("eva-areal-k-1-np-130-L-30.mat"); plot(a.eva,'b+'); hold on;
+a=load("eva-areal-k-1-np-130-L-60.mat"); plot(a.eva,'gsq'); hold on;
 
+%% evc comp
+clf;
+% a=load("eva-areal-k-1-np-100-L-30.mat"); plot(a.eva,'b+'); hold on;  ev=a.eva; %text(real(ev),imag(ev),string(num2str([1:length(ev)]')));
+% a=load("eva-areal-k-1-np-200-L-60.mat"); plot(a.eva,'gsq'); hold on; ev=a.eva; %text(real(ev),imag(ev),string(num2str([1:length(ev)]')));
+a=load("eva-areal-k-1-np-1600-L-480.mat"); plot(a.eva,'rx'); hold on; ev=a.eva; text(real(ev),imag(ev),string(num2str([1:length(ev)]')));
+
+% a=load("eva-areal-k-1-np-100-L-30.mat"); up=reshape(abs(a.evc(:,9)),[4,length(a.x)])'; plot(up(:,[1:4]),a.x,'r-'); grid on; hold on;
+% a=load("eva-areal-k-1-np-200-L-60.mat"); up=reshape(abs(a.evc(:,18)),[4,length(a.x)])'; plot(up(:,[1:4]),a.x,'b-'); grid on;
 %%
 clf;
 contour(ar,ai,imag(z)',40); title("Imaginary part of most unstable $\omega(\alpha)$.");

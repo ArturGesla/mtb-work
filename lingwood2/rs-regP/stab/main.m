@@ -3,7 +3,8 @@
  addpath C:\Users\Artur\Documents\GitHub\rotst2\scripts\source_for_mtb;
 %%
 % a=load("../rs-np-132-k-0.313-L-32.mat");
-a=load("../rs-np-200-k-0.313-L-31.6228.mat");
+% a=load("../rs-np-200-k-0.313-L-31.6228.mat");
+a=load("../rs-np-162-k-0.313-reh-1000.mat");
 
 data=a;
 x=a.x;
@@ -27,6 +28,11 @@ k=a.k;
 
 up=reshape(a.u,[4,length(a.u)/4])';
 plot(up(:,1:end),a.x,'k-'); 
+
+aa=load('data2D.mat'); aa=aa.data;
+up=reshape(aa.u,[4,length(aa.u)/4])';
+hold on; plot(up(:,1:end),aa.x,'-'); 
+
 %%
 
 evaM=[];

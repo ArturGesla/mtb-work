@@ -73,12 +73,13 @@ end
 Rar=a.xc(1,irng)*sqrt(Re);
 %%
 
-save('omiar2D200.mat','Rar','omiar')
+save('omiar2D500.mat','Rar','omiar')
 %%
 
-a=load('omiar2D200.mat'); plot(a.Rar,a.omiar,'-x'); grid on; hold on;
-a=load('omiarsup50.mat'); plot(a.Rar,a.omiar,'r-'); grid on; hold on;
+a=load('omiar2D500.mat'); plot(a.Rar,a.omiar,'-x'); grid on; hold on;
+a=load('omiarsup50Reh500.mat'); plot(a.Rar,a.omiar,'r-'); grid on; hold on;
 % a=load('omiarbelow40.mat'); plot(a.Rar,a.omiar,'r-'); grid on; hold on;
+
 xlabel("R"); ylabel("abs growth rate");
 legend("2d profile substitution","1d","1d")
 title("om0i self s vs 2d Re="+num2str(Re))

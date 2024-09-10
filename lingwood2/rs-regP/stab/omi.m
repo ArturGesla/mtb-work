@@ -1,5 +1,8 @@
-load('startR40.mat'); 
-Rar=[40:-1:10];
+% load('startR40.mat'); 
+% load('start50-Reh200.mat')
+load('start50-Reh500.mat')
+% Rar=[40:-1:10];
+Rar=[50:1:70];
 
 omiar=[];
 

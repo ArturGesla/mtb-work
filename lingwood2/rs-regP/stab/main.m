@@ -4,7 +4,9 @@
 %%
 % a=load("../rs-np-132-k-0.313-L-32.mat");
 % a=load("../rs-np-200-k-0.313-L-31.6228.mat");
-a=load("../rs-np-162-k-0.313-reh-1000.mat");
+% a=load("../rs-np-162-k-0.313-reh-1000.mat");
+% a=load("../rs-np-162-k-0.313-reh-200.mat");
+a=load("../rs-np-162-k-0.313-reh-500.mat");
 
 data=a;
 x=a.x;
@@ -45,8 +47,8 @@ R=40; bbar=-0.0316; shift=0.1i;
 R=  40.127834854531294;
 omegaa=[-0.05:0.01/10:0.05]+1i*0.001/4; alpha=0;
 
-R=20; bbar=0;
-omegaa=[-0.05:0.01/10:0.05]+1i*2.5e-3/2; alpha=0;
+R=50; bbar=0;
+omegaa=[-0.05:0.01/10:0.05]+1i*8e-4; alpha=0;
 
 % R=R/sqrt(k); bbar=beta/R;  omegaa=omegaa.*k^(3/2); %ar=ar.*sqrt(k);
 
@@ -65,7 +67,7 @@ eva=[eva;ev]; im=[im;ev*0+omega];
 disp(omega)
 i
 end
-evaM=[evaM,eva];
+% evaM=[evaM,eva];
 %%
 save("eva-omline-k-"+num2str(k)+"-l-"+num2str(length(x))+".mat",'eva','k','x');
 %%
@@ -103,7 +105,7 @@ size_sq23; fnts=10; jfm_plt_aid_comm;
 
 %%
 clf;
-iev=3;
+iev=5;
 up=reshape(real(evc(:,iev)),[4,length(x)])';
 plot(up(:,[1:3]),zc,'x-'); grid on;
 hold on;
@@ -145,9 +147,12 @@ ar=0:0.01/2:1; ai=0:0.01:0.1;
 R=  40.127834854531294; ai=0; %ai=0.025936806686725;
 
 
-R=40; bbar=0; shift=0.1+0.1i;
-% ai=[0];  ar=-0.5:0.01:1.5; ar(51)=[];%ar=0.5;
-ar=-0.3:0.01:0.3; ai=-0.1:0.01:0.1; ar(31)=[];
+R=50; bbar=0; shift=0.1+0.1i;
+% ai=[0]+0.00;  ar=-0.5:0.01:1.5; ar(51)=[];%ar=0.5;
+% ar=-0.3:0.01:0.3; ai=-0.1:0.01:0.1; ar(31)=[];
+% ar=0.2:0.01:0.4; ai=0:0.01:0.15; 
+% ar=0.2:0.01:0.3; ai=0.06;
+ar=0.1:0.01:0.4; ai=-0.05:0.01:0.05; %reh=500
 %
 
 for ii=1:length(ai) 
@@ -165,21 +170,19 @@ fprintf("ir %d\t ii %d\n",ir,ii);
 end
 % evaM=[evaM,eva];
 %%
-save("aiarz-"+num2str(bbar)+"-"+num2str(R)+".mat",'ai','ar','z');
-%%
 clf;
 plot(eva,'k.'); grid on; hold on;
 plot(ev,'r.'); hold on; text(real(ev),imag(ev),string(num2str([1:length(ev)]')));
 
 % plot(evaM,'.'); grid on; hold on;
 
-%%
-hold on; axis equal;
-plot(shift,'rx')
-
-xlim([-0.08 0.04]); ylim([-0.08 0.01 ]); xlabel("$\omega_r$"); ylabel("$\omega_i$"); 
-title("Re="+num2str(R)+", $\beta$="+num2str(bbar)+", $\alpha\in$("+num2str(min(ar))+", "+num2str(max(ar))+")");
-size_sq23; fnts=10; jfm_plt_aid_comm;
+% %%
+% hold on; axis equal;
+% plot(shift,'rx')
+% 
+% xlim([-0.08 0.04]); ylim([-0.08 0.01 ]); xlabel("$\omega_r$"); ylabel("$\omega_i$"); 
+% title("Re="+num2str(R)+", $\beta$="+num2str(bbar)+", $\alpha\in$("+num2str(min(ar))+", "+num2str(max(ar))+")");
+% size_sq23; fnts=10; jfm_plt_aid_comm;
 % exportgraphics(gcf,"p4-lw97fig6-2.eps")%lw97 fig 6
 %%
 % save("eva-areal-k-"+num2str(k)+"-l-"+num2str(length(x))+"+.mat",'eva','k','x');
@@ -228,7 +231,9 @@ clc;
 % x=[0.25;-0.05];
 % x=[0.2;0.2];
 % x=[0.2;0.02];
- x=[0.15;    0.0];
+%  x=[0.25;    0.05];% reh=200
+%  x=[0.173;    -0.00135];% reh=500
+ x=[0.244;    8.56e-3];% reh=500
 xa=[x];
 eps=1e-6;
 zh=@(x,y) imag(imagOmega(x,y,bbar,R,data));
@@ -247,11 +252,13 @@ det(jac);
 norm(g);
 % imagOmega(x(1),x(2),bbar,R,data)
 
-fprintf("ar: %4.2e\tai: %4.2e\tR: %4.2f\tnorm(g): %4.2e\tomi: %4.2e\n",x(1),x(2),R,norm(g),g(end));
+fprintf("ar: %4.2e\tai: %4.2e\tR: %4.2f\tnorm(g): %4.2e\tomi: %4.2e\n",x(1),x(2),R,norm(g),zh(x(1),x(2)));
 
 %% 3dof Re
 
-clc; x=[0.16;    0.01; 60];
+clc; x=[0.25;    0.05; 50];
+x=[0.244;    8.56e-3; 50];% reh=500
+x=[0.173;    -0.00135; 50];% reh=500
 
 xa=[x];
 eps=1e-6;

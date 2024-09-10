@@ -1,8 +1,9 @@
 clc; clear;
 cd C:\Users\Artur\Documents\rotst\plots_yd
 
-Re=1000;
+Re=500;
 a=importdata("u"+num2str(Re)+"-600-160.dat");
+% a=importdata("u"+num2str(Re)+".dat.base");
 a=loadrs2(a,600,160);
  cd C:\Users\Artur\Documents\GitHub\mtb-work\lingwood2\rs-regP\stab;
 %%
@@ -10,9 +11,13 @@ a=loadrs2(a,600,160);
 
 omiar=[];
 xa=[0.15;    0.0];
+% xa=[0.25;0.06]; irng=200:400;
+xa=[0.25;0.01]; irng=150:350; %Reh=500
 
 
-for    iii=75:200
+
+for    iii=    irng
+
 
 R=a.xc(1,iii)*sqrt(Re);
 bbar=0;
@@ -65,16 +70,18 @@ if(norm(g)>1e-7), error("no conv"); end
 omiar(end+1)=zh(x(1),x(2));
 end
 
-Rar=a.xc(1,75:200)*sqrt(Re);
-
+Rar=a.xc(1,irng)*sqrt(Re);
 %%
 
-a=load('omiar2D.mat'); plot(a.Rar,a.omiar,'-x'); grid on; hold on;
-a=load('omiarsup40.mat'); plot(a.Rar,a.omiar,'r-'); grid on; hold on;
-a=load('omiarbelow40.mat'); plot(a.Rar,a.omiar,'r-'); grid on; hold on;
+save('omiar2D200.mat','Rar','omiar')
+%%
+
+a=load('omiar2D200.mat'); plot(a.Rar,a.omiar,'-x'); grid on; hold on;
+a=load('omiarsup50.mat'); plot(a.Rar,a.omiar,'r-'); grid on; hold on;
+% a=load('omiarbelow40.mat'); plot(a.Rar,a.omiar,'r-'); grid on; hold on;
 xlabel("R"); ylabel("abs growth rate");
 legend("2d profile substitution","1d","1d")
-title("om0i drops for real profile but slightly, this is naive approach")
+title("om0i self s vs 2d Re="+num2str(Re))
 
 %%
 

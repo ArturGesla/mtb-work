@@ -1,7 +1,9 @@
  clc; clear;
  
  
- addpath C:\Users\Artur\Documents\GitHub\rotst2\scripts\source_for_mtb;
+ % addpath C:\Users\Artur\Documents\GitHub\rotst2\scripts\source_for_mtb;
+ addpath     '/people/gesla/Documents/git/rotst2/scripts/source_for_mtb'
+
 %%
 % a=load("../vk-np-50.mat");
 % a=load("../vk-np-100.mat");
@@ -10,7 +12,7 @@
 
 % a=load("../vk-np-110.mat");
 % a=load("../vk-np-120.mat");
-a=load("../vk-np-130-k-1.mat");
+% a=load("../vk-np-130-k-1.mat");
 % a=load("../vk-np-130-k-0.313.mat");
 % a=load("../vk-np-140.mat");
 % a=load("../vk-np-180.mat");
@@ -25,6 +27,10 @@ a=load("../vk-np-130-k-1.mat");
 % a=load("../vk-np-100-k-1-L-30.mat");
 % a=load("../vk-np-200-k-1-L-60.mat");
 % a=load("../vk-np-1600-k-1-L-480.mat");
+
+% a=load("../vk-np-100-k-1-L-20.mat");
+% a=load("../vk-np-150-k-1-L-30.mat");
+a=load("../vk-np-200-k-1-L-40.mat");
 
 x=a.x;
 u=a.u*0;
@@ -45,6 +51,7 @@ k=a.k;
 % R=515; bbar=0.0117;
 % beta=0; bbar=beta/R;
 
+clf;
 up=reshape(a.u,[4,length(a.u)/4])';
 plot(up(:,1:end),a.x,'k-'); 
 %%
@@ -146,10 +153,10 @@ ar=-0.05:0.01:0.45;
 % ai=[-0.2:0.01:0];  ar=0:0.01:0.4; 
 
 R=27.4; bbar=0.1152; beta=bbar*R;
-R=21.6; bbar=-0.1174; beta=bbar*R; %critical
-ai=[0];  ar=-0.5:0.01:1.5; %ar=0.5;
-ai=0:0.1/10:0.2; ar=0:0.01:1; ai=0.0819;
-ai=0.0819; ar=0.3403;
+% R=21.6; bbar=-0.1174; beta=bbar*R; %critical
+ai=[0];  ar=-0.5:0.01:1.5; ar=0.5;
+% ai=0:0.1/10:0.2; ar=0:0.01:1; ai=0.0819;
+% ai=0.0819; ar=0.3403;
 % ai=[-0.5:0.01:0.5];  ar=0:0.01:1; 
 R=R/sqrt(k); bbar=beta/R;ar=ar*sqrt(k); shift=shift/k^(3/2); %ar=ar./sqrt(k);
 %

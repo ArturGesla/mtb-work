@@ -1,7 +1,12 @@
 clc; clear;
 
 % np=400; x=linspace(0,20,np); x=(x/20).^2*20;
-L=30*16; np=1600; x=linspace(0,L,np); x=(x/L).^1*L;
+% L=30*16; np=1600; x=linspace(0,L,np); x=(x/L).^1*L;
+
+% L=20; np=100; x=linspace(0,L,np); x=(x/L).^1*L;
+% L=30; np=150; x=linspace(0,L,np); x=(x/L).^1*L;
+L=40; np=200; x=linspace(0,L,np); x=(x/L).^1*L;
+
 % x=0:0.1:20; np=length(x);
 % al=0.01; x=(exp(al*x)./exp(al*20)*2-1)*20;
 u=zeros(np*4,1);

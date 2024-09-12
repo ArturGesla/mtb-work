@@ -10,9 +10,9 @@
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    id="svg281"
    version="1.2"
-   viewBox="0 0 866.25433 571.27199"
-   height="571.27197pt"
-   width="866.25433pt"
+   viewBox="0 0 758.95605 535.99466"
+   height="535.99463pt"
+   width="758.95605pt"
    sodipodi:docname="inst-scenario-8.svg"
    inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)">
   <sodipodi:namedview
@@ -28,9 +28,9 @@
      inkscape:window-height="964"
      id="namedview146"
      showgrid="false"
-     inkscape:zoom="0.61341513"
-     inkscape:cx="584.72769"
-     inkscape:cy="264.17937"
+     inkscape:zoom="0.8675"
+     inkscape:cx="647.1896"
+     inkscape:cy="356.73364"
      inkscape:window-x="0"
      inkscape:window-y="27"
      inkscape:window-maximized="1"
@@ -38,7 +38,9 @@
      fit-margin-top="0"
      fit-margin-left="0"
      fit-margin-right="0"
-     fit-margin-bottom="0" />
+     fit-margin-bottom="0"
+     showguides="true"
+     inkscape:guide-bbox="true" />
   <metadata
      id="metadata285">
     <rdf:RDF>
@@ -110,7 +112,7 @@
   </defs>
   <g
      id="surface688"
-     transform="translate(38.44791,8.5331167)">
+     transform="translate(14.178307,306.60825)">
     <g
        id="g18"
        clip-path="url(#clip2)"
@@ -550,18 +552,11 @@
          sodipodi:role="line"
          id="tspan1396"
          x="295.01834"
-         y="77.333405"
-         style="font-size:20px;stroke-width:0.75">subcritical states?</tspan></text>
-    <ellipse
-       style="opacity:1;fill:none;fill-opacity:1;stroke:#d40000;stroke-width:2.25;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-       id="path1400"
-       cx="374.18576"
-       cy="71.831429"
-       rx="95.673378"
-       ry="19.562607" />
+         y="105.2634"
+         style="font-size:20px;stroke-width:0.75" /></text>
     <g
        id="surface594"
-       transform="matrix(1.5501983,0,0,1.5501983,-38.44791,206.19323)">
+       transform="matrix(1.5501983,0,0,1.5501983,171.08006,-306.60825)">
       <rect
          id="rect2"
          style="fill:#ffffff;fill-opacity:1;stroke:none"
@@ -1200,8 +1195,8 @@
          inkscape:connector-curvature="0" />
     </g>
     <path
-       style="opacity:1;fill:#d40000;fill-opacity:1;stroke:none;stroke-width:0.79700565;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-       d="m 267.20698,75.817827 c -9.67949,1.70992 -18.89308,6.20045 -27.38867,13.34875 -3.21201,2.70263 -8.84116,8.71568 -11.68978,12.487043 -2.57392,3.40762 -6.87171,10.18561 -8.80257,13.88232 -4.91452,9.40907 -8.76338,20.70872 -9.80314,28.78063 -0.44421,3.4483 -0.3773,3.27442 -1.19111,3.09533 -2.09395,-0.46081 -6.84249,-3.13407 -9.37542,-5.27808 -0.74853,-0.6336 -1.38404,-1.12753 -1.4122,-1.09773 -0.0281,0.0299 0.40439,1.23385 0.96127,2.67552 1.63335,4.22843 6.355,17.1875 7.19213,19.73956 0.42375,1.2918 0.96466,2.94115 1.20204,3.66518 1.02502,3.1265 3.01878,10.06803 3.06626,10.67558 0.0375,0.47884 0.13449,0.32848 0.34967,-0.54161 1.61568,-6.53524 7.62459,-17.84108 16.31847,-30.70332 1.23444,-1.82633 2.20344,-3.3194 2.15331,-3.31795 -0.05,0.001 -0.96262,0.43376 -2.0278,0.96071 -2.87783,1.42369 -9.22578,3.61652 -10.58266,3.65569 -0.4525,0.0131 -0.48951,-0.11821 -0.35305,-1.25227 0.48507,-4.03075 1.93962,-8.77753 4.25227,-13.87677 5.88976,-12.98657 16.54513,-23.59576 32.03865,-31.89979 7.47117,-4.004303 16.66939,-7.578263 24.7062,-9.599553 1.08844,-0.27374 2.45373,-0.62358 3.03402,-0.77742 1.91543,-0.50775 8.99745,-1.83509 11.39493,-2.13569 2.09866,-0.2631 1.77282,-0.28241 -2.98895,-0.17692 -5.88499,0.13028 -11.86021,-0.24327 -15.11618,-0.94509 -4.0596,-0.87496 -6.08043,-2.32579 -6.12948,-4.40059 -0.0395,-1.66786 0.70038,-3.11703 2.7697,-5.42533 l 1.85962,-2.07438 -1.02881,0.0579 c -0.56583,0.0318 -2.09972,0.24707 -3.40864,0.47831 z"
+       style="opacity:1;fill:#d40000;fill-opacity:1;stroke:none;stroke-width:0.50778347;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       d="m 233.02659,42.421069 c -4.12423,4.712609 -6.90725,10.620078 -8.27288,17.560784 -0.51633,2.624141 -0.91164,7.856981 -0.82093,10.8668 0.0819,2.719543 0.65307,7.800843 1.16974,10.407275 1.31505,6.634024 3.9139,13.781545 6.61939,18.204975 1.15577,1.889687 1.1196,1.776637 0.64398,2.012527 -1.22376,0.60695 -4.64884,1.17477 -6.76243,1.12108 -0.6246,-0.0159 -1.13734,-0.008 -1.13943,0.0185 -0.002,0.0261 0.6933,0.4513 1.54527,0.94495 2.49884,1.44786 10.01606,5.99859 11.4504,6.93178 0.72604,0.47236 1.65297,1.07551 2.05984,1.3403 1.75693,1.14346 5.51766,3.79476 5.78374,4.07751 0.20974,0.22282 0.19789,0.10944 -0.0426,-0.40853 -1.80616,-3.89021 -3.33482,-11.90297 -4.15138,-21.760299 -0.11595,-1.39965 -0.2307,-2.527858 -0.25502,-2.507133 -0.0245,0.02045 -0.30489,0.599626 -0.62352,1.286461 -0.86085,1.855645 -3.13792,5.478304 -3.7961,6.039354 -0.21948,0.18711 -0.29027,0.13668 -0.67515,-0.48096 -1.36796,-2.195229 -2.54028,-5.133 -3.42716,-8.588298 -2.25868,-8.799835 -1.2019,-18.321238 3.17753,-28.629027 2.11183,-4.970543 5.25305,-10.416719 8.43726,-14.628289 0.43124,-0.570378 0.9696,-1.289048 1.19636,-1.59706 0.74852,-1.01667 3.73558,-4.502537 4.80616,-5.608744 0.93716,-0.968314 0.76764,-0.847847 -1.5549,1.105156 -2.87042,2.413636 -5.98675,4.61309 -7.88375,5.564165 -2.36519,1.185856 -3.9478,1.271986 -4.80029,0.261241 -0.68533,-0.812475 -0.89634,-1.827433 -0.79007,-3.79966 l 0.0955,-1.772365 -0.48779,0.439393 c -0.26829,0.241637 -0.94408,0.960776 -1.50178,1.598051 z"
        id="path1678"
        inkscape:connector-curvature="0" />
     <text
@@ -1219,86 +1214,47 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:30.00000191px;line-height:1.25;font-family:'Latin Modern Math';-inkscape-font-specification:'Latin Modern Math';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.75000006"
-       x="453.80719"
-       y="260.73764"
+       x="-5.2706299"
+       y="224.42641"
        id="text3887"><tspan
          sodipodi:role="line"
-         x="453.80719"
-         y="260.73764"
-         style="font-size:20px;stroke-width:0.75000006"
-         id="tspan3920">   <tspan
+         x="-5.2706299"
+         y="224.42641"
+         style="font-size:20px;fill:#000000;stroke-width:0.75000006"
+         id="tspan1120">   <tspan
    style="font-size:50px;fill:#ff0000"
-   id="tspan3907">✗</tspan> <tspan
-   style="font-size:25px"
-   id="tspan1133">Subcritical solutions </tspan><tspan
-   style="font-size:25px;fill:#ff0000"
-   id="tspan1131">don't</tspan></tspan><tspan
-         sodipodi:role="line"
-         x="453.80719"
-         y="304.91763"
-         style="font-size:25px;stroke-width:0.75000006"
-         id="tspan3891">explain the circular rolls.</tspan><tspan
-         sodipodi:role="line"
-         x="453.80719"
-         y="342.41763"
-         style="font-size:20px;stroke-width:0.75000006"
-         id="tspan1103" /><tspan
-         sodipodi:role="line"
-         x="453.80719"
-         y="379.91763"
-         style="font-size:20px;stroke-width:0.75000006"
-         id="tspan1097">(Subcritical axisymmetric solutions </tspan><tspan
-         sodipodi:role="line"
-         x="453.80719"
-         y="417.41766"
-         style="font-size:20px;stroke-width:0.75000006"
-         id="tspan1099">in rotor-stator flow. Gesla et al. </tspan><tspan
-         sodipodi:role="line"
-         x="453.80719"
-         y="454.91766"
-         style="font-size:20px;stroke-width:0.75000006"
-         id="tspan1141">Phys. Rev. Fluids 2024.)</tspan><tspan
-         sodipodi:role="line"
-         x="453.80719"
-         y="492.41766"
-         style="font-size:20px;stroke-width:0.75000006"
-         id="tspan1101" /><tspan
-         sodipodi:role="line"
-         x="453.80719"
-         y="529.91766"
-         style="font-size:20px;stroke-width:0.75000006"
-         id="tspan3899" /></text>
+   id="tspan3907">✗ </tspan>Subcritical solutions do not explain the circular rolls. (Gesla et al., PRF 2024)</tspan></text>
     <path
        id="path32-4"
-       d="m 279.39871,122.75449 v 7.96094"
+       d="m 249.39871,122.75449 v 7.96094"
        style="fill:#ff0000;stroke:#ff0000;stroke-width:2.83465004;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1"
        inkscape:connector-curvature="0" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:30.00000191px;line-height:1.25;font-family:'Latin Modern Math';-inkscape-font-specification:'Latin Modern Math';letter-spacing:0px;word-spacing:0px;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.75000006"
-       x="258.88223"
+       x="228.88223"
        y="147.80511"
        id="text3965"><tspan
          sodipodi:role="line"
          id="tspan3963"
-         x="258.88223"
+         x="228.88223"
          y="147.80511"
          style="font-size:20px;fill:#ff0000;stroke-width:0.75000006">1800</tspan></text>
     <path
        id="path32-4-3"
-       d="m 46.491095,510.69834 v 7.96094"
+       d="m 250.01907,-2.103142 v 7.96094"
        style="fill:#ff0000;stroke:#ff0000;stroke-width:2.83465004;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1"
        inkscape:connector-curvature="0" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:30.00000191px;line-height:1.25;font-family:'Latin Modern Math';-inkscape-font-specification:'Latin Modern Math';letter-spacing:0px;word-spacing:0px;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.75000006"
-       x="25.974617"
-       y="535.74896"
+       x="235.50258"
+       y="22.947481"
        id="text3965-6"><tspan
          sodipodi:role="line"
          id="tspan3963-7"
-         x="25.974617"
-         y="535.74896"
+         x="235.50258"
+         y="22.947481"
          style="font-size:20px;fill:#ff0000;stroke-width:0.75000006">1800</tspan></text>
   </g>
 </svg>

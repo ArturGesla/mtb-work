@@ -1,0 +1,35 @@
+,Multiphysics index,Re,name,num,ysa
+a01,2,10,Drops and Bubbles ,84,7
+a02,1,20,Instability and Transition ,71,10
+a03,3,60,Convection and Buoyancy-Driven Flows,63,4
+a04,4,50,"Granular Flows, Particle-Laden Flows, Suspensions",63,4
+a05,"1,5",100,misc. CFD,49,3
+a06,3,80,FSI ,47,7
+a07,2,90,Aerodynamics ,46,8
+a08,2,60,Wall-Bounded Flows,40,2
+a09,5,1,Biological Fluid Mechanics ,40,2
+a10,3,50,Multiphase Flows,41,5
+a11,2,60,Control of Turbulent Flows,39,5
+a12,"2,2",80,Geophysical and Astrophysical Turbulence ,35,2
+a13,2,60,Jets and Free Shear Flows,29,7
+a14,1,40,Vortex Dynamics and Structure Formation ,28,3
+a15,2,30,Surface Tension Effects ,31,4
+a16,3,70,Non-Newtonian Flows,23,3
+a17,1,70,Intermittency and Scaling ,24,3
+a18,2,60,Lagrangian Aspects of Turbulence ,27,6
+a19,2,60,Compressible Flows,21,1
+a20,2,20,Waves,23,2
+a21,"1,5",50,Transport and Mixing ,21,6
+a22,3,30,"Rotating Fluids, Stokes Flow, Superfluids Turbulence ",21,2
+a23,3,40,Experimental Techniques ,24,1
+a24,3,60,Atmospheric Flows/Turbulence ,17,2
+a25,2,30,Free Surface Flows,17,0
+a26,4,60,AI in Turbulence ,15,2
+a27,5,55,MHD,14,1
+a28,3,20,Porous Media Flow,14,1
+a29,4,10,Microscale and Nanoscale Flows,12,2
+a30,2,50,Separated Flows,9,2
+a31,4,40,Combustion and Reacting Flows,12,1
+a32,2,60,Wind and Water Power,10,0
+a33,2,40,Acoustics,10,1
+a34,3,30,Atomisation and Sprays,8,6

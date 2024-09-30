@@ -2,7 +2,10 @@ clc; clear;
 %
 % np=400; x=linspace(0,20,np); x=(x/20).^2*20;
 %L=1; np=100+L; x=linspace(0,L,np); x=(x/L).^1*L; Re=1000; s="x"; reh=Re;
- L=(sqrt(500)); np=161; x=linspace(0,L,np); x=[x,x(end)*2-x(end-1)]; np=length(x); x=(x/L).^1*L; Re=1; s="x"; reh=L.^2;
+%  L=(sqrt(200)); np=161; x=linspace(0,L,np); x=[x,x(end)*2-x(end-1)]; np=length(x); x=(x/L).^1*L; Re=1; s="x"; reh=L.^2;
+ 
+L=(sqrt(1)); np=161; x=linspace(0,L,np); x=[x,x(end)*2-x(end-1)]; np=length(x);  x=(x/L).^1*L; Re=150; s="x"; reh=Re;
+
 disp("Reh: "+num2str(reh));
 % x=0:0.1:20; np=length(x);
 % al=0.01; x=(exp(al*x)./exp(al*20)*2-1)*20;
@@ -38,7 +41,7 @@ end
 %
 % save("vk-np-"+num2str(np),'u','np','x');
 
-%%
+%
 clf;
 % plot(x,reshape(u,[3,np])','x-')
 up=reshape(u,[4,np])';

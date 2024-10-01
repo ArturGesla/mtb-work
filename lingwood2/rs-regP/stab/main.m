@@ -5,7 +5,7 @@
 % a=load("../rs-np-132-k-0.313-L-32.mat");
 % a=load("../rs-np-200-k-0.313-L-31.6228.mat");
 % a=load("../rs-np-162-k-0.313-reh-1000.mat");
-a=load("../rs-np-162-k-0.313-reh-200.mat");
+a=load("../rs-np-162-k-0.313-reh-600.mat");
 % a=load("../rs-np-162-k-0.313-reh-500.mat");
 
 data=a;
@@ -31,9 +31,9 @@ k=a.k;
 up=reshape(a.u,[4,length(a.u)/4])';
 plot(up(:,1:end),a.x,'k-'); 
 
-aa=load('data2D.mat'); aa=aa.data;
-up=reshape(aa.u,[4,length(aa.u)/4])';
-hold on; plot(up(:,1:end),aa.x,'-'); 
+% aa=load('data2D.mat'); aa=aa.data;
+% up=reshape(aa.u,[4,length(aa.u)/4])';
+% hold on; plot(up(:,1:end),aa.x,'-'); 
 
 %%
 
@@ -153,8 +153,12 @@ R=50; bbar=0; shift=0.1+0.1i;
 % ar=0.2:0.01:0.4; ai=0:0.01:0.15; 
 % ar=0.2:0.01:0.3; ai=0.06;
 ar=0.1:0.01:0.4; ai=-0.05:0.01:0.05; %reh=500
-%
 
+R=100; bbar=0; ar=0.01:0.01:1; ai=0; %reh=600
+%
+zRe=[];
+for ire=10:10:300
+    R=ire;
 for ii=1:length(ai) 
 for ir=1:length(ar) 
     alpha=ar(ir)+1i*ai(ii);
@@ -167,6 +171,9 @@ fprintf("ir %d\t ii %d\n",ir,ii);
     [~,b]=max(imag(ev));
     z(ir,ii)=ev(b);
     end
+end
+zRe=[zRe, z];
+disp(ire);
 end
 % evaM=[evaM,eva];
 %%

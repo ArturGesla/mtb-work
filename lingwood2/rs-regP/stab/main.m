@@ -5,8 +5,10 @@
 % a=load("../rs-np-132-k-0.313-L-32.mat");
 % a=load("../rs-np-200-k-0.313-L-31.6228.mat");
 % a=load("../rs-np-162-k-0.313-reh-1000.mat");
-a=load("../rs-np-162-k-0.313-reh-600.mat");
+% a=load("../rs-np-162-k-0.313-reh-600.mat");
 % a=load("../rs-np-162-k-0.313-reh-500.mat");
+addpath ..
+a=get_rs(1000,160);
 
 data=a;
 x=a.x;
@@ -48,7 +50,7 @@ R=  40.127834854531294;
 omegaa=[-0.05:0.01/10:0.05]+1i*0.001/4; alpha=0;
 
 R=50; bbar=0;
-omegaa=[-0.05:0.01/10:0.05]+1i*8e-4; alpha=0;
+omegaa=[-0.05:0.01/10:0.05]+1i*1e-3; alpha=0;
 
 % R=R/sqrt(k); bbar=beta/R;  omegaa=omegaa.*k^(3/2); %ar=ar.*sqrt(k);
 
@@ -152,13 +154,13 @@ R=50; bbar=0; shift=0.1+0.1i;
 % ar=-0.3:0.01:0.3; ai=-0.1:0.01:0.1; ar(31)=[];
 % ar=0.2:0.01:0.4; ai=0:0.01:0.15; 
 % ar=0.2:0.01:0.3; ai=0.06;
-ar=0.1:0.01:0.4; ai=-0.05:0.01:0.05; %reh=500
+ar=0.01:0.01/2:0.4; ai=-0.05:0.01/4/2:0.05; %reh=500
 
-R=100; bbar=0; ar=0.01:0.01:1; ai=0; %reh=600
+% R=50; bbar=0; ar=0.01:0.01:1; ai=0; %reh=600
 %
 zRe=[];
-for ire=10:10:300
-    R=ire;
+% for ire=10:10:300
+%     R=ire;
 for ii=1:length(ai) 
 for ir=1:length(ar) 
     alpha=ar(ir)+1i*ai(ii);
@@ -172,9 +174,9 @@ fprintf("ir %d\t ii %d\n",ir,ii);
     z(ir,ii)=ev(b);
     end
 end
-zRe=[zRe, z];
-disp(ire);
-end
+% zRe=[zRe, z];
+% disp(ire);
+% end
 % evaM=[evaM,eva];
 %%
 clf;
@@ -218,10 +220,13 @@ a=load("eva-areal-k-1-np-1600-L-480.mat"); plot(a.eva,'rx'); hold on; ev=a.eva; 
 clf;
 contour(ar,ai,imag(z)',40); title("Imaginary part of most unstable $\omega(\alpha)$.");
 hold on; contour(ar,ai,imag(z)',[0 0],'-k');
+hold on; contour(ar,ai,imag(z)',[1 1]*7.8e-4,'k--');
+
+hold on; contour(ar,ai,imag(z)',[1 1]*5.98e-4,'k:');
+
 % contour(ar,ai,real(z)',400); title("Real part of most unstable $\omega(\alpha)$.");
 
 % surf(ar,ai,imag(z)');
-
 xlabel("$\alpha_r$");
 ylabel("$\alpha_i$");
 fnts=12; jfm_plt_aid_comm; 
@@ -229,7 +234,7 @@ size_sq; colorbar(); colormap(hsv(8));
 
 %%
 
-exportgraphics(gcf,"saddlepoint-4.eps");
+exportgraphics(gcf,"saddlepoint-rs-ss.pdf");
 
 
 %% precise saddle
@@ -239,6 +244,8 @@ clc;
 % x=[0.2;0.2];
 % x=[0.2;0.02];
  bbar=0; R=50; x=[0.25;    0.05];% reh=200
+  bbar=0; R=50; x=[0.15;    -0.01];% reh=200
+
 %  x=[0.173;    -0.00135];% reh=500
 %  x=[0.244;    8.56e-3];% reh=500
 xa=[x];

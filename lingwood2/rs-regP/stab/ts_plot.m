@@ -10,8 +10,10 @@ hold on;
 plot(a(1,:),10*sqrt(a(1,:)),'-');
 plot(a(1,:),a(1,:)./a(1,:)*24/sqrt(0.313),':k');
 plot(1000,48.5,'r+');
+plot(1000,45.53,'bx');
 
-legend("Red crit","Red edge of cavity","Bodewadt limit (LW97)","Serre et al. 2004","Location","best"); grid on;
+
+legend("Red crit","Red edge of cavity","Bodewadt limit (LW97)","Serre et al. 2004","mesh double","Location","best"); grid on;
 
 axes('Position',[.17 .6 .05 .25]); 
 plot(a(1,:),a(4,:),'-'); hold on; xlim([130 200]); ylim([0 150]);
@@ -22,6 +24,8 @@ plot(a(1,:),a(4,:),'-'); hold on; xlim([900 1100]); ylim([40 50]);
 plot(a(1,:),10*sqrt(a(1,:)),'-'); box on; grid on; 
 plot(a(1,:),a(1,:)./a(1,:)*24/sqrt(0.313),':k');
 plot(1000,48.5,'r+');
+plot(1000,45.53,'bx');
+
 
 subplot(1,4,3); plot(a(1,:),a(2,:)); title("ar vs Reh at abs inst");
 xlabel("Reh"); ylabel("ar"); grid on;

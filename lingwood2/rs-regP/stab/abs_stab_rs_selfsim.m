@@ -3,6 +3,7 @@ clc; clear;
  bbar=0;
 % reharr=1050:5:1250;
 reharr=200:-2:100;
+reharr=1000;
 resarr=[reharr(1);0.25;    0.01; 50; 0; 0]; %ig
 
 %%
@@ -10,7 +11,7 @@ resarr=[reharr(1);0.25;    0.01; 50; 0; 0]; %ig
 
 for ire=1:length(reharr)
     reh=reharr(ire);
-a=get_rs(reh,160); data=a;
+a=get_rs(reh,320); data=a;
 
 % clc; 
 % x=[0.25;    0.01; 50];

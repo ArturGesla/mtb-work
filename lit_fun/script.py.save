@@ -1,0 +1,70 @@
+a=open("localbiblio.bib", mode="r")
+a2=open("localbiblio-out.bib", mode="w")
+# https://woodward.library.ubc.ca/woodward/research-help/journal-abbreviations/
+for i in range(0,2000):
+	a1=a.readline()
+#	print(a1[0:7])
+#	if a1[0:8]=="@article":
+#		print(a1[0:8])
+	if a1[0:9]=="  journal":
+		print(a1)
+		a1=a1.replace("Journal of Fluid Mechanics","J. Fluid Mech.")
+		a1=a1.replace("Physical Review E—Statistical, Nonlinear, and Soft Matter Physics","Phys. Rev. E")
+		a1=a1.replace("Physical Review E","Phys. Rev. E")
+		a1=a1.replace("Physical Review Fluids","Phys. Rev. Fluids")
+		a1=a1.replace("Physics Review Letters","Phys. Rev. Lett.")
+		a1=a1.replace("Physics of Fluids","Phys. Fluids ")
+		a1=a1.replace("Annu. Rev. Fluid Mech.","Ann. Rev. Fluid Mech.")
+		a1=a1.replace("Annual Review of Fluid Mechanics","Ann. Rev. Fluid Mech.")
+		a1=a1.replace("Annual review of fluid mechanics","Ann. Rev. Fluid Mech.")
+			       #Comptes Rendus de l'Acad{\'e}mie des Sciences-Series IIB-Mechanics-Physics-Chemistry-Astronomy
+		a1=a1.replace("Comptes Rendus de l'Acad{\'e}mie des Sciences-Series IIB-Mechanics-Physics-Chemistry-Astronomy","C. R. Acad. Sci., Ser. II  b ")
+		a1=a1.replace("Computers \& fluids","Comput. Fluids")
+		a1=a1.replace("Experiments in Fluids","Exp. Fluids")
+		a1=a1.replace("Fluid Dynamics Research","Fluid Dyn. Res.")
+		a1=a1.replace("International Journal for Numerical Methods in Fluids","Int. J. Numer. Meth. Fluids")
+		a1=a1.replace("Numerical Heat Transfer, Part A: Applications","Numer. Heat Transfer A")
+		a1=a1.replace("Philosophical Transactions of the Royal Society A","Philos. Trans. Royal Soc. A")
+		a1=a1.replace("The quarterly journal of mechanics and applied mathematics","Q. J. Mech. Appl. Math.")
+		print(a1)
+	a2.write(a1)
+
+	if a1[0:7]=="  title":
+		print(a1)
+		a1=a1.replace("Taylor","{T}aylor")
+		a1=a1.replace("Couette","{C}ouette")
+		a1=a1.replace("Chebyshev","{C}hebyshev")
+		a1=a1.replace("Ekman","{E}kman")
+		print(a1)
+	a2.write(a1)
+
+	if a1[0:8]=="  author":
+		print(a1)
+		a1=a1.replace("Veronis, George","Veronis, G.")
+		a1=a1.replace("Nagata, Masato","Nagata, M.")
+		a1=a1.replace("Clever, Richard M","Clever, R. M.")
+		a1=a1.replace("Busse, Friedrich H","Busse, F. H.")
+		a1=a1.replace("Faisst, Holger","Faisst, H.")
+			a1=a1.replace("Eckhardt, Bruno","Eckhardt, B.")
+a1=a1.replace("Ishida, Takahiro","Ishida, T.")
+a1=a1.replace("Duguet, Yohann","Duguet, Y.")
+a1=a1.replace("Tsukahara, Takahiro","Tsukahara, T.")
+a1=a1.replace("Batchelor, George K","Batchelor, G. K.")
+a1=a1.replace("Daube, Olivier","Daube, O.")
+a1=a1.replace("Le Qu{\'e}r{\'e} Patrick","Le Qu{\'e}r{\'e}, P.")
+a1=a1.replace("Eckhardt, Bruno","Eckhardt, B.")
+a1=a1.replace("Eckhardt, Bruno","Eckhardt, B.")
+a1=a1.replace("Eckhardt, Bruno","Eckhardt, B.")
+a1=a1.replace("Eckhardt, Bruno","Eckhardt, B.")
+a1=a1.replace("Eckhardt, Bruno","Eckhardt, B.")
+a1=a1.replace("Eckhardt, Bruno","Eckhardt, B.")
+a1=a1.replace("Eckhardt, Bruno","Eckhardt, B.")
+a1=a1.replace("Eckhardt, Bruno","Eckhardt, B.")
+a1=a1.replace("Eckhardt, Bruno","Eckhardt, B.")
+a1=a1.replace("Eckhardt, Bruno","Eckhardt, B.")
+
+
+		print(a1)
+	a2.write(a1)
+
+

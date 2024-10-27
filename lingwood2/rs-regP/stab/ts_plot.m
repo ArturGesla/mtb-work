@@ -64,13 +64,13 @@ a=load("dataR1.7.mat"); R=[R;a.R]; ress=[ress;a.re0];
 
 
 plot(R,ress,'-x');
- set(gca,"YTick",[16,100:100:600,900:300:3000]); grid on; hold on;
+ set(gca,"YTick",[(rlw97/10).^2,100:100:600,900:300:3000]); grid on; hold on;
 % set(gca,"XTick",sort([get(gca,"XTick"),1.7,0.78]))
 set(gca,"XTick",sort([3:1:10,2.5,1.7,0.78]))
 
 ylabel("Reh"); xlabel("r"); xlim([0 10]); ylim([10 3e3]);
 set(gca,"yscale","log");
-legend("assuming Bodewadt profile","taking the real ss profile")
+legend("assuming Bodewadt profile","taking the real ss profile",'dns ss')
 %%
 %%
 clf;

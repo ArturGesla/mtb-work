@@ -5,6 +5,7 @@ im(b)=255;
 
 % imwrite(im,"sig2.png",Alpha=uint8(b))
 imwrite(im,"sig2.png")
+%%
 system("convert sig2.png -transparent white sig3.png")
 
 %%

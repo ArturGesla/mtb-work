@@ -14,7 +14,7 @@
    version="1.2"
    id="svg281"
    sodipodi:docname="inst-scenario-6.svg"
-   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)">
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)">
   <metadata
      id="metadata285">
     <rdf:RDF>
@@ -36,15 +36,15 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1920"
-     inkscape:window-height="964"
+     inkscape:window-width="1366"
+     inkscape:window-height="705"
      id="namedview283"
      showgrid="false"
-     inkscape:zoom="2.4536605"
-     inkscape:cx="596.88618"
-     inkscape:cy="61.092842"
-     inkscape:window-x="0"
-     inkscape:window-y="27"
+     inkscape:zoom="0.86749999"
+     inkscape:cx="470.2568"
+     inkscape:cy="107.97185"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
      inkscape:window-maximized="1"
      inkscape:current-layer="surface688"
      fit-margin-top="0"
@@ -444,28 +444,38 @@
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;line-height:1.25;font-family:'Latin Modern Math';-inkscape-font-specification:'Latin Modern Math';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.75"
        x="361.96985"
-       y="40.475723"
+       y="14.975723"
        id="text1215"><tspan
          sodipodi:role="line"
          id="tspan1213"
          x="361.96985"
-         y="40.475723"
+         y="14.975723"
          style="font-size:20px;stroke-width:0.75">Spiral rolls are a linear</tspan><tspan
          sodipodi:role="line"
          x="361.96985"
-         y="65.475723"
+         y="39.975723"
          style="font-size:20px;stroke-width:0.75"
-         id="tspan1217">instability of the base flow.</tspan></text>
+         id="tspan1217">instability of the base flow.</tspan><tspan
+         sodipodi:role="line"
+         x="361.96985"
+         y="64.975723"
+         style="font-size:20px;stroke-width:0.75"
+         id="tspan87">DNS and the experiment </tspan><tspan
+         sodipodi:role="line"
+         x="361.96985"
+         y="89.975723"
+         style="font-size:20px;stroke-width:0.75"
+         id="tspan89">agree well.</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:43.17028809px;line-height:1.25;font-family:'Latin Modern Math';-inkscape-font-specification:'Latin Modern Math';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:2.02360725"
-       x="455.31351"
-       y="104.2618"
+       x="497.67664"
+       y="112.04279"
        id="text1221"><tspan
          sodipodi:role="line"
          id="tspan1219"
-         x="455.31351"
-         y="104.2618"
+         x="497.67664"
+         y="112.04279"
          style="fill:#008000;stroke:none;stroke-width:2.02360725">✔</tspan></text>
   </g>
 </svg>

@@ -40,9 +40,9 @@
      inkscape:window-height="705"
      id="namedview323"
      showgrid="false"
-     inkscape:zoom="0.59942847"
-     inkscape:cx="233.14149"
-     inkscape:cy="230.38495"
+     inkscape:zoom="1.1988569"
+     inkscape:cx="442.28288"
+     inkscape:cy="257.55752"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
@@ -647,20 +647,15 @@
          x="279.13116"
          y="155.86024"
          style="font-size:20px;stroke-width:0.75">1800</tspan></text>
-    <path
-       style="fill:none;stroke:#000000;stroke-width:0.75px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 269.94464,54.989728 11.88632,-13.450312 19.70627,-7.819949 16.89109,-3.753575"
-       id="path241"
-       inkscape:connector-curvature="0" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:30px;line-height:1.25;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.75"
-       x="299.85416"
-       y="71.141548"
+       x="307.3613"
+       y="121.81482"
        id="text245"><tspan
          sodipodi:role="line"
-         x="299.85416"
-         y="71.141548"
+         x="307.3613"
+         y="121.81482"
          style="font-size:15px;text-align:center;text-anchor:middle;stroke-width:0.75"
          id="tspan257">Chaotic large amplitude solutions</tspan></text>
     <text
@@ -682,7 +677,7 @@
       <g
          id="g316"
          style="fill:#000000;fill-opacity:1"
-         transform="translate(-42,187.5)">
+         transform="translate(-42,159)">
         <use
            id="use278"
            y="85.866203"
@@ -819,7 +814,7 @@
       </g>
       <path
          id="path318"
-         d="m 370.03906,267.86328 c 0,10.80469 -42.83593,19.5625 -95.67578,19.5625 -52.83984,0 -95.67187,-8.75781 -95.67187,-19.5625 0,-10.80469 42.83203,-19.5625 95.67187,-19.5625 52.83985,0 95.67578,8.75781 95.67578,19.5625 z m 0,0"
+         d="m 370.03906,239.36328 c 0,10.80469 -42.83593,19.5625 -95.67578,19.5625 -52.83984,0 -95.67187,-8.75781 -95.67187,-19.5625 0,-10.80469 42.83203,-19.5625 95.67187,-19.5625 52.83985,0 95.67578,8.75781 95.67578,19.5625 z m 0,0"
          style="fill:none;stroke:#ff0000;stroke-width:2.25;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-opacity:1"
          inkscape:connector-curvature="0" />
       <ellipse

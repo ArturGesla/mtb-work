@@ -9,8 +9,8 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="884.41504"
-   height="544.05365"
-   viewBox="0 0 663.31127 408.04024"
+   height="585.78546"
+   viewBox="0 0 663.31127 439.33909"
    version="1.2"
    id="svg281"
    sodipodi:docname="history2.svg"
@@ -41,8 +41,8 @@
      id="namedview283"
      showgrid="false"
      inkscape:zoom="0.61341513"
-     inkscape:cx="-24.986863"
-     inkscape:cy="247.12739"
+     inkscape:cx="439.66131"
+     inkscape:cy="62.848892"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
@@ -478,7 +478,12 @@
          x="341.76459"
          y="204.0195"
          style="font-size:25px;text-align:center;text-anchor:middle;stroke-width:0.75"
-         id="tspan916-1">Numerics: Spirlas are a supercitical Hopf bifurcation</tspan></text>
+         id="tspan916-1">Numerics: Spirlas are a supercitical Hopf bifurcation,</tspan><tspan
+         sodipodi:role="line"
+         x="341.76459"
+         y="235.2695"
+         style="font-size:25px;text-align:center;text-anchor:middle;stroke-width:0.75"
+         id="tspan895">but no sign of circular rolls.</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;line-height:1.25;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.75"

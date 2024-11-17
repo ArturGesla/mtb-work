@@ -22,7 +22,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -41,9 +41,9 @@
      inkscape:window-height="705"
      id="namedview239"
      showgrid="false"
-     inkscape:zoom="1.0074671"
-     inkscape:cx="123.52329"
-     inkscape:cy="163.07451"
+     inkscape:zoom="2.0149342"
+     inkscape:cx="13.458297"
+     inkscape:cy="99.201995"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
@@ -544,22 +544,22 @@
        id="path234"
        inkscape:connector-curvature="0" />
     <rect
-       style="opacity:0.32400004;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.72566932;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       style="opacity:0.32400004;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.54247046;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        id="rect920"
-       width="25.311001"
+       width="14.144382"
        height="60.29974"
        x="57.694195"
        y="109.77275" />
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15px;line-height:1.25;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.75"
-       x="89.332947"
-       y="135.82819"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15px;line-height:1.25;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';letter-spacing:0px;word-spacing:0px;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.75;stroke-opacity:1;"
+       x="73.327461"
+       y="145.87814"
        id="text924"><tspan
          sodipodi:role="line"
          id="tspan922"
-         x="89.332947"
-         y="135.82819"
-         style="font-size:15px;fill:#d40000;stroke-width:0.75">Lifetimes</tspan></text>
+         x="73.327461"
+         y="145.87814"
+         style="font-size:15px;fill:#ff0000;stroke-width:0.75;stroke:none;stroke-opacity:1;fill-opacity:1;">Lifetimes</tspan></text>
   </g>
 </svg>

@@ -13,7 +13,7 @@
    version="1.2"
    id="svg237"
    sodipodi:docname="lyon_bbif.svg"
-   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)">
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)">
   <metadata
      id="metadata243">
     <rdf:RDF>
@@ -37,15 +37,15 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1600"
-     inkscape:window-height="782"
+     inkscape:window-width="1366"
+     inkscape:window-height="705"
      id="namedview239"
      showgrid="false"
-     inkscape:zoom="2.0149341"
-     inkscape:cx="185.33333"
-     inkscape:cy="153.33333"
-     inkscape:window-x="0"
-     inkscape:window-y="27"
+     inkscape:zoom="1.0074671"
+     inkscape:cx="123.52329"
+     inkscape:cy="163.07451"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
      inkscape:window-maximized="1"
      inkscape:current-layer="surface790" />
   <g
@@ -543,5 +543,23 @@
        d="m 171.729,125.35438 h 96.792 V 67.479001 h -96.792 z m 0,0"
        id="path234"
        inkscape:connector-curvature="0" />
+    <rect
+       style="opacity:0.32400004;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.72566932;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect920"
+       width="25.311001"
+       height="60.29974"
+       x="57.694195"
+       y="109.77275" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15px;line-height:1.25;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.75"
+       x="89.332947"
+       y="135.82819"
+       id="text924"><tspan
+         sodipodi:role="line"
+         id="tspan922"
+         x="89.332947"
+         y="135.82819"
+         style="font-size:15px;fill:#d40000;stroke-width:0.75">Lifetimes</tspan></text>
   </g>
 </svg>

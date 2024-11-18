@@ -13,7 +13,7 @@
    viewBox="0 0 758.95605 535.99466"
    height="535.99463pt"
    width="758.95605pt"
-   sodipodi:docname="inst-scenario-8.svg"
+   sodipodi:docname="inst-scenario-8-1.svg"
    inkscape:version="0.92.4 (5da689c313, 2019-01-14)">
   <sodipodi:namedview
      pagecolor="#ffffff"
@@ -28,9 +28,9 @@
      inkscape:window-height="705"
      id="namedview146"
      showgrid="false"
-     inkscape:zoom="0.8675"
-     inkscape:cx="565.00625"
-     inkscape:cy="280.07419"
+     inkscape:zoom="0.61341513"
+     inkscape:cx="431.50841"
+     inkscape:cy="330.57744"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
@@ -49,7 +49,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -1247,5 +1247,31 @@
          x="602.55896"
          y="184.53319"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15.00000095px;font-family:'Latin Modern Math';-inkscape-font-specification:'Latin Modern Math';stroke-width:0.75000006">2024</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;line-height:1.25;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.75000006"
+       x="77.965416"
+       y="-130.07655"
+       id="text1063"><tspan
+         sodipodi:role="line"
+         id="tspan1061"
+         x="77.965416"
+         y="-130.07655"
+         style="font-size:25.00000191px;text-align:center;text-anchor:middle;stroke-width:0.75000006;fill:#ff0000">Circular rolls</tspan><tspan
+         sodipodi:role="line"
+         x="77.965416"
+         y="-98.826553"
+         style="font-size:25.00000191px;text-align:center;text-anchor:middle;stroke-width:0.75000006;fill:#ff0000"
+         id="tspan1073">are not</tspan><tspan
+         sodipodi:role="line"
+         x="81.090416"
+         y="-67.576546"
+         style="font-size:25.00000191px;text-align:center;text-anchor:middle;stroke-width:0.75000006;fill:#ff0000"
+         id="tspan1075">a self-sustained </tspan><tspan
+         sodipodi:role="line"
+         x="77.965416"
+         y="-36.326546"
+         style="font-size:25.00000191px;text-align:center;text-anchor:middle;stroke-width:0.75000006;fill:#ff0000"
+         id="tspan1071">state.</tspan></text>
   </g>
 </svg>

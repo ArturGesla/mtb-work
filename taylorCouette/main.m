@@ -1,4 +1,6 @@
 % i=430;
+cd     'C:\Users\Artur\Documents\taylorCouette'
+%%
 clc; clf;
 % for i=1500
 a=importdata("./figs/p1."+num2str(i,'%05d')+".bmp");
@@ -13,11 +15,12 @@ ix=500; iy=200;
 da=(a(:,:,2)); %whole
 % da=(a(600:1800,100:900,3)); %bulk 
 % da=(a(1200:1300,500:600,3)); %detail
-da=(a(1200:1200+64,500:500+64,3)); %detail2
+% da=(a(1200:1200+64,500:500+64,3)); %detail2
+da=(a(1060:1260,640:740,1)); %detail3
 % da=(a(1:200,200:950,2)); %top
 % da=((a(800:1700,200:950,1))+(a(800:1700,200:950,2))+(a(800:1700,200:950,3)))/3;
 % da=flipud(da);
-h=pcolor(da); h.EdgeAlpha=0; colormap(gray(16)); caxis([0 255]); %colorbar();
+% h=pcolor(da); h.EdgeAlpha=0; colormap(gray(16)); caxis([0 255]); %colorbar();
 % shading interp;
 % hold on; plot(ix,iy,'+')
 imshow(da)
@@ -76,3 +79,56 @@ eta=R1/R2;
 om1=2*pi./T;
 Ta=4*om1.^2*R1^4/nu^2*(1-mu)*(1-mu/eta^2)/(1-eta^2)^2;
 Re1=om1*R1*(R2-R1)/nu
+
+%%
+close all;
+x=-5:0.1:5;
+da=exp(-x.^2-x'.^2);
+da1=exp(-(x-2).^2-x'.^2);
+%%
+ figure(); imshow(da);
+ figure(); imshow(da1);
+ DA=da;
+ DA1=da1;
+ %%
+ c=conv2(da-mean(da,'all'),da1-mean(da1,'all')); [e,f]=max(c,[],'all','linear'); ii=mod(f,length(c)); jj=(f-ii)/length(c)+1;
+ djj=jj-length(da); dii=ii-length(da);
+ %%
+ iia=-length(da)+1:1:length(da)-1;
+ mesh(iia,iia,c)
+
+ %% piv
+ 
+ winsize=31; halfsize=(winsize+1)/2; hm=(winsize-1)/2;
+ 
+ arr=[];
+ 
+ sz1=length(halfsize:size(DA,1)-hm);
+ sz2=length(halfsize:size(DA,2)-hm);
+ 
+ for ix=halfsize:size(DA,1)-hm
+     for iy=halfsize:size(DA,2)-hm
+     da=DA(ix-hm:ix+hm,iy-hm:iy+hm);
+     da1=DA(ix-hm:ix+hm,iy-hm:iy+hm);
+     
+      c=conv2(da-mean(da,'all'),da1-mean(da1,'all')); [e,f]=max(c,[],'all','linear'); ii=mod(f,length(c)); jj=(f-ii)/length(c)+1;
+ djj=jj-length(da); dii=ii-length(da);
+ 
+ arr=[arr; ix,iy,dii,djj;];
+ 
+ 
+     end
+     ix
+ end
+ 
+ X=reshape(arr(:,1),[sz2,sz1]);
+ Y=reshape(arr(:,2),[sz2,sz1]);
+ U=reshape(arr(:,3),[sz2,sz1]);
+ V=reshape(arr(:,4),[sz2,sz1]);
+ 
+ %%
+ close all;
+ quiver(X,Y,U,V);
+%  pcolor(X,Y,sqrt(U.^2+V.^2)); shading interp;
+     
+ 

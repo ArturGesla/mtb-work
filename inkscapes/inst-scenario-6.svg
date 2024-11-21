@@ -23,7 +23,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -40,9 +40,9 @@
      inkscape:window-height="705"
      id="namedview283"
      showgrid="false"
-     inkscape:zoom="0.61341513"
-     inkscape:cx="217.78427"
-     inkscape:cy="266.85091"
+     inkscape:zoom="1.2268303"
+     inkscape:cx="564.6613"
+     inkscape:cy="104.91391"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
@@ -458,32 +458,37 @@
          id="tspan1213"
          x="361.96985"
          y="14.975723"
-         style="font-size:20px;stroke-width:0.75">Spiral rolls are a linear</tspan><tspan
+         style="font-size:20px;stroke-width:0.75">Spiral rolls result from</tspan><tspan
          sodipodi:role="line"
          x="361.96985"
          y="39.975723"
          style="font-size:20px;stroke-width:0.75"
-         id="tspan1217">instability of the base flow.</tspan><tspan
+         id="tspan1217">a linear instability </tspan><tspan
          sodipodi:role="line"
          x="361.96985"
          y="64.975723"
          style="font-size:20px;stroke-width:0.75"
-         id="tspan87">DNS and the experiment </tspan><tspan
+         id="tspan87">of the base flow. </tspan><tspan
          sodipodi:role="line"
          x="361.96985"
          y="89.975723"
          style="font-size:20px;stroke-width:0.75"
-         id="tspan89">agree well.</tspan></text>
+         id="tspan89">DNS and the experiment </tspan><tspan
+         sodipodi:role="line"
+         x="361.96985"
+         y="114.97572"
+         style="font-size:20px;stroke-width:0.75"
+         id="tspan914">agree well.</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:43.17028809px;line-height:1.25;font-family:'Latin Modern Math';-inkscape-font-specification:'Latin Modern Math';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:2.02360725"
-       x="497.67664"
-       y="112.04279"
+       x="536.19055"
+       y="63.747604"
        id="text1221"><tspan
          sodipodi:role="line"
          id="tspan1219"
-         x="497.67664"
-         y="112.04279"
+         x="536.19055"
+         y="63.747604"
          style="fill:#008000;stroke:none;stroke-width:2.02360725">✔</tspan></text>
   </g>
 </svg>

@@ -14,7 +14,7 @@
    height="535.99463pt"
    width="758.95605pt"
    sodipodi:docname="mathods.svg"
-   inkscape:version="0.92.4 (5da689c313, 2019-01-14)">
+   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)">
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -24,17 +24,17 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1366"
-     inkscape:window-height="705"
+     inkscape:window-width="1600"
+     inkscape:window-height="782"
      id="namedview146"
      showgrid="false"
-     inkscape:zoom="0.61341513"
-     inkscape:cx="383.18645"
-     inkscape:cy="422.07413"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
+     inkscape:zoom="1.735"
+     inkscape:cx="467.81432"
+     inkscape:cy="440.50122"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
      inkscape:window-maximized="1"
-     inkscape:current-layer="surface688"
+     inkscape:current-layer="surface594"
      fit-margin-top="0"
      fit-margin-left="0"
      fit-margin-right="0"
@@ -49,7 +49,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -66,7 +66,7 @@
       <path
          id="path1381"
          d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
-         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1;fill:#000000;fill-opacity:1"
+         style="fill-rule:evenodd;stroke:#ff0000;stroke-width:1pt;stroke-opacity:1;fill:#ff0000;fill-opacity:1"
          transform="scale(0.8) rotate(180) translate(12.5,0)" />
     </marker>
     <marker
@@ -80,7 +80,7 @@
       <path
          id="path1090"
          d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
-         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1;fill:#000000;fill-opacity:1"
+         style="fill-rule:evenodd;stroke:#ff0000;stroke-width:1pt;stroke-opacity:1;fill:#ff0000;fill-opacity:1"
          transform="scale(0.8) rotate(180) translate(12.5,0)" />
     </marker>
     <marker
@@ -654,12 +654,6 @@
          id="path28"
          transform="matrix(0.1,0,0,-0.1,0,230)"
          d="M 345,320 H 2767.5"
-         style="fill:none;stroke:#232323;stroke-width:5.00250006;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:10;stroke-opacity:1"
-         inkscape:connector-curvature="0" />
-      <path
-         id="path30-5"
-         transform="matrix(0.1,0,0,-0.1,0,230)"
-         d="m 950.625,320 v 24.21875"
          style="fill:none;stroke:#232323;stroke-width:5.00250006;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:10;stroke-opacity:1"
          inkscape:connector-curvature="0" />
       <path
@@ -1271,7 +1265,7 @@
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:15.00000095px;font-family:'Latin Modern Math';-inkscape-font-specification:'Latin Modern Math';stroke-width:0.75000006">2024</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;line-height:1.25;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.75000006;"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;line-height:1.25;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';letter-spacing:0px;word-spacing:0px;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.75000006;"
        x="23.724249"
        y="-253.56552"
        id="text1069"><tspan
@@ -1279,10 +1273,10 @@
          id="tspan1067"
          x="23.724249"
          y="-253.56552"
-         style="font-size:30.00000191px;stroke-width:0.75000006;fill:#000000;">Methods:</tspan></text>
+         style="font-size:30.00000191px;stroke-width:0.75000006;fill:#ff0000;">Methods:</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;line-height:1.25;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.75000006;"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;line-height:1.25;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';letter-spacing:0px;word-spacing:0px;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.75000006;"
        x="335.85944"
        y="-208.21304"
        id="text1073"><tspan
@@ -1290,10 +1284,10 @@
          id="tspan1071"
          x="335.85944"
          y="-208.21304"
-         style="fill:#000000;stroke-width:0.75000006;">DNS</tspan></text>
+         style="fill:#ff0000;stroke-width:0.75000006;">DNS</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;line-height:1.25;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.75000006;"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;line-height:1.25;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';letter-spacing:0px;word-spacing:0px;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.75000006;"
        x="383.51624"
        y="-37.760593"
        id="text1077"><tspan
@@ -1301,10 +1295,10 @@
          id="tspan1075"
          x="383.51624"
          y="-37.760593"
-         style="fill:#000000;stroke-width:0.75000006;">edge tracking</tspan></text>
+         style="fill:#ff0000;stroke-width:0.75000006;">edge tracking</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;line-height:1.25;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.75000006;"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;line-height:1.25;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';letter-spacing:0px;word-spacing:0px;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.75000006;"
        x="355.85052"
        y="-68.884514"
        id="text1081"><tspan
@@ -1312,20 +1306,20 @@
          id="tspan1079"
          x="355.85052"
          y="-68.884514"
-         style="fill:#000000;stroke-width:0.75000006;stroke:none;">Harmonic Balance Method</tspan></text>
+         style="fill:#ff0000;stroke-width:0.75000006;stroke:none;">Harmonic Balance Method</tspan></text>
     <path
-       style="fill:#000000;stroke:#000000;stroke-width:0.75000006px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#marker1383)"
+       style="fill:#ff0000;stroke:#ff0000;stroke-width:0.75000006px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#marker1383)"
        d="M 351.52776,-73.207273 324.72661,-84.446466"
        id="path1083"
        inkscape:connector-curvature="0" />
     <path
-       style="fill:#000000;stroke:#000000;stroke-width:0.75000006px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow1Lend)"
+       style="fill:#ff0000;stroke:#ff0000;stroke-width:0.75000006px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow1Lend)"
        d="m 519.25111,-62.832635 12.53602,23.991361"
        id="path1085"
        inkscape:connector-curvature="0" />
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;line-height:1.25;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.75000006;"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;line-height:1.25;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';letter-spacing:0px;word-spacing:0px;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.75000006;"
        x="440.65234"
        y="42.318947"
        id="text1447"><tspan
@@ -1333,48 +1327,40 @@
          id="tspan1445"
          x="440.65234"
          y="42.318947"
-         style="fill:#000000;stroke-width:0.75000006;">Linear stability analysis</tspan></text>
+         style="fill:#ff0000;stroke-width:0.75000006;">Linear stability analysis</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;line-height:1.25;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.75000006"
-       x="229.43355"
-       y="-117.78847"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;line-height:1.25;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';letter-spacing:0px;word-spacing:0px;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.75000006"
+       x="154.23976"
+       y="-90.889877"
        id="text1453"><tspan
          sodipodi:role="line"
-         x="229.43355"
-         y="-117.78847"
-         style="fill:#000000;stroke-width:0.75000006"
+         x="154.23976"
+         y="-90.889877"
+         style="fill:#ff0000;stroke-width:0.75000006"
          id="tspan1457">Pseudo-arclength</tspan><tspan
          sodipodi:role="line"
-         x="229.43355"
-         y="-92.788467"
-         style="fill:#000000;stroke-width:0.75000006"
+         x="154.23976"
+         y="-65.889877"
+         style="fill:#ff0000;stroke-width:0.75000006"
          id="tspan1455">continuation</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;line-height:1.25;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.75000006"
-       x="89.883308"
-       y="-112.20075"
-       id="text1063"><tspan
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;line-height:1.25;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';letter-spacing:0px;word-spacing:0px;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.75000006"
+       x="269.94293"
+       y="-2.4186313"
+       id="text1447-3"><tspan
          sodipodi:role="line"
-         id="tspan1061"
-         x="89.883308"
-         y="-112.20075"
-         style="font-size:25.00000381px;text-align:center;text-anchor:middle;fill:#ff0000;stroke-width:0.75000006">Circular rolls</tspan><tspan
-         sodipodi:role="line"
-         x="89.883308"
-         y="-80.950745"
-         style="font-size:25.00000381px;text-align:center;text-anchor:middle;fill:#ff0000;stroke-width:0.75000006"
-         id="tspan1073">are not</tspan><tspan
-         sodipodi:role="line"
-         x="93.008308"
-         y="-49.700741"
-         style="font-size:25.00000381px;text-align:center;text-anchor:middle;fill:#ff0000;stroke-width:0.75000006"
-         id="tspan1075-9">a self-sustained </tspan><tspan
-         sodipodi:role="line"
-         x="89.883308"
-         y="-18.450735"
-         style="font-size:25.00000381px;text-align:center;text-anchor:middle;fill:#ff0000;stroke-width:0.75000006"
-         id="tspan1071-6">state.</tspan></text>
+         id="tspan1445-6"
+         x="269.94293"
+         y="-2.4186313"
+         style="fill:#ff0000;stroke-width:0.75000006">Newton method</tspan></text>
+    <rect
+       style="opacity:0.228;fill:#ffaaaa;fill-opacity:1;stroke:#ffaaaa;stroke-width:1.41732287;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect1137"
+       width="223.03622"
+       height="24.913694"
+       x="350.68173"
+       y="-87.74633" />
   </g>
 </svg>

@@ -8,13 +8,13 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="813.83856"
-   height="509.09631"
-   viewBox="0 0 610.37892 381.82224"
+   width="822.78107"
+   height="510.72653"
+   viewBox="0 0 617.0858 383.0449"
    version="1.2"
    id="svg281"
    sodipodi:docname="history1.svg"
-   inkscape:version="0.92.4 (5da689c313, 2019-01-14)">
+   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)">
   <metadata
      id="metadata285">
     <rdf:RDF>
@@ -36,15 +36,15 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1366"
-     inkscape:window-height="705"
+     inkscape:window-width="1600"
+     inkscape:window-height="782"
      id="namedview283"
      showgrid="false"
-     inkscape:zoom="0.61341513"
-     inkscape:cx="476.9009"
-     inkscape:cy="182.91421"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
+     inkscape:zoom="0.8675"
+     inkscape:cx="352.19898"
+     inkscape:cy="213.43852"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
      inkscape:window-maximized="1"
      inkscape:current-layer="surface688"
      fit-margin-top="0"
@@ -147,7 +147,7 @@
   </defs>
   <g
      id="surface688"
-     transform="translate(15.01235,183.83376)">
+     transform="translate(14.750163,183.83376)">
     <path
        style="fill:none;stroke:#000000;stroke-width:2.83465004;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1"
        d="m 426.03516,-50.777341 h 158.5625"
@@ -181,7 +181,7 @@
        id="text1173"><tspan
          sodipodi:role="line"
          x="348.95596"
-         y="59.613392"
+         y="60.458431"
          style="font-size:20px;stroke-width:0.75"
          id="tspan1183" /></text>
     <text
@@ -192,7 +192,7 @@
        id="text1191"><tspan
          sodipodi:role="line"
          x="352.96347"
-         y="68.954453"
+         y="69.517815"
          style="stroke-width:0.75"
          id="tspan1193" /></text>
     <text
@@ -203,7 +203,7 @@
        id="text1199"><tspan
          sodipodi:role="line"
          x="385.02451"
-         y="68.31369"
+         y="68.877045"
          style="stroke-width:0.75"
          id="tspan1201" /></text>
     <text
@@ -215,7 +215,7 @@
          sodipodi:role="line"
          id="tspan1205"
          x="442.48965"
-         y="89.710289"
+         y="90.273651"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;line-height:1.25;font-family:'Latin Modern Math';-inkscape-font-specification:'Latin Modern Math';font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:0px;word-spacing:0px;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;vector-effect:none;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.75;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" /></text>
     <text
        xml:space="preserve"
@@ -437,13 +437,13 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;line-height:1.25;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.75"
-       x="54.189419"
-       y="192.59297"
+       x="0.39224529"
+       y="193.81563"
        id="text884"><tspan
          sodipodi:role="line"
          id="tspan882"
-         x="54.189419"
-         y="192.59297"
-         style="font-size:25px;stroke-width:0.75">Experiment: circular rolls followed by spirals</tspan></text>
+         x="0.39224529"
+         y="193.81563"
+         style="font-size:25px;stroke-width:0.75">Experiment: circular rolls followed by spirals at higher Re</tspan></text>
   </g>
 </svg>

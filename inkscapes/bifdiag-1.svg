@@ -42,13 +42,13 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1920"
-     inkscape:window-height="964"
+     inkscape:window-width="1600"
+     inkscape:window-height="782"
      id="namedview239"
      showgrid="false"
      inkscape:zoom="2.1766591"
-     inkscape:cx="126.61868"
-     inkscape:cy="107.6028"
+     inkscape:cx="229.80898"
+     inkscape:cy="116.14436"
      inkscape:window-x="0"
      inkscape:window-y="27"
      inkscape:window-maximized="1"
@@ -408,7 +408,7 @@
          id="tspan1940"
          x="59.265141"
          y="194.50983"
-         style="font-size:10.0000003px;stroke-width:0.75">stable base flow</tspan></text>
+         style="font-size:10px;stroke-width:0.75">linearly stable base flow</tspan></text>
     <path
        style="fill:none;stroke:#000000;stroke-width:0.74999998;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:2.24999993,0.74999998;stroke-dashoffset:0"
        d="m 81.62077,139.12077 c 38.18153,23.68934 60.34252,25.58263 94.5339,27.04449"

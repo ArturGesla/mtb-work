@@ -16,7 +16,7 @@
    height="129.34641"
    viewBox="0 0 704.45349 129.3464"
    sodipodi:docname="jfm_sf.svg"
-   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
+   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
    inkscape:export-filename="C:\Users\Artur\Documents\GitHub\mtb-work\inkscapes\jfm_sf.png.arrow.png"
    inkscape:export-xdpi="300"
    inkscape:export-ydpi="300">
@@ -434,17 +434,17 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1366"
-     inkscape:window-height="705"
+     inkscape:window-width="1600"
+     inkscape:window-height="782"
      id="namedview4"
      showgrid="false"
      showguides="true"
      inkscape:guide-bbox="true"
      inkscape:zoom="1.6511628"
-     inkscape:cx="157.84183"
-     inkscape:cy="95.80923"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
+     inkscape:cx="468.01652"
+     inkscape:cy="-37.276919"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
      inkscape:window-maximized="1"
      inkscape:current-layer="svg2"
      fit-margin-top="0"
@@ -600,6 +600,18 @@
      style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:0, 11;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#Arrow2Mend-25-58-86)"
      d="m 688.9532,41.445424 v -7.90336"
      id="path4524-25-20-06"
+     inkscape:connector-curvature="0"
+     sodipodi:nodetypes="cc" />
+  <path
+     style="fill:none;stroke:#ff0000;stroke-width:1.14540768px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     d="M 174.97296,58.152994 C 233.34587,59.305282 653.54512,43.21397 686.61652,27.920539"
+     id="path819"
+     inkscape:connector-curvature="0"
+     sodipodi:nodetypes="cc" />
+  <path
+     style="fill:none;stroke:#ff0000;stroke-width:1.14540768px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     d="M 172.74708,79.17493 676.17754,78.95086"
+     id="path821"
      inkscape:connector-curvature="0"
      sodipodi:nodetypes="cc" />
 </svg>

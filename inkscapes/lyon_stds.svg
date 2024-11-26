@@ -127,16 +127,16 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="3.959798"
-     inkscape:cx="234.48015"
-     inkscape:cy="80.671363"
+     inkscape:zoom="2.28"
+     inkscape:cx="188.89702"
+     inkscape:cy="79.66121"
      inkscape:document-units="mm"
-     inkscape:current-layer="layer2"
+     inkscape:current-layer="layer1"
      showgrid="false"
      showguides="true"
      inkscape:guide-bbox="true"
-     inkscape:window-width="1920"
-     inkscape:window-height="964"
+     inkscape:window-width="1600"
+     inkscape:window-height="782"
      inkscape:window-x="0"
      inkscape:window-y="27"
      inkscape:window-maximized="1"
@@ -202,17 +202,6 @@
        d="m 35.501901,28.530418 v 12"
        id="path1026-0"
        inkscape:connector-curvature="0" />
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:1.25;font-family:'Latin Modern Math';-inkscape-font-specification:'Latin Modern Math';letter-spacing:0px;word-spacing:0px;display:inline;opacity:1;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       x="35.872108"
-       y="35.93409"
-       id="text1030-6-6"><tspan
-         sodipodi:role="line"
-         id="tspan1028-7-2"
-         x="35.872108"
-         y="35.93409"
-         style="font-size:7.05555534px;fill:#ff0000;stroke-width:0.26458332">φ</tspan></text>
     <path
        style="display:inline;opacity:1;fill:none;fill-opacity:1;stroke:#ff0000;stroke-width:0.26499999;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        id="path1050-6"
@@ -325,17 +314,6 @@
        d="m 18.234089,50.51919 v 12"
        id="path1026"
        inkscape:connector-curvature="0" />
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:1.25;font-family:'Latin Modern Math';-inkscape-font-specification:'Latin Modern Math';letter-spacing:0px;word-spacing:0px;opacity:1;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       x="18.604298"
-       y="57.922867"
-       id="text1030-6"><tspan
-         sodipodi:role="line"
-         id="tspan1028-7"
-         x="18.604298"
-         y="57.922867"
-         style="font-size:7.05555534px;fill:#ff0000;stroke-width:0.26458332">φ</tspan></text>
     <path
        style="opacity:1;fill:none;fill-opacity:1;stroke:#ff0000;stroke-width:0.26499999;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        id="path1050"

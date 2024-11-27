@@ -10,11 +10,11 @@
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    id="svg281"
    version="1.2"
-   viewBox="0 0 758.95605 535.99466"
-   height="535.99463pt"
-   width="758.95605pt"
+   viewBox="0 0 733.3775 572.20963"
+   height="572.20959pt"
+   width="733.3775pt"
    sodipodi:docname="inst-scenario-8.svg"
-   inkscape:version="0.92.4 (5da689c313, 2019-01-14)">
+   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)">
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -24,15 +24,15 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1366"
-     inkscape:window-height="705"
+     inkscape:window-width="1920"
+     inkscape:window-height="964"
      id="namedview146"
      showgrid="false"
      inkscape:zoom="0.8675"
-     inkscape:cx="565.00625"
-     inkscape:cy="280.07419"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
+     inkscape:cx="507.49178"
+     inkscape:cy="-179.08445"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
      inkscape:window-maximized="1"
      inkscape:current-layer="surface688"
      fit-margin-top="0"
@@ -49,7 +49,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -1193,17 +1193,22 @@
          id="tspan3849" /></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:30.00000191px;line-height:1.25;font-family:'Latin Modern Math';-inkscape-font-specification:'Latin Modern Math';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.75000006"
-       x="-5.2706299"
-       y="224.42641"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:25.00000191px;line-height:1.25;font-family:'Latin Modern Math';-inkscape-font-specification:'Latin Modern Math';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.75000006"
+       x="35.363373"
+       y="224.42639"
        id="text3887"><tspan
          sodipodi:role="line"
-         x="-5.2706299"
-         y="224.42641"
-         style="font-size:20px;fill:#000000;stroke-width:0.75000006"
-         id="tspan1120">   <tspan
-   style="font-size:50px;fill:#ff0000"
-   id="tspan3907">✗ </tspan>Subcritical solutions do not explain the circular rolls. (Gesla et al., PRF 2024)</tspan></text>
+         x="35.363373"
+         y="224.42639"
+         style="font-size:25.00000191px;fill:#000000;stroke-width:0.75000006"
+         id="tspan1068"><tspan
+   style="font-size:36px;fill:#ff0000"
+   id="tspan1074">   ✗</tspan> Subcritical solutions do not explain the circular rolls </tspan><tspan
+         sodipodi:role="line"
+         x="35.363373"
+         y="259.4014"
+         style="font-size:25.00000191px;fill:#000000;stroke-width:0.75000006"
+         id="tspan1072">observed experimentally. (Gesla et al., PRF 2024)</tspan></text>
     <path
        id="path32-4"
        d="m 249.39871,122.75449 v 7.96094"

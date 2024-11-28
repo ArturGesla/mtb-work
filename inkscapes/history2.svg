@@ -36,13 +36,13 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1920"
-     inkscape:window-height="964"
+     inkscape:window-width="1600"
+     inkscape:window-height="782"
      id="namedview283"
      showgrid="false"
      inkscape:zoom="0.43375"
-     inkscape:cx="19.047529"
-     inkscape:cy="342.94844"
+     inkscape:cx="15.439994"
+     inkscape:cy="333.72654"
      inkscape:window-x="0"
      inkscape:window-y="27"
      inkscape:window-maximized="1"
@@ -379,7 +379,7 @@
          id="tspan1018-3-0"
          x="401.37769"
          y="149.23451"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;font-family:'Latin Modern Math';-inkscape-font-specification:'Latin Modern Math';stroke-width:0.75">(Gelfgat., Fluid Dyn. Res. 2015)</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;font-family:'Latin Modern Math';-inkscape-font-specification:'Latin Modern Math';stroke-width:0.75">(Gelfgat, Fluid Dyn. Res. 2015)</tspan></text>
     <path
        style="fill:none;stroke:#000000;stroke-width:2.83465004;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1"
        d="m 527.59365,119.26095 v 7.95703"

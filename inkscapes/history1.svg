@@ -36,13 +36,13 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1600"
-     inkscape:window-height="782"
+     inkscape:window-width="1920"
+     inkscape:window-height="964"
      id="namedview283"
      showgrid="false"
      inkscape:zoom="0.8675"
-     inkscape:cx="352.19898"
-     inkscape:cy="213.43852"
+     inkscape:cx="149.8935"
+     inkscape:cy="208.82757"
      inkscape:window-x="0"
      inkscape:window-y="27"
      inkscape:window-maximized="1"
@@ -444,6 +444,6 @@
          id="tspan882"
          x="0.39224529"
          y="193.81563"
-         style="font-size:25px;stroke-width:0.75">Experiment: circular rolls followed by spirals at higher Re</tspan></text>
+         style="font-size:25px;stroke-width:0.75">Experiments: circular rolls followed by spirals at higher Re</tspan></text>
   </g>
 </svg>

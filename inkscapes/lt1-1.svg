@@ -80,14 +80,14 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.7"
-     inkscape:cx="196.57973"
-     inkscape:cy="672.43429"
+     inkscape:zoom="1.4"
+     inkscape:cx="440.61531"
+     inkscape:cy="353.70966"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1600"
-     inkscape:window-height="782"
+     inkscape:window-width="1920"
+     inkscape:window-height="964"
      inkscape:window-x="0"
      inkscape:window-y="27"
      inkscape:window-maximized="1"
@@ -3004,5 +3004,27 @@
          x="58.175297"
          y="78.548569"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.29166651px;font-family:'Latin Modern Math';-inkscape-font-specification:'Latin Modern Math';stroke-width:0.26458332;fill:#808000;">seed 4</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.26499999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Lend)"
+       d="M 110.4698,115.10605 55.794621,125.75631"
+       id="path1344"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.29166651px;line-height:1.25;font-family:'Latin Modern Math';-inkscape-font-specification:'Latin Modern Math';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="106.31207"
+       y="104.9007"
+       id="text1690"><tspan
+         sodipodi:role="line"
+         x="106.31207"
+         y="104.9007"
+         style="font-size:5.29166651px;stroke-width:0.26458332"
+         id="tspan1692">300 DNS runs, each with </tspan><tspan
+         sodipodi:role="line"
+         x="106.31207"
+         y="111.51529"
+         style="font-size:5.29166651px;stroke-width:0.26458332"
+         id="tspan1694">a different initial condition</tspan></text>
   </g>
 </svg>

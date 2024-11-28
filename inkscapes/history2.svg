@@ -8,13 +8,13 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="884.41504"
-   height="585.78546"
-   viewBox="0 0 663.31127 439.33909"
+   width="910.15625"
+   height="585.7724"
+   viewBox="0 0 682.61718 439.32929"
    version="1.2"
    id="svg281"
    sodipodi:docname="history2.svg"
-   inkscape:version="0.92.4 (5da689c313, 2019-01-14)">
+   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)">
   <metadata
      id="metadata285">
     <rdf:RDF>
@@ -36,15 +36,15 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1366"
-     inkscape:window-height="705"
+     inkscape:window-width="1600"
+     inkscape:window-height="782"
      id="namedview283"
      showgrid="false"
      inkscape:zoom="0.43375"
-     inkscape:cx="423.65848"
-     inkscape:cy="352.17034"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
+     inkscape:cx="7.5201515"
+     inkscape:cy="342.94842"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
      inkscape:window-maximized="1"
      inkscape:current-layer="surface688"
      fit-margin-top="0"
@@ -235,7 +235,7 @@
   </defs>
   <g
      id="surface688"
-     transform="translate(0,198.67407)">
+     transform="translate(0,198.66431)">
     <g
        transform="matrix(0.99999998,0,0,-0.99999998,64.33125,675.13995)"
        id="g646"
@@ -275,7 +275,7 @@
        id="text1173"><tspan
          sodipodi:role="line"
          x="348.95596"
-         y="59.613392"
+         y="60.458431"
          style="font-size:20px;stroke-width:0.75"
          id="tspan1183" /></text>
     <text
@@ -286,7 +286,7 @@
        id="text1191"><tspan
          sodipodi:role="line"
          x="352.96347"
-         y="68.954453"
+         y="69.517815"
          style="stroke-width:0.75"
          id="tspan1193" /></text>
     <text
@@ -297,7 +297,7 @@
        id="text1199"><tspan
          sodipodi:role="line"
          x="385.02451"
-         y="68.31369"
+         y="68.877045"
          style="stroke-width:0.75"
          id="tspan1201" /></text>
     <text
@@ -309,7 +309,7 @@
          sodipodi:role="line"
          id="tspan1205"
          x="442.48965"
-         y="89.710289"
+         y="90.273651"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;line-height:1.25;font-family:'Latin Modern Math';-inkscape-font-specification:'Latin Modern Math';font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:0px;word-spacing:0px;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;vector-effect:none;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.75;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" /></text>
     <text
        xml:space="preserve"
@@ -506,7 +506,7 @@
          x="596.49762"
          y="-40.852016"
          style="font-size:15px;stroke-width:0.74999994">u<tspan
-   style="font-size:65%;baseline-shift:sub"
+   style="font-size:64.99999762%;baseline-shift:sub"
    id="tspan966">θ</tspan></tspan></text>
     <text
        xml:space="preserve"
@@ -519,7 +519,7 @@
          x="218.29518"
          y="6.7428489"
          style="font-size:12px;stroke-width:0.75">u<tspan
-   style="font-size:65%;baseline-shift:sub"
+   style="font-size:64.99999762%;baseline-shift:sub"
    id="tspan968">z</tspan></tspan></text>
     <text
        xml:space="preserve"

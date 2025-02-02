@@ -94,8 +94,8 @@ u(nt*3+1)=2*pi/T;
 close all; uinit=u;
 semilogy(abs(reshape(u(1:end-1),[3,nt])'),':'); hold on; grid on; grid minor; title("Distribution on Chebyshev modes");
 %
-for ir=1:1;%40
-for i=1:1
+for ir=1:1%40
+for i=1:16
 [g,jac]=calculateRhsAndJac(3,nt,u,r,1,collx);
 
 fprintf("it: %d \t norm(rhs): %4.2e \t gend: %4.2e\n",i,norm(g),g(end));

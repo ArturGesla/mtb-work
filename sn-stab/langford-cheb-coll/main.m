@@ -5,12 +5,17 @@ clc; close all; clear; mua=[];
 
 % Noack system
 np=520; %r=24; 
-nt=30; 
+nt=29+1; 
+nt=25+1; 
+nt=21+1; 
+nt=17+1; 
 
 % mu=0.04; r=sqrt(mu); gm=1; %gamma
 % mu=0.04+it*0.04; r=sqrt(mu); gm=1; %gamma
 % mu=5; r=sqrt(mu); gm=1; %gamma
-mu=2.005;
+% mu=2.005;
+% mu=2.000; %review 1
+mu=1.995; %review 1
 % mu=1.69;
 % mu=2
 % mu=1.99;
@@ -127,8 +132,9 @@ disp(sort(abs(flnum)));
 % disp(sort(flnum)-sort(flmult'));
 % save("flnum-"+num2str(nt)+".mat",'nt','flnum','flmult');
 % close all;
-format long
-flexp=log(flnum)/2/pi/4
+format longE
+% flexp=log(flnum)/2/pi/4
+flexp=log(flnum)/2/pi/4+1i
 
 fprintf("%4.4f\t%4.4f\t%4.4f\t%4.4f\n",real(flnum(1)),imag(flnum(1)),real(flnum(3)),imag(flnum(3)))
 %%

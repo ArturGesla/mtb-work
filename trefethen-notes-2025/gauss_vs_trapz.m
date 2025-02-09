@@ -12,7 +12,7 @@ varr=[];
 varr2=[];
 
 f=@(x) cos(x*pi/2);  vext=4/pi; % not periodic 
-% f=@(x) 1+cos(x*pi);  vext=; % int of constant wtf 
+f=@(x) 1+cos(5*x*pi-0.2*pi);  vext=2; % int of constant wtf 
 
 for i=1:25
 N=i;
@@ -25,6 +25,6 @@ end
 
 %%
 clf;
-loglog(abs(varr-4/pi)); hold on
-loglog(abs(varr2-4/pi)); hold on
+loglog(abs(varr-vext)); hold on
+loglog(abs(varr2-vext)); hold on
 loglog(5*[1:length(varr2)].^(-2))

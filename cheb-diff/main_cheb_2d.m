@@ -1,7 +1,7 @@
 clc; clear;
 uarr=[];
 %%
-nt=21;
+nt=5+2+2+2+2+2+2+2+2+8;
 nx=nt; ny=nx;
 % x=linspace(-1,1,nx)';
 % x=x.^3;

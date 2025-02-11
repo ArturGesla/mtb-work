@@ -9,6 +9,7 @@ nx=nt; ny=nx;
 % x=linspace(-1,1,nx)';
 % x=x.^3;
 x=-cos(linspace(0,pi,nx))'; y=x;
+[X,Y]=meshgrid(x,y);
 %d2udx2-1=0
 %
 g=zeros(nx*ny,1);
@@ -18,8 +19,9 @@ J=sparse(nx*ny,nx*ny,0);
 % f=x*0-1*x.^2+1;
 % f=x*0-1*x+1;
 f=u*0-1;
-
 %
+tic; 
+ii=zeros(nt*nt*nx*ny,1); jj=ii; vv=ii; iip=1;
 for ix=1+1:length(x)-1
     for iy=1+1:length(y)-1
         ip=iy+(ix-1)*ny; xc=x(ix); yc=y(iy);
@@ -27,8 +29,12 @@ for ix=1+1:length(x)-1
         for ikx=0:nt-1
             for iky=0:nt-1
                 ipk=iky+1+(ikx-1+1)*ny;
-                g(ip)=g(ip)+u(ipk)*(dTn2(xc,ikx)*Tn(yc,iky)+dTn2(yc,iky)*Tn(xc,ikx));
-                J(ip,ipk)=J(ip,ipk)+(dTn2(xc,ikx)*Tn(yc,iky)+dTn2(yc,iky)*Tn(xc,ikx));
+                aa=(dTn2(xc,ikx)*Tn(yc,iky)+dTn2(yc,iky)*Tn(xc,ikx));
+%                 g(ip)=g(ip)+u(ipk)*(dTn2(xc,ikx)*Tn(yc,iky)+dTn2(yc,iky)*Tn(xc,ikx));
+                g(ip)=g(ip)+u(ipk)*aa;
+%                 J(ip,ipk)=J(ip,ipk)+(dTn2(xc,ikx)*Tn(yc,iky)+dTn2(yc,iky)*Tn(xc,ikx));
+% ii(iip)=ip; jj(iip)=ipk; vv(iip)=(dTn2(xc,ikx)*Tn(yc,iky)+dTn2(yc,iky)*Tn(xc,ikx)); iip=iip+1;
+ii(iip)=ip; jj(iip)=ipk; vv(iip)=aa; iip=iip+1;
             end
         end
 %         g(ip)=g(ip)-f(ip);
@@ -38,14 +44,25 @@ for ix=1+1:length(x)-1
 
     end
 end
+
+J=J+sparse([ii(1:iip-1);nx*ny],[jj(1:iip-1);nx*ny],[vv(1:iip-1);0]);
+toc;
+% gold=g;
+
+%
+tic;
 %
 %corners
+ii=zeros(nt*nt*nx*ny,1); jj=ii; vv=ii; iip=1;
+
 ix=1; iy=1; ip=iy+(ix-1)*ny;
 for ikx=0:nt-1
     for iky=0:nt-1
         ipk=iky+1+(ikx-1+1)*ny; xc=x(ix); yc=y(iy);
         g(ip)=g(ip)+u(ipk)*(Tn(yc,iky)*Tn(xc,ikx));
-        J(ip,ipk)=J(ip,ipk)+(Tn(yc,iky)*Tn(xc,ikx));
+%         J(ip,ipk)=J(ip,ipk)+(Tn(yc,iky)*Tn(xc,ikx));
+        ii(iip)=ip; jj(iip)=ipk; vv(iip)=(Tn(yc,iky)*Tn(xc,ikx)); iip=iip+1;
+
     end
 end
 ix=1; iy=ny; ip=iy+(ix-1)*ny;
@@ -53,7 +70,9 @@ for ikx=0:nt-1
     for iky=0:nt-1
         ipk=iky+1+(ikx-1+1)*ny; xc=x(ix); yc=y(iy);
         g(ip)=g(ip)+u(ipk)*(Tn(yc,iky)*Tn(xc,ikx));
-        J(ip,ipk)=J(ip,ipk)+(Tn(yc,iky)*Tn(xc,ikx));
+%         J(ip,ipk)=J(ip,ipk)+(Tn(yc,iky)*Tn(xc,ikx));
+        ii(iip)=ip; jj(iip)=ipk; vv(iip)=(Tn(yc,iky)*Tn(xc,ikx)); iip=iip+1;
+
     end
 end
 ix=nx; iy=1; ip=iy+(ix-1)*ny;
@@ -61,41 +80,60 @@ for ikx=0:nt-1
     for iky=0:nt-1
         ipk=iky+1+(ikx-1+1)*ny; xc=x(ix); yc=y(iy);
         g(ip)=g(ip)+u(ipk)*(Tn(yc,iky)*Tn(xc,ikx));
-        J(ip,ipk)=J(ip,ipk)+(Tn(yc,iky)*Tn(xc,ikx));
+%         J(ip,ipk)=J(ip,ipk)+(Tn(yc,iky)*Tn(xc,ikx));
+        ii(iip)=ip; jj(iip)=ipk; vv(iip)=(Tn(yc,iky)*Tn(xc,ikx)); iip=iip+1;
+
     end
 end
+g(ip)=g(ip)-1;
+
 ix=nx; iy=ny; ip=iy+(ix-1)*ny;
 for ikx=0:nt-1
     for iky=0:nt-1
         ipk=iky+1+(ikx-1+1)*ny; xc=x(ix); yc=y(iy);
         g(ip)=g(ip)+u(ipk)*(Tn(yc,iky)*Tn(xc,ikx));
-        J(ip,ipk)=J(ip,ipk)+(Tn(yc,iky)*Tn(xc,ikx));
+%         J(ip,ipk)=J(ip,ipk)+(Tn(yc,iky)*Tn(xc,ikx));
+        ii(iip)=ip; jj(iip)=ipk; vv(iip)=(Tn(yc,iky)*Tn(xc,ikx)); iip=iip+1;
+
     end
 end
+g(ip)=g(ip)-1;
+
+J=J+sparse([ii(1:iip-1);nx*ny],[jj(1:iip-1);nx*ny],[vv(1:iip-1);0]);
+
+toc;
+tic;
 %
 %bords
+ii=zeros(nt*nt*nx*ny,1); jj=ii; vv=ii; iip=1;
+
 for iy=1+1:length(y)-1
     ix=1; ip=iy+(ix-1)*ny;
     for ikx=0:nt-1
         for iky=0:nt-1
             ipk=iky+1+(ikx-1+1)*ny; xc=x(ix); yc=y(iy);
             g(ip)=g(ip)+u(ipk)*(Tn(yc,iky)*Tn(xc,ikx));
-            J(ip,ipk)=J(ip,ipk)+(Tn(yc,iky)*Tn(xc,ikx));
+%             J(ip,ipk)=J(ip,ipk)+(Tn(yc,iky)*Tn(xc,ikx));
+ii(iip)=ip; jj(iip)=ipk; vv(iip)=(Tn(yc,iky)*Tn(xc,ikx)); iip=iip+1;
+
         end
     end
 %     g(ip)=g(ip)-1; % bc gives 2nd order maybe
 %     g(ip)=g(ip)-(1-y(iy).^2); % bc maybe some 5th
 %     g(ip)=g(ip)-(1-abs(y(iy))); % bc maybe 3rd
-    g(ip)=g(ip)-exp(-1./(1-y(iy).^2)); % bc
+%     g(ip)=g(ip)-exp(-1./(1-y(iy).^2)); % bc
 
     ix=nx; ip=iy+(ix-1)*ny;
     for ikx=0:nt-1
         for iky=0:nt-1
             ipk=iky+1+(ikx-1+1)*ny; xc=x(ix); yc=y(iy);
             g(ip)=g(ip)+u(ipk)*(Tn(yc,iky)*Tn(xc,ikx));
-            J(ip,ipk)=J(ip,ipk)+(Tn(yc,iky)*Tn(xc,ikx));
+%             J(ip,ipk)=J(ip,ipk)+(Tn(yc,iky)*Tn(xc,ikx));
+            ii(iip)=ip; jj(iip)=ipk; vv(iip)=(Tn(yc,iky)*Tn(xc,ikx)); iip=iip+1;
+
         end
     end
+      g(ip)=g(ip)-1; %
 end
 for ix=1+1:length(x)-1
     iy=1; ip=iy+(ix-1)*ny;
@@ -103,23 +141,35 @@ for ix=1+1:length(x)-1
         for iky=0:nt-1
             ipk=iky+1+(ikx-1+1)*ny; xc=x(ix); yc=y(iy);
             g(ip)=g(ip)+u(ipk)*(Tn(yc,iky)*Tn(xc,ikx));
-            J(ip,ipk)=J(ip,ipk)+(Tn(yc,iky)*Tn(xc,ikx));
+%             J(ip,ipk)=J(ip,ipk)+(Tn(yc,iky)*Tn(xc,ikx));
+ii(iip)=ip; jj(iip)=ipk; vv(iip)=(Tn(yc,iky)*Tn(xc,ikx)); iip=iip+1;
+
         end
     end
 
 %     g(ip)=g(ip)-1; % bc
+%       g(ip)=g(ip)-(1+x(ix))/2; %
+
 
     iy=ny; ip=iy+(ix-1)*ny;
     for ikx=0:nt-1
         for iky=0:nt-1
             ipk=iky+1+(ikx-1+1)*ny;xc=x(ix); yc=y(iy);
             g(ip)=g(ip)+u(ipk)*(Tn(yc,iky)*Tn(xc,ikx));
-            J(ip,ipk)=J(ip,ipk)+(Tn(yc,iky)*Tn(xc,ikx));
+%             J(ip,ipk)=J(ip,ipk)+(Tn(yc,iky)*Tn(xc,ikx));
+ii(iip)=ip; jj(iip)=ipk; vv(iip)=(Tn(yc,iky)*Tn(xc,ikx)); iip=iip+1;
+
         end
     end
+      g(ip)=g(ip)-(1+x(ix))/2; %
 end
+J=J+sparse([ii(1:iip-1);nx*ny],[jj(1:iip-1);nx*ny],[vv(1:iip-1);0]);
+
+toc;
 %
+tic;
 u=u-J\g;
+toc;
 %
 uPhys=zeros(length(x)*length(y),1);
 for ix=1:length(x)
@@ -146,8 +196,8 @@ uecc=0;
 
 %
 ix=(length(x)+1)/2; iy=(length(y)+1)/2; ip=iy+(ix-1)*ny; 
-% uarr=[uarr;uPhys(ip)]
-uarr=[uarr;uecc]
+uarr=[uarr;uPhys(ip)]
+% uarr=[uarr;uecc]
 narr=[narr; nt];
 
 %%
@@ -168,8 +218,8 @@ loglog(narr,narr.^(-4),'o-')
 d=diff(uarr)
 d(1)/d(2)
 %%
-x=-cos(linspace(0,pi,nx*5))'; y=x;
-% x=-cos(linspace(0,pi,nx))'; y=x;
+% x=-cos(linspace(0,pi,nx*5))'; y=x;
+x=-cos(linspace(0,pi,nx))'; y=x;
 
 % uarr=[uarr;u((length(x)+1)/2)]
 uPhys=zeros(length(x)*length(y),1);
@@ -196,3 +246,9 @@ d(1)/d(2)
 %%
 close all;
 plot(x,uPhys,'-x')
+
+%%
+clf;
+plot(dTn2(x,n)); hold on; 
+% plot(-n^2*cos(n*acos(x))./sin(n*acos(x)).^2+n*sin(n*acos(x)).*cos(acos(x))./sin(acos(x)).^3);
+plot(n*((n+1)*cos(n*acos(x))-sin((n+1)*acos(x))./sin(acos(x)))./(x.^2-1))

@@ -1,7 +1,7 @@
 clf;  close all; clear;
 uarr=[]; dxarr=[];
 %
-np=50%*2*2*2*2*2*2;
+np=4%*2*2*2*2*2*2;
 %%
 % xe=0:1/np:1; xe=xe.^1;
 % xc=[(-xe(2)+3*xe(1))/2,(xe(1:end-1)+xe(2:end))/2,(3*xe(end)-xe(end-1))/2];
@@ -19,18 +19,21 @@ b=zeros(length(xc),1);
 %fourth_order;
 %
 % u=A\b;
-
+%
+fourth_AB;
+u=A\(B*fb);
+%
 
 %pade
-fourth_pade; 
-u=A\b; u=u(1:2:end); 
+% fourth_pade;
+% u=A\b; u=u(1:2:end); 
 
 %
 hold on;
 plot(xc,u,'-o'); grid on;
 
 plot(xc,-1/(4*pi*pi)*(f(xc)-1),'-x');
-%%
+%
 uarr=[uarr;u(np/2+1)];
 dxarr=[dxarr;dx];
 np=np*2

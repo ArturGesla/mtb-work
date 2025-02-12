@@ -4,7 +4,7 @@ narr=[];
 %
 nt=3;
 %%
-nt=nt+2;
+% nt=nt+2;
 nx=nt; ny=nx;
 % x=linspace(-1,1,nx)';
 % x=x.^3;
@@ -90,7 +90,7 @@ for ikx=0:nt-1
 
     end
 end
-% g(ip)=g(ip)-1;
+g(ip)=g(ip)-1;
 
 ix=nx; iy=ny; ip=iy+(ix-1)*ny;
 for ikx=0:nt-1
@@ -124,7 +124,7 @@ ii(iip)=ip; jj(iip)=ipk; vv(iip)=(Tn(yc,iky)*Tn(xc,ikx)); iip=iip+1;
         end
     end
 %     g(ip)=g(ip)-1; % bc gives 2nd order maybe
-    g(ip)=g(ip)-(1-y(iy).^2); % bc maybe some 12th order, really smooth
+%     g(ip)=g(ip)-(1-y(iy).^2); % bc maybe some 12th order, really smooth
 %     g(ip)=g(ip)-(1-abs(y(iy))); % bc maybe 3rd
 %     g(ip)=g(ip)-exp(-1./(1-y(iy).^2)); % bc
 
@@ -139,6 +139,7 @@ ii(iip)=ip; jj(iip)=ipk; vv(iip)=(Tn(yc,iky)*Tn(xc,ikx)); iip=iip+1;
         end
     end
 %       g(ip)=g(ip)-1; %
+      g(ip)=g(ip)-(1-y(iy))/2; %
 end
 for ix=1+1:length(x)-1
     iy=1; ip=iy+(ix-1)*ny;
@@ -153,7 +154,7 @@ ii(iip)=ip; jj(iip)=ipk; vv(iip)=(Tn(yc,iky)*Tn(xc,ikx)); iip=iip+1;
     end
 
 %     g(ip)=g(ip)-1; % bc
-%       g(ip)=g(ip)-(1+x(ix))/2; %
+      g(ip)=g(ip)-(1+x(ix))/2; %
 
 
     iy=ny; ip=iy+(ix-1)*ny;
@@ -194,15 +195,15 @@ uecc=0;
         for ikx=0:nt-1
             for iky=0:nt-1
                 ipk=iky+1+(ikx-1+1)*ny;
-                uecc=uecc+u(ipk)*(Tn(0.6,iky)*Tn(0.6,ikx));
+                uecc=uecc+u(ipk)*(Tn(0.11,iky)*Tn(0.11,ikx));
             end
         end
 
 
 %
 ix=(length(x)+1)/2; iy=(length(y)+1)/2; ip=iy+(ix-1)*ny; 
-uarr=[uarr;uPhys(ip)]
-% uarr=[uarr;uecc]
+% uarr=[uarr;uPhys(ip)]
+uarr=[uarr;uecc]
 narr=[narr; nt];
 
 %%

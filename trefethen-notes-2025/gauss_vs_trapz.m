@@ -12,7 +12,8 @@ varr=[];
 varr2=[];
 
 f=@(x) cos(x*pi/2);  vext=4/pi; % not periodic 
-f=@(x) 1+cos(5*x*pi-0.2*pi);  vext=2; % int of constant wtf 
+f=@(x) x.^4;  vext=2/5; % not periodic 
+% f=@(x) 1+cos(5*x*pi-0.2*pi);  vext=2; % int of constant wtf 
 
 for i=1:25
 N=i;

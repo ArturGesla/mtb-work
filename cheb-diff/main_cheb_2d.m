@@ -40,8 +40,9 @@ ii(iip)=ip; jj(iip)=ipk; vv(iip)=aa; iip=iip+1;
 iib(iipb)=ip; jjb(iipb)=ipk; vvb(iipb)=Tn(xc,ikx)*Tn(yc,iky); iipb=iipb+1;
             end
         end
+        %focring
 %         g(ip)=g(ip)-f(ip);
-        g(ip)=g(ip)-f(ip)*cos(pi/2*xc)*cos(pi/2*yc);
+%         g(ip)=g(ip)-f(ip)*cos(pi/2*xc)*cos(pi/2*yc);
 %         g(ip)=g(ip)-f(ip)*cos(pi*xc)*cos(pi/2*yc);
 
 
@@ -123,7 +124,7 @@ ii(iip)=ip; jj(iip)=ipk; vv(iip)=(Tn(yc,iky)*Tn(xc,ikx)); iip=iip+1;
         end
     end
 %     g(ip)=g(ip)-1; % bc gives 2nd order maybe
-%     g(ip)=g(ip)-(1-y(iy).^2); % bc maybe some 5th
+    g(ip)=g(ip)-(1-y(iy).^2); % bc maybe some 12th order, really smooth
 %     g(ip)=g(ip)-(1-abs(y(iy))); % bc maybe 3rd
 %     g(ip)=g(ip)-exp(-1./(1-y(iy).^2)); % bc
 
@@ -207,12 +208,12 @@ narr=[narr; nt];
 %%
 
 % clf; 
-% [ev,evs]=eig(full(J),full(B)); evs=diag(evs); 
-[ev,evs]=eigs((J),(B),20,"smallestabs"); evs=diag(evs); 
+[ev,evs]=eig(full(J),full(B)); evs=diag(evs); 
+% [ev,evs]=eigs((J),(B),20,"smallestabs"); evs=diag(evs); 
 % plot(evs,'x');
 % aa=load("evsFD.mat"); hold on;
 % plot(aa.evs,'o');
-uarr=[uarr;real(evs(1:5)')]
+% uarr=[uarr;real(evs(1:5)')]
 
 
 narr=[narr; nt];
@@ -232,17 +233,19 @@ loglog(narr,abs(uarr-uarr(end,:)),'x-'); hold on;
 loglog(narr,narr.^(-2),'o-')
 loglog(narr,narr.^(-3),'o-')
 loglog(narr,narr.^(-4),'o-')
+loglog(narr,narr.^(-5),'o-')
+loglog(narr,narr.^(-12),'o-')
 
 %%
 d=diff(uarr)
 d(1)/d(2)
 %%
 clf; 
-% [ev,evs]=eig(full(J),full(B)); evs=diag(evs); 
-[ev,evs]=eigs((J),(B),20,"smallestabs"); evs=diag(evs); 
+[ev,evs]=eig(full(J),full(B)); evs=diag(evs); 
+% [ev,evs]=eigs((J),(B),20,"smallestabs"); evs=diag(evs); 
 plot(evs,'x');
-aa=load("evsFD.mat"); hold on;
-plot(aa.evs,'o');
+% aa=load("evsFD.mat"); hold on;
+% plot(aa.evs,'o');
 
 %hold on; text(real(evs),imag(evs),num2str([1:length(evs)]'));
 %%
@@ -250,7 +253,7 @@ iev=1;
 %%
 % x=-cos(linspace(0,pi,nx*5))'; y=x;
 x=-cos(linspace(0,pi,nx))'; y=x;
-% u=real(ev(:,iev)); iev=iev+1;
+u=real(ev(:,iev)); iev=iev+1;
 % uarr=[uarr;u((length(x)+1)/2)]
 uPhys=zeros(length(x)*length(y),1);
 for ix=1:length(x)
@@ -268,6 +271,7 @@ end
 %
 uPhys2=reshape(uPhys,[length(y),length(x)]);
 mesh(x,y,uPhys2);
+title("ev:"+num2str(evs(iev)))
 %%
 uarr=[uarr;uPhys((length(x)+1)/2)]
 %%

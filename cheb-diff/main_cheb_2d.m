@@ -253,7 +253,7 @@ iev=1;
 %%
 % x=-cos(linspace(0,pi,nx*5))'; y=x;
 x=-cos(linspace(0,pi,nx))'; y=x;
-u=real(ev(:,iev)); iev=iev+1;
+% u=real(ev(:,iev)); iev=iev+1;
 % uarr=[uarr;u((length(x)+1)/2)]
 uPhys=zeros(length(x)*length(y),1);
 for ix=1:length(x)
@@ -271,7 +271,7 @@ end
 %
 uPhys2=reshape(uPhys,[length(y),length(x)]);
 mesh(x,y,uPhys2);
-title("ev:"+num2str(evs(iev)))
+% title("ev:"+num2str(evs(iev)))
 %%
 uarr=[uarr;uPhys((length(x)+1)/2)]
 %%

@@ -3,7 +3,9 @@ uarr=[];
 narr=[];
 %
 nt=3;
-%%
+%
+% for int=1:20
+for nt=[3:2:41,51]
 % nt=nt+2;
 nx=nt; ny=nx;
 % x=linspace(-1,1,nx)';
@@ -21,7 +23,7 @@ B=sparse(nx*ny,nx*ny,0);
 % f=x*0-1*x+1;
 f=u*0-1;
 %
-tic; 
+% tic; 
 ii=zeros(nt*nt*nx*ny,1); jj=ii; vv=ii; iip=1;
 iib=zeros(nt*nt*nx*ny,1); jjb=iib; vvb=iib; iipb=1;
 for ix=1+1:length(x)-1
@@ -51,11 +53,11 @@ end
 
 J=J+sparse([ii(1:iip-1);nx*ny],[jj(1:iip-1);nx*ny],[vv(1:iip-1);0]);
 B=B+sparse([iib(1:iipb-1);nx*ny],[jjb(1:iipb-1);nx*ny],[vvb(1:iipb-1);0]);
-toc;
+% toc;
 % gold=g;
 
 %
-tic;
+% tic;
 %
 %corners
 ii=zeros(nt*nt*nx*ny,1); jj=ii; vv=ii; iip=1;
@@ -70,6 +72,8 @@ for ikx=0:nt-1
 
     end
 end
+% g(ip)=g(ip)-1;
+
 ix=1; iy=ny; ip=iy+(ix-1)*ny;
 for ikx=0:nt-1
     for iky=0:nt-1
@@ -80,6 +84,8 @@ for ikx=0:nt-1
 
     end
 end
+% g(ip)=g(ip)-1;
+
 ix=nx; iy=1; ip=iy+(ix-1)*ny;
 for ikx=0:nt-1
     for iky=0:nt-1
@@ -102,15 +108,16 @@ for ikx=0:nt-1
 
     end
 end
-% g(ip)=g(ip)-1;
+g(ip)=g(ip)-1;
 
 J=J+sparse([ii(1:iip-1);nx*ny],[jj(1:iip-1);nx*ny],[vv(1:iip-1);0]);
 
-toc;
-tic;
+% toc;
+% tic;
 %
 %bords
 ii=zeros(nt*nt*nx*ny,1); jj=ii; vv=ii; iip=1;
+%left
 
 for iy=1+1:length(y)-1
     ix=1; ip=iy+(ix-1)*ny;
@@ -124,10 +131,12 @@ ii(iip)=ip; jj(iip)=ipk; vv(iip)=(Tn(yc,iky)*Tn(xc,ikx)); iip=iip+1;
         end
     end
 %     g(ip)=g(ip)-1; % bc gives 2nd order maybe
-%     g(ip)=g(ip)-(1-y(iy).^2); % bc maybe some 12th order, really smooth
+%     g(ip)=g(ip)-(y(iy)>0); % bc gives 2nd order maybe
+%     g(ip)=g(ip)-(1-y(iy).^2); % bc maybe some 12th order, really smooth, in the center point
 %     g(ip)=g(ip)-(1-abs(y(iy))); % bc maybe 3rd
 %     g(ip)=g(ip)-exp(-1./(1-y(iy).^2)); % bc
 
+    %right
     ix=nx; ip=iy+(ix-1)*ny;
     for ikx=0:nt-1
         for iky=0:nt-1
@@ -138,9 +147,11 @@ ii(iip)=ip; jj(iip)=ipk; vv(iip)=(Tn(yc,iky)*Tn(xc,ikx)); iip=iip+1;
 
         end
     end
-%       g(ip)=g(ip)-1; %
-      g(ip)=g(ip)-(1-y(iy))/2; %
+      g(ip)=g(ip)-1; %
+%       g(ip)=g(ip)-(1-y(iy))/2; %
 end
+
+%bottom
 for ix=1+1:length(x)-1
     iy=1; ip=iy+(ix-1)*ny;
     for ikx=0:nt-1
@@ -154,9 +165,10 @@ ii(iip)=ip; jj(iip)=ipk; vv(iip)=(Tn(yc,iky)*Tn(xc,ikx)); iip=iip+1;
     end
 
 %     g(ip)=g(ip)-1; % bc
-      g(ip)=g(ip)-(1+x(ix))/2; %
+%       g(ip)=g(ip)-(1+x(ix))/2; %
+      g(ip)=g(ip)-exp((-1+x(ix))/2/0.03); %
 
-
+%top
     iy=ny; ip=iy+(ix-1)*ny;
     for ikx=0:nt-1
         for iky=0:nt-1
@@ -167,15 +179,15 @@ ii(iip)=ip; jj(iip)=ipk; vv(iip)=(Tn(yc,iky)*Tn(xc,ikx)); iip=iip+1;
 
         end
     end
-%       g(ip)=g(ip)-(1+x(ix))/2; %
+      g(ip)=g(ip)-(1+x(ix))/2; %
 end
 J=J+sparse([ii(1:iip-1);nx*ny],[jj(1:iip-1);nx*ny],[vv(1:iip-1);0]);
 
-toc;
+% toc;
 %
-tic;
+% tic;
 u=u-J\g;
-toc;
+% toc;
 %
 uPhys=zeros(length(x)*length(y),1);
 for ix=1:length(x)
@@ -195,7 +207,7 @@ uecc=0;
         for ikx=0:nt-1
             for iky=0:nt-1
                 ipk=iky+1+(ikx-1+1)*ny;
-                uecc=uecc+u(ipk)*(Tn(0.11,iky)*Tn(0.11,ikx));
+                uecc=uecc+u(ipk)*(Tn(0.1,iky)*Tn(0.1,ikx));
             end
         end
 
@@ -203,8 +215,10 @@ uecc=0;
 %
 ix=(length(x)+1)/2; iy=(length(y)+1)/2; ip=iy+(ix-1)*ny; 
 % uarr=[uarr;uPhys(ip)]
-uarr=[uarr;uecc]
+uarr=[uarr;uecc];
 narr=[narr; nt];
+[narr,uarr]
+end
 
 %%
 

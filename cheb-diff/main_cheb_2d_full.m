@@ -1,15 +1,13 @@
 clc; clear;
 uarr=[];
 narr=[];
-tarr=[];
 %
 nt=3;
 %
 % for int=1:20
 % for nt=[3:2:41,51]
-for nt=71
+for nt=71%[3:2:41,51]
 % nt=nt+2;
-% tic;
 nx=nt; ny=nx;
 % x=linspace(-1,1,nx)';
 % x=x.^3;
@@ -19,16 +17,16 @@ x=-cos(linspace(0,pi,nx))'; y=x;
 %
 g=zeros(nx*ny,1);
 u=g;
-J=sparse(nx*ny,nx*ny,0);
-B=sparse(nx*ny,nx*ny,0);
+J=zeros(nx*ny,nx*ny);
+B=zeros(nx*ny,nx*ny);
 %
 % f=x*0-1*x.^2+1;
 % f=x*0-1*x+1;
 f=u*0-1;
 %
 tic; 
-ii=zeros(nt*nt*nx*ny,1); jj=ii; vv=ii; iip=1;
-iib=zeros(nt*nt*nx*ny,1); jjb=iib; vvb=iib; iipb=1;
+% ii=zeros(nt*nt*nx*ny,1); jj=ii; vv=ii; iip=1;
+% iib=zeros(nt*nt*nx*ny,1); jjb=iib; vvb=iib; iipb=1;
 for ix=1+1:length(x)-1
     for iy=1+1:length(y)-1
         ip=iy+(ix-1)*ny; xc=x(ix); yc=y(iy);
@@ -39,10 +37,10 @@ for ix=1+1:length(x)-1
                 aa=(dTn2(xc,ikx)*Tn(yc,iky)+dTn2(yc,iky)*Tn(xc,ikx));
 %                 g(ip)=g(ip)+u(ipk)*(dTn2(xc,ikx)*Tn(yc,iky)+dTn2(yc,iky)*Tn(xc,ikx));
                 g(ip)=g(ip)+u(ipk)*aa;
-%                 J(ip,ipk)=J(ip,ipk)+(dTn2(xc,ikx)*Tn(yc,iky)+dTn2(yc,iky)*Tn(xc,ikx));
+                J(ip,ipk)=J(ip,ipk)+(dTn2(xc,ikx)*Tn(yc,iky)+dTn2(yc,iky)*Tn(xc,ikx));
 % ii(iip)=ip; jj(iip)=ipk; vv(iip)=(dTn2(xc,ikx)*Tn(yc,iky)+dTn2(yc,iky)*Tn(xc,ikx)); iip=iip+1;
-ii(iip)=ip; jj(iip)=ipk; vv(iip)=aa; iip=iip+1;
-iib(iipb)=ip; jjb(iipb)=ipk; vvb(iipb)=Tn(xc,ikx)*Tn(yc,iky); iipb=iipb+1;
+% ii(iip)=ip; jj(iip)=ipk; vv(iip)=aa; iip=iip+1;
+% iib(iipb)=ip; jjb(iipb)=ipk; vvb(iipb)=Tn(xc,ikx)*Tn(yc,iky); iipb=iipb+1;
             end
         end
         %focring
@@ -54,10 +52,9 @@ iib(iipb)=ip; jjb(iipb)=ipk; vvb(iipb)=Tn(xc,ikx)*Tn(yc,iky); iipb=iipb+1;
     end
 end
 
-J=J+sparse([ii(1:iip-1);nx*ny],[jj(1:iip-1);nx*ny],[vv(1:iip-1);0]);
+% J=J+sparse([ii(1:iip-1);nx*ny],[jj(1:iip-1);nx*ny],[vv(1:iip-1);0]);
+% B=B+sparse([iib(1:iipb-1);nx*ny],[jjb(1:iipb-1);nx*ny],[vvb(1:iipb-1);0]);
 toc;
-B=B+sparse([iib(1:iipb-1);nx*ny],[jjb(1:iipb-1);nx*ny],[vvb(1:iipb-1);0]);
-% toc;
 % gold=g;
 
 %
@@ -192,7 +189,6 @@ J=J+sparse([ii(1:iip-1);nx*ny],[jj(1:iip-1);nx*ny],[vv(1:iip-1);0]);
 % tic;
 u=u-J\g;
 % toc;
-t=toc;
 %
 uPhys=zeros(length(x)*length(y),1);
 for ix=1:length(x)
@@ -222,7 +218,6 @@ ix=(length(x)+1)/2; iy=(length(y)+1)/2; ip=iy+(ix-1)*ny;
 % uarr=[uarr;uPhys(ip)]
 uarr=[uarr;uecc];
 narr=[narr; nt];
-tarr=[tarr; t];
 [narr,uarr]
 end
 

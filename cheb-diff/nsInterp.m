@@ -12,12 +12,16 @@ cd ..;
 %
 % u interpl
 
+pC=interp2(a.xc(1,1:end)*2/R-1,a.zc(:,1)*2/H-1,a.p(1:end,1:end),rp,zp');
 uC=interp2(a.xu(1,1:end)*2/R-1,a.zc(:,1)*2/H-1,a.u(1:end,1:end-1),ru,zu');
+vC=interp2(a.xc(1,1:end)*2/R-1,a.zc(:,1)*2/H-1,a.v(1:end,1:end),rv,zv');
 wC=interp2(a.xc(1,1:end)*2/R-1,a.zw(:,1)*2/H-1,a.w(1:end-1,1:end),rw,zw');
 
 % mesh(ru,zu',uC);
 % mesh(rw,zw',wC);
-%
+% mesh(rv,zv',vC);
+% mesh(rp,zp',pC);
+%%
 %
 % tic;
 % A=zeros(length(ru)*length(zu));
@@ -67,4 +71,65 @@ for ix=1:length(rw)
 end
 %
 aw=A\[reshape([wC;zeros(1,N+1)],[(N+1)^2,1]);];
+
 % toc;
+%% v map
+
+A=zeros((N+1)^2);
+for ix=1:length(rv)
+    for iy=1:length(zv)
+        ip=iy+(ix-1)*(N+1); xc=rv(ix); zc=zv(iy);
+        for ikx=0:length(rv)-1
+            for iky=0:length(zv)-1
+                ikp=iky+1+(ikx-1+1)*(N+1);
+                A(ip,ikp)=A(ip,ikp)+Tn(xc,ikx)*Tn(zc,iky);
+            end
+        end
+    end
+end
+%
+% for ix=1:length(rw)
+%     for iy=N+1
+%         ip=iy+(ix-1)*(N+1); 
+%          A(ip,ip)=1;
+%     end
+% end
+%
+av=A\[reshape([vC],[(N+1)^2,1]);];
+%% p map
+A=zeros((N+1)^2);
+%
+for ix=1:length(rp)
+    for iy=1:length(zp)
+        ip=(iy+1)+(ix-1+1)*(N+1); xc=rp(ix); zc=zp(iy);
+        for ikx=0:length(rp)-1
+            for iky=0:length(zp)-1
+                ikp=iky+1+1+(ikx-1+1+1)*(N+1);
+                A(ip,ikp)=A(ip,ikp)+Tn(xc,ikx)*Tn(zc,iky);
+            end
+        end
+    end
+end
+%
+for ix=1:length(rv)
+    for iy=1:length(zv)
+        ip=iy+(ix-1)*(N+1);
+        if (ix==1)
+         A(ip,ip)=1;
+        end
+        if (ix==length(rv))
+         A(ip,ip)=1;
+        end
+        if (iy==1)
+         A(ip,ip)=1;
+        end
+        if (iy==length(zv))
+         A(ip,ip)=1;
+        end
+
+    end
+end
+%
+ppC=[zeros(1,N+1);[zeros(N-1,1),pC,zeros(N-1,1)];zeros(1,N+1)];
+%
+ap=A\[reshape([ppC],[(N+1)^2,1]);];

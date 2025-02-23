@@ -92,7 +92,9 @@ narr=[];
 
 % cas="5";  name="-dblreg"; regname=", shroud + stator regularisation eps=0.03"; for N=4:2:26
 
-cas="6";  name="-dblreg2"; regname=",  shroud + stator regularisation eps=0.006"; for N=4:2:24
+% cas="6";  name="-dblreg2"; regname=",  shroud + stator regularisation eps=0.006"; for N=4:2:24
+% cas="7";  name="-nostress"; regname=",  shroud no stress"; for N=4:2:22
+cas="8";  name="-selfsim"; regname=",  shroud self sim"; for N=4:2:22
 % cas="1"; name="-constsh"; regname=", no regularisation"; for N=4:2:24
 % cas="2"; name="-lin"; regname=""; for N=4:2:28
 % for N=12

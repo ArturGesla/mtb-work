@@ -7,15 +7,19 @@ plot(R,Z,'k'); hold on;
 plot(R',Z','k'); hold on;
 
 %%
-clc;
+clc; clf;
 
-r=0.5:0.1:1; th=r*pi/2; x=r*0;
-[R,TH]=meshgrid(r,th); X=R*0+1;
+z=0.0:0.1:1; th=linspace(0,atan(0.5),20); 
+[TH,Z]=meshgrid(th,z);
+% X=R*0+1;
 %
 % X=R; Y=2-R./tan(TH);
-X=2-R*tan(TH); Y=R;
+% X=2-R.*tan(TH); Y=R;
+X=(2-Z).*tan(TH); Y=Z;
 plot(X,Y,'k'); hold on;
 plot(X',Y','r'); hold on;
+%%
+mesh(X,Y,Y)
 
 %%
 

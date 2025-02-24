@@ -3,15 +3,18 @@ uarr=[];
 %
 % nx=71;
 nx=301;
-% nx=71*1+1;
-
+% nx=71*2+1;
 ny=(nx+1)/2;
 narr=[];
+L=2;
 %
 % nx=(nx-1)*2+1;
 % ny=nx;
-x=linspace(0,1,nx)';
-y=linspace(0,1,ny)';
+% x=linspace(0,1,nx)';
+% y=linspace(0,1,ny)';
+
+y=linspace(0,1,ny); x=linspace(0,atan(0.5),nx); 
+%
 dx=mean(diff(x));
 dy=mean(diff(y));
 
@@ -25,7 +28,7 @@ J=sparse(nx*ny,nx*ny,0);
 f=u*0;
 % f=cos(pi*x);
 %
-
+%
 g=zeros(nx*ny,1);
 % u=g-1;
 J=sparse(nx*ny,nx*ny,0);
@@ -44,28 +47,29 @@ for ix=1+1:length(x)-1
             ipfym=(iy-1+(ix-1)*ny-1)+1;
             ip=ipf;
 
-        if (ix+iy<2*ny)
-            g(ip)=g(ip)+(u(ipfxp)+u(ipfxm)-2*u(ipf))/dx/dx;
+            th=x(ix);
+            z=y(iy);
+            val1=cos(th)^2/(L-z)*cos(th)^2/(L-z);
+            val2=cos(th)^2/(L-z)*(-2*cos(th)*sin(th)/(L-z));
+%             val2=cos(th)^2/(L-z)*(-10*cos(th)*sin(th)/(L-z))*0;
+
+            g(ip)=g(ip)+(u(ipfxp)+u(ipfxm)-2*u(ipf))/dx/dx*val1;
+            g(ip)=g(ip)+(u(ipfxp)-u(ipfxm))/dx/2*val2;
             g(ip)=g(ip)+(u(ipfyp)+u(ipfym)-2*u(ipf))/dy/dy;
-            ii(iip)=ip; jj(iip)=ipfxp; vv(iip)=1/dx/dx; iip=iip+1;
-            ii(iip)=ip; jj(iip)=ipfxm; vv(iip)=1/dx/dx; iip=iip+1;
+
+            ii(iip)=ip; jj(iip)=ipfxp; vv(iip)=1/dx/dx*val1; iip=iip+1;
+            ii(iip)=ip; jj(iip)=ipfxm; vv(iip)=1/dx/dx*val1; iip=iip+1;
+                        ii(iip)=ip; jj(iip)=ipf; vv(iip)=-2/dx/dx*val1; iip=iip+1;
+
+
+            ii(iip)=ip; jj(iip)=ipfxp; vv(iip)=1/dx/2*val2; iip=iip+1;
+            ii(iip)=ip; jj(iip)=ipfxm; vv(iip)=-1/dx/2*val2; iip=iip+1;
+
             ii(iip)=ip; jj(iip)=ipfyp; vv(iip)=1/dy/dy; iip=iip+1;
             ii(iip)=ip; jj(iip)=ipfym; vv(iip)=1/dy/dy; iip=iip+1;
-            ii(iip)=ip; jj(iip)=ipf; vv(iip)=-2/dx/dx; iip=iip+1;
             ii(iip)=ip; jj(iip)=ipf; vv(iip)=-2/dy/dy; iip=iip+1;
 
 %             u(ip)=2;
-        elseif((ix+iy)==2*ny)
-%              u(ip)=3;
-         g(ip)=g(ip)+u(ipf)-1;
-   ii(iip)=ip; jj(iip)=ipf; vv(iip)=1; iip=iip+1;
-
-        else
-%             u(ip)=-1;
-
-         g(ip)=g(ip)+u(ipf);
-   ii(iip)=ip; jj(iip)=ipf; vv(iip)=1; iip=iip+1;
-        end
         % iib(iipb)=ipf; jjb(iipb)=ipf; vvb(iipb)=1; iipb=iipb+1;
 
         %fourth order what a magic
@@ -134,7 +138,7 @@ for iy=1+1:length(y)-1
     %         J(ip,ip)=1;
     ii(iip)=ip; jj(iip)=ip; vv(iip)=1; iip=iip+1;
 
-    ix=nx; ip=iy+(ix-1)*ny; g(ip)=u(ip);
+    ix=nx; ip=iy+(ix-1)*ny; g(ip)=u(ip)-1;
     %         J(ip,ip)=1;
     ii(iip)=ip; jj(iip)=ip; vv(iip)=1; iip=iip+1;
 
@@ -162,47 +166,47 @@ toc;
 % norm(g)
 %
 % plt
-clf;
 uPhys=reshape(u,[ny,nx]);
 % mesh(x,y,uPhys);
 mesh(1:nx,1:ny,uPhys);
-save('dataCart','x','y','uPhys','nx');
-%%
-pcolor(1:nx,1:ny,uPhys); shading interp; colormap(parula(8))
+%
+% pcolor(1:nx,1:ny,uPhys); shading interp; colormap(parula(8))
+% contour(1:nx,1:ny,uPhys,30); 
+%
 
-%%
-ix=(length(x)+1)/2; iy=(length(y)+1)/2; ip=iy+(ix-1)*ny;
-uarr=[uarr;u(ip)]
-narr=[narr;nx];
-nx=(nx-1)*2+1;
-% anal=-1/pi/pi*2
-%%
-save('centerFD2','narr','uarr');
+[TH,Z]=meshgrid(x,y);
+X=(2-Z).*tan(TH); Y=Z;
 
-%%
-% clf;
-B=zeros(nx,ny); B(2:end-1,2:end-1)=1; B=reshape(B,[nx*ny,1]); B=sparse(1:length(B),1:length(B),B);
-% [ev,evs]=eig(full(J)); evs=diag(evs);
-[ev,evs]=eigs((J),B,20,2); evs=diag(evs);
-save('evsFD','evs')
-% plot(evs,'x');
+%
+clf;
+% mesh(X,Y,uPhys)
+contour(X,Y,uPhys,[0:0.1:1],'r'); 
 
-uarr=[uarr;real(evs(1:5)')]
-narr=[narr;nx];
-%%
-save('evsFD',"uarr","narr");
+%
+clf; 
+a=load("dataCart.mat");
+a.nx
+[X2,Y2]=meshgrid(a.x,a.y);
+mesh(X2,Y2,a.uPhys,'EdgeColor','r');
+hold on;
+mesh(X,Y,uPhys,'EdgeColor','b')
 
+%
+pp=interp2(X2,Y2,a.uPhys,X,Y);
+max(max(uPhys-pp))
 %%
-% i=1;
-u=real(ev(:,i));
-uPhys=reshape(u,[ny,nx]);
-mesh(x,y,uPhys);
-i=i+1;
-%%
-d=diff(uarr)
-d(1)/d(2)
+
+clf;
+contour(X,Y,uPhys,[0:0.1:1],'r');
+hold on;
+contour(X2,Y2,a.uPhys,[0:0.1:1],'k');
+legend("modified","cartesian"); grid on;
+title("contour 0:0.1:1 | nth or nx: "+num2str(nx));
+exportgraphics(gcf,"comparison-"+num2str(nx)+".png")
 %%
 clf;
-loglog(narr,abs(uarr-2/pi/pi),'x-'); hold on;
-loglog(narr,narr.^(-2),'-')
-loglog(narr,narr.^(-4),'-')
+mesh(X,Y,uPhys-pp,'EdgeColor','b'); hold on;
+% mesh(X(2:end-1,2:end-1),Y(2:end-1,2:end-1),uPhys(2:end-1,2:end-1)-pp(2:end-1,2:end-1),'EdgeColor','b'); hold on;
+% mesh(X,Y,pp,'EdgeColor','r')
+
+

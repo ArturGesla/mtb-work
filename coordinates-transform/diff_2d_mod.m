@@ -2,9 +2,10 @@ clc; clear;
 uarr=[];
 %
 % nx=71;
-nx=301;
+nx=31;
 % nx=71*2+1;
-ny=(nx+1)/2;
+% ny=(nx+1)/2;
+ny=nx-10;
 narr=[];
 L=2;
 %
@@ -173,7 +174,7 @@ mesh(1:nx,1:ny,uPhys);
 % pcolor(1:nx,1:ny,uPhys); shading interp; colormap(parula(8))
 % contour(1:nx,1:ny,uPhys,30); 
 %
-
+%
 [TH,Z]=meshgrid(x,y);
 X=(2-Z).*tan(TH); Y=Z;
 
@@ -202,7 +203,8 @@ hold on;
 contour(X2,Y2,a.uPhys,[0:0.1:1],'k');
 legend("modified","cartesian"); grid on;
 title("contour 0:0.1:1 | nth or nx: "+num2str(nx));
-exportgraphics(gcf,"comparison-"+num2str(nx)+".png")
+% exportgraphics(gcf,"comparison-"+num2str(nx)+".png")
+%nie wiem czemu sie nie zgadza 24/02/2025
 %%
 clf;
 mesh(X,Y,uPhys-pp,'EdgeColor','b'); hold on;

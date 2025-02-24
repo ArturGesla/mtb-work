@@ -9,7 +9,7 @@ plot(R',Z','k'); hold on;
 %%
 clc; clf;
 
-z=0.0:0.1:1; th=linspace(0,atan(0.5),20); 
+z=0.0:0.1:1; th=linspace(0,atan(0.5),30); 
 [TH,Z]=meshgrid(th,z);
 % X=R*0+1;
 %
@@ -18,6 +18,9 @@ z=0.0:0.1:1; th=linspace(0,atan(0.5),20);
 X=(2-Z).*tan(TH); Y=Z;
 plot(X,Y,'k'); hold on;
 plot(X',Y','r'); hold on;
+ grid on;
+ %%
+ plot(diff(X(1,:)))
 %%
 mesh(X,Y,Y)
 

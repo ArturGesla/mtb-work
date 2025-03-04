@@ -1,11 +1,12 @@
-clc; clear;
+clc; 
+% clear;
 uarr=[];
 %
 % nx=71;
 % nx=301;
 % nx=71*2+1;
 % ny=(nx+1)/2;
-nx=160+1;
+% nx=160+1;
 ny=nx-10;
 narr=[];
 L=2;
@@ -179,7 +180,7 @@ uPhys=reshape(u,[ny,nx]);
 [TH,Z]=meshgrid(x,y);
 X=(2-Z).*tan(TH); Y=Z;
 save("dataMod-"+num2str(nx),'X','Y','uPhys','nx');
-
+return;
 %
 % plt
 uPhys=reshape(u,[ny,nx]);

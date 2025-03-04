@@ -1,10 +1,11 @@
-clc; clear;
+clc; 
+% clear;
 uarr=[];
 %
 % nx=71;
 % nx=301;
 % nx=71*3+1;
-nx=20*2*2*2*2+1;
+% nx=20*2*2*2*2+1;
 
 ny=(nx+1)/2;
 narr=[];
@@ -166,8 +167,9 @@ toc;
 clf;
 uPhys=reshape(u,[ny,nx]);
 % mesh(x,y,uPhys);
-mesh(1:nx,1:ny,uPhys);
+% mesh(1:nx,1:ny,uPhys);
 save("dataCart-"+num2str(nx),'x','y','uPhys','nx');
+return;
 %%
 % pcolor(1:nx,1:ny,uPhys); shading interp; colormap(parula(8))
 pcolor(x,y,uPhys); shading interp; colormap(parula(8))

@@ -94,8 +94,8 @@ narr=[];
 
 % cas="6";  name="-dblreg2"; regname=",  shroud + stator regularisation eps=0.006"; for N=4:2:24
 % cas="7";  name="-nostress"; regname=",  shroud no stress"; for N=4:2:22
-cas="8";  name="-selfsim"; regname=",  shroud self sim"; for N=4:2:22
-% cas="1"; name="-constsh"; regname=", no regularisation"; for N=4:2:24
+% cas="8";  name="-selfsim"; regname=",  shroud self sim"; for N=4:2:22
+cas="1"; name="-constsh"; regname=", no regularisation"; for N=4:2:22
 % cas="2"; name="-lin"; regname=""; for N=4:2:28
 % for N=12
 a=importdata("v-"+num2str(N)+".dat"+name);
@@ -145,13 +145,18 @@ title("w");
 % ru=[-cos(pi*(0:N-1)/(N-1))]; %GL points
 
 nexttile;
-loglog(narr,abs(varr-varr(end)),'-o'); grid on; hold on;
-title("midpoint error: |v_n(0,0)-v_{max n}(0,0)|")
+% loglog(narr,abs(varr-varr(end)),'-o');
+a=importdata("norms.dat-constsh");
+loglog(a(:,1),abs(a(:,2:4)-a(end,2:4)),'-x');
+grid on; hold on;
+
+% legend("midpoint error: |v_n(0,0)-v_{max n}(0,0)|","u L2 error","v L2 error","w L2 error")
+title("error")
 xlabel("n"); ylabel("error");
 
 
 nexttile;
-loglog(narr,abs(varr-varr(end)),'-o'); grid on; hold on;
+% loglog(narr,abs(varr-varr(end)),'-o'); 
 
 for is=2:2:16
 %     loglog(narr,narr.^(-is),'k--');
@@ -159,10 +164,14 @@ for is=2:2:16
 %     text(narr(end),narr(end).^(-is),"slope "+num2str(-is))
     text(narr(end),abs(varr(1)-varr(end))*(narr(end)./narr(1)).^(-is),"slope "+num2str(-is))
 end
-title("|v_n(0,0)-v_{max n}(0,0)|");
+
+loglog(a(:,1),abs(a(:,2:4)-a(end,2:4)),'-x');
+grid on; hold on;
+
+% legend("|v_n(0,0)-v_{max n}(0,0)|");
 xlabel("n"); ylabel("error");
 sgtitle("Case "+num2str(cas)+" | Chebyshev solution rotor-stator, Re=10, (R=1,H=1, square cavity at the axis), N="+num2str(N)+regname)
-%
+%%
 exportgraphics(gcf,"chebStudy"+"-c"+cas+name+".png")
 %%
 % save("lin","varr","narr");

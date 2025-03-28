@@ -1,0 +1,82 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2.2.1                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    location    "0";
+    object      epsilon;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [0 2 -3 0 0 0 0];
+
+internalField   uniform 1;
+
+boundaryField
+{
+    inlet
+    {
+	//type            epsilonWallFunction;
+        //value           uniform 32;
+
+// 	type            fixedValue;
+ //       value           uniform 32;
+
+	type zeroGradient;
+
+    }
+    outlet
+    {
+	type zeroGradient;
+	//type            epsilonWallFunction;
+        //value           uniform 32;
+    }
+    shroud
+    {
+	
+	type zeroGradient;
+	//type            epsilonWallFunction;
+        //value           uniform 32;
+
+	//type            epsilonWallFunction;
+        //value           uniform 32;
+    }
+    hub
+    {
+	type zeroGradient;
+	//type            epsilonWallFunction;
+        //value           uniform 32;
+
+	//type            epsilonWallFunction;
+        //value           uniform 32;
+    }
+    rotor
+    {
+	//type            epsilonWallFunction;
+        //value           uniform 32;
+
+        type            fixedValue;
+        value           uniform 1;
+    }
+    stator
+    {
+	type zeroGradient;
+	//type            epsilonWallFunction;
+        //value           uniform 32;
+
+//        type            freestream;
+  //      freestreamValue uniform 1;
+    //    value           uniform 1;
+    }
+
+}
+
+
+// ************************************************************************* //

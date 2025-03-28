@@ -1,0 +1,259 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2.2.1                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      blockMeshDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+convertToMeters 10;	//This gives you the scale: 0.001 would mean all units in this file are [mm]
+
+vertices		//list of vertices defining the geometry
+(
+
+    (0 0 0)		//This is point 0. Not 1!
+    (0.707106781 -0.707106781 0)		//This is point 1
+    (1 0 0)		//point 2
+//    (0.996194698 -0.087155743 0)		//This is point 1
+//    (0.996194698 0.087155743 0)		//point 2
+    (0.70710678 0.70710678 0)		//point 3
+
+(0.353553391 -0.353553391 0)
+(0.70710678 0 0)
+(0.353553391 0.353553391 0)
+
+//pipe
+    (0 0 0.1)		//point 4
+    (0.707106781 -0.707106781 0.1)		//point 5
+    (1 0 0.1) 	//point 6
+    (0.70710678 0.70710678 0.1)		//point 7
+
+(0.353553391 -0.353553391 0.1)
+(0.70710678 0 0.1)
+(0.353553391 0.353553391 0.1)
+
+
+//difusor
+//    (0 0  4)		//point 4
+//    (1.414213562 -1.414213562 4)		//point 5
+//    (2 0 4) 	//point 6
+//    (1.414213562 1.414213562 4)		//point 7
+
+
+);
+
+blocks			//defining the block which the geometry is made out of
+(
+
+//    hex (0 4 5 6 7 11 12 13) (5 5 5) simpleGrading (1 1 1)  	//65 it nu 1e-2
+//    hex (4 1 2 5 11 8 9 12) (5 5 5) simpleGrading (1 1 1)  	//65 it nu 1e-2
+//    hex (5 2 3 6 12 9 10 13) (5 5 5) simpleGrading (1 1 1)  	//65 it nu 1e-2
+
+//    hex (0 4 5 6 7 11 12 13) (32 32 16) simpleGrading (1 1 1)  	//65 it nu 1e-2
+//    hex (4 1 2 5 11 8 9 12) (32 32 16) simpleGrading (1 1 1)  	//65 it nu 1e-2
+//    hex (5 2 3 6 12 9 10 13) (32 32 16) simpleGrading (1 1 1)  	//65 it nu 1e-2
+
+    hex (0 4 5 6 7 11 12 13) (64 64 32) simpleGrading (1 1 1)  	//65 it nu 1e-2
+    hex (4 1 2 5 11 8 9 12) (64 64 32) simpleGrading (1 1 1)  	//65 it nu 1e-2
+    hex (5 2 3 6 12 9 10 13) (64 64 32) simpleGrading (1 1 1)  	//65 it nu 1e-2
+
+);
+
+edges
+(
+//    spline 0 1 
+//    (
+//	    (5 -2 0)
+//    )
+//    spline 4 5 
+//    (
+//	    (5 -2 0.1)
+//    )
+
+//pipe
+//arc 0 1 (1 0 0)
+arc 1 2 (0.923879533 -0.382683432 0)
+arc 2 3 (0.923879533 0.382683432 0)
+//arc 3 0 (0 -1 0)
+//arc 4 5 (1 0 4) //p1 p2 x y z
+arc 8 9 (0.923879533 -0.382683432 0.1) //p1 p2 x y z
+arc 9 10 (0.923879533 0.382683432 0.1) //p1 p2 x y z
+//arc 7 4 (0 -1 4) //p1 p2 x y z
+
+//dif
+//arc 4 5 (2 0 5) //p1 p2 x y z
+//arc 5 6 (0 2 5) //p1 p2 x y z
+//arc 6 7 (-2 0 5) //p1 p2 x y z
+//arc 7 4 (0 -2 5) //p1 p2 x y z
+//arc 5 6 (1.847759065 -0.765366865 4) //p1 p2 x y z
+//arc 6 7 (1.847759065 0.765366865 4) //p1 p2 x y z
+
+
+);
+
+// 6--5
+// /  /
+//7--4
+// 2--1
+// /  /
+//3--0
+boundary
+(
+    shroud1	//choose a name for the boundary
+    {
+//        type cyclic;	//define the type of the boundary
+//	neighbourPatch inlet;
+        type wall;
+
+        faces
+        (
+//            (4 11 12 5)
+            (1 8 9 2)
+        );
+    }
+    inlet1	//choose a name for the boundary
+    {
+        type cyclic;	//define the type of the boundary
+	neighbourPatch outlet1;
+      //  type ;
+//        type wall;
+
+        faces
+        (
+            (0 7 11 4)	//list the faces; vertices should be listed in clockwise direction, as seen from the block
+//            (0 7 8 1)	//list the faces; vertices should be listed in clockwise direction, as seen from the block
+        );
+    }
+    inlet2	//choose a name for the boundary
+    {
+        type cyclic;	//define the type of the boundary
+	neighbourPatch outlet2;
+      //  type ;
+//        type wall;
+
+        faces
+        (
+            (4 11 8 1)	//list the faces; vertices should be listed in clockwise direction, as seen from the block
+        );
+    }
+
+    
+    stator
+    {
+        type wall;
+        faces
+        (
+//            (3 7 4 0)
+            (7 13 12 11)
+
+	);
+    }	   	
+    stator2
+    {
+        type wall;
+        faces
+        (
+//            (3 7 4 0)
+            (11 12 9 8)
+
+	);
+    }	   	
+    stator3
+    {
+        type wall;
+        faces
+        (
+//            (3 7 4 0)
+            (13 10 9 12)
+
+	);
+    }	   	
+
+
+
+
+    rotor
+    {
+	type wall;
+	faces
+	(
+//            (2 1 5 6)
+            (0 4 5 6)
+
+	);
+    }
+    rotor2
+    {
+	type wall;
+	faces
+	(
+//            (2 1 5 6)
+            (4 1 2 5)
+
+	);
+    }
+    rotor3
+    {
+	type wall;
+	faces
+	(
+//            (2 1 5 6)
+            (6 5 2 3)
+
+	);
+    }
+
+
+    outlet1
+    {
+//        type wall;
+        type cyclic;	//define the type of the boundary
+	neighbourPatch inlet1;
+
+        faces
+        (
+//            (1 2 3 0)
+//            (7 6 5 4)
+            (0 6 13 7)
+
+
+        );
+    }
+    outlet2
+    {
+//        type wall;
+        type cyclic;	//define the type of the boundary
+	neighbourPatch inlet2;
+
+        faces
+        (
+//            (1 2 3 0)
+//            (7 6 5 4)
+            (6 3 10 13)
+
+
+        );
+    }
+    shroud2
+    {
+        type wall;
+        faces
+        (
+//            (5 12 13 6)
+            (2 9 10 3)
+
+
+        );
+    }
+);
+
+
+// ************************************************************************* //

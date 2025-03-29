@@ -3,12 +3,19 @@ uarr=[];
 %
 nx=5; 
 narr=[];
-%%
+%
 nx=(nx-1)*2+1;
+
+% nx=101;
+% nx=401;
+% nx=51;
+nx=201;
+
 ny=nx;
 % x=linspace(-1,1,nx)'; y=x;
+x=linspace(0,1,nx)'; y=x;
 % x=x.^3;
-x=-cos(linspace(0,pi,nx))';y=x;
+% x=-cos(linspace(0,pi,nx))';y=x;
 
 %d2udx2-1=0
 g=zeros(nx*ny,1);
@@ -38,7 +45,14 @@ ipym=iy+(ix-1)*ny-1;
 
 g(ip)=g(ip)+-2/dx1/dx2*u(ip)+2/dx2/(dx1+dx2)*u(ipxp)+2/dx1/(dx1+dx2)*u(ipxm);
 g(ip)=g(ip)+-2/dy1/dy2*u(ip)+2/dy2/(dy1+dy2)*u(ipyp)+2/dy1/(dy1+dy2)*u(ipym);
-g(ip)=g(ip)+-f(ip)*cos(pi/2*x(ix))*cos(pi/2*y(iy));
+
+%polar
+g(ip)=g(ip)+(u(ipxp)-u(ipxm))/(x(ix+1)-x(ix-1))/x(ix);
+
+ii(iip)=ip; jj(iip)=ipxp; vv(iip)=1/(x(ix+1)-x(ix-1))/x(ix); iip=iip+1;
+ii(iip)=ip; jj(iip)=ipxm; vv(iip)=-1/(x(ix+1)-x(ix-1))/x(ix); iip=iip+1;
+
+% g(ip)=g(ip)+-f(ip)*cos(pi/2*x(ix))*cos(pi/2*y(iy));
 % g(ip)=g(ip)+-f(ip);
 % g(ip)=g(ip)+-u(ip)*pi*pi/4;
 
@@ -86,17 +100,20 @@ ii(iip)=ip; jj(iip)=ip; vv(iip)=1; iip=iip+1;
 %         J(ip,ip)=1;
 ii(iip)=ip; jj(iip)=ip; vv(iip)=1; iip=iip+1;
 
-        ix=nx; ip=iy+(ix-1)*ny; g(ip)=u(ip); 
+%         ix=nx; ip=iy+(ix-1)*ny; g(ip)=u(ip); 
+        ix=nx; ip=iy+(ix-1)*ny; g(ip)=u(ip)-1; 
 %         J(ip,ip)=1;
 ii(iip)=ip; jj(iip)=ip; vv(iip)=1; iip=iip+1;
 
     end
     for ix=1+1:length(x)-1
-        iy=1; ip=iy+(ix-1)*ny; g(ip)=u(ip); 
+%         iy=1; ip=iy+(ix-1)*ny; g(ip)=u(ip); 
+        iy=1; ip=iy+(ix-1)*ny; g(ip)=u(ip)-x(ix); 
 %         J(ip,ip)=1;
 ii(iip)=ip; jj(iip)=ip; vv(iip)=1; iip=iip+1;
 
-        iy=ny; ip=iy+(ix-1)*ny; g(ip)=u(ip);
+%         iy=ny; ip=iy+(ix-1)*ny; g(ip)=u(ip);
+        iy=ny; ip=iy+(ix-1)*ny; g(ip)=u(ip)-x(ix);
 %         J(ip,ip)=1;
 ii(iip)=ip; jj(iip)=ip; vv(iip)=1; iip=iip+1;
 
@@ -114,7 +131,21 @@ norm(g)
 %
 uPhys=reshape(u,[ny,nx]);
 mesh(x,y,uPhys);
+save("dat"+num2str(nx),'x','uPhys','nx');
+%%
+clf; aa=[];
 %
+
+a=load ('dat51');  plot(a.x,a.uPhys((a.nx+1)/2,:)','-o');  aa=[aa;a.uPhys((a.nx+1)/2,1:2:end)];
+hold on;
+%
+a=load ('dat101'); plot(a.x,a.uPhys((a.nx+1)/2,:)','-+'); aa=[aa;a.uPhys((a.nx+1)/2,1:4:end)]; 
+a=load ('dat201'); plot(a.x,a.uPhys((a.nx+1)/2,:)','-x'); aa=[aa;a.uPhys((a.nx+1)/2,1:8:end)];
+a=load ('dat401'); plot(a.x,a.uPhys((a.nx+1)/2,:)','-hex'); aa=[aa;a.uPhys((a.nx+1)/2,1:16:end)];
+%%
+ratio=(aa(1,2:end-1)-aa(2,2:end-1))./(aa(2,2:end-1)-aa(3,2:end-1));
+plot(ratio)
+%%
 ix=(length(x)+1)/2; iy=(length(y)+1)/2; ip=iy+(ix-1)*ny; 
 % uarr=[uarr;u(ip)]
 % narr=[narr;nx];

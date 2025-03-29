@@ -1,0 +1,143 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2.2.1                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      blockMeshDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+convertToMeters 1;	//This gives you the scale: 0.001 would mean all units in this file are [mm]
+
+vertices		//list of vertices defining the geometry
+(
+
+//2pi/32
+//    (0 0 0)		//This is point 0. Not 1!
+//    (9.95184726672 -0.98017140329 0)		//This is point 1
+//    (9.95184726672 0.98017140329 0)		//point 2
+//    (0.98079 0.19509 0)		//point 3
+//    (0 0  1)		//point 4
+//    (9.95184726672 -0.98017140329 1)		//point 5
+//    (9.95184726672 0.98017140329 1) 	//point 6
+//    (0.98079 0.19509 1)		//point 7
+
+//2pi/16
+    (0 0 0)		//This is point 0. Not 1!
+    (9.807852804 -1.95090322 0)		//This is point 1
+    (9.807852804 1.95090322 0)		//point 2
+    (9.807852804 1.95090322 0)		//point 3
+    (0 0  1)		//point 4
+    (9.807852804 -1.95090322 1)		//point 5
+    (9.807852804 1.95090322 1) 	//point 6
+    (9.807852804 1.95090322 1)		//point 7
+
+);
+
+blocks			//defining the block which the geometry is made out of
+(
+//    hex (0 1 2 3 4 5 6 7) (64 64 64) simpleGrading (1 1 1)  	
+//    hex (0 1 2 3 4 5 6 7) (10 4 3) simpleGrading (1 1 1)  	
+    hex (0 1 2 0 4 5 6 4) (128 32 32) simpleGrading (1 1 1)  	
+//    hex (0 1 2 3 4 5 6 7) (50 25 50) simpleGrading (1 1 1)  	
+//this means that the only block in the geometry is defined by vertices (0 1 2 ...), there are 100, 10 
+//and 1 cells in the x, y, and z direction and that in each direction all the cells have the same length 
+);
+
+edges
+(
+//    spline 0 1 
+//    (
+//	    (5 -2 0)
+//    )
+//    spline 4 5 
+//    (
+//	    (5 -2 0.1)
+//    )
+arc 1 2 (10 0 0)
+arc 5 6 (10 0 1)
+//arc 0 3 (0.99518 0.09802 0)
+//arc 4 7 (0.99518 0.09802 1)
+);
+
+boundary
+(
+    outlet	//choose a name for the boundary
+    {
+        type cyclic;	//define the type of the boundary
+	neighbourPatch inlet;
+        faces
+        (
+            (2 6 4 0)
+        );
+    }
+    inlet	//choose a name for the boundary
+    {
+        type cyclic;	//define the type of the boundary
+	neighbourPatch outlet;
+        faces
+        (
+            (0 4 5 1)	//list the faces; vertices should be listed in clockwise direction, as seen from the block
+        );
+    }
+
+    
+    stator
+    {
+        type wall;
+        faces
+        (
+//            (3 7 4 0)
+            (4 6 5 4)
+
+	);
+    }	   	
+
+
+    rotor
+    {
+	type wall;
+	faces
+	(
+//            (2 1 5 6)
+            (1 2 0 0)
+
+	);
+    }
+
+
+  //  hub
+   // {
+    //    type wall;
+     //   faces
+      //  (
+//            (1 2 3 0)
+//            (7 6 5 4)
+      //      (3 7 4 0)
+
+
+        //);
+    //}
+    shroud
+    {
+        type wall;
+        faces
+        (
+//            (1 2 3 0)
+//            (7 6 5 4)
+            (2 1 5 6)
+
+
+        );
+    }
+);
+
+
+// ************************************************************************* //

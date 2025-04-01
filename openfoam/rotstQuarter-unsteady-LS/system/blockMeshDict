@@ -20,6 +20,7 @@ H 1;
 //R 1;
 //H 0.1;
 halfAngle 45;
+halfAngle 22.5;
 
 //- Derived quantities
 radHalfAngle #calc "degToRad($halfAngle)";
@@ -36,6 +37,7 @@ myh #calc "-$R*sin($radHalfAngle)/2";
 yp #calc "$R*sin($hradHalfAngle)";
 myp #calc "-$R*sin($hradHalfAngle)";
 xp #calc "$R*cos($hradHalfAngle)";
+xpp #calc "$R*cos($radHalfAngle)*5/8";
 
 
 vertices		//list of vertices defining the geometry
@@ -47,7 +49,7 @@ vertices		//list of vertices defining the geometry
     ($x $y 0)		//point 3
 
 ($xh $myh  0)
-($x 0 0)
+($xpp 0 0)
 ($xh $yh 0)
 
     (0 0 $H)		//point 4
@@ -56,7 +58,7 @@ vertices		//list of vertices defining the geometry
     ($x $y $H)		//point 7
 
 ($xh $myh  $H)
-($x 0 $H)
+($xpp 0 $H)
 ($xh $yh $H)
 
 
@@ -65,8 +67,9 @@ vertices		//list of vertices defining the geometry
 
 //resolxy 64;
 //resolz 32;
-resolxy 16;
-resolz 8;
+resolxy 40;
+resolxy2 100;
+resolz 24;
 
 blocks			//defining the block which the geometry is made out of
 (
@@ -83,9 +86,13 @@ blocks			//defining the block which the geometry is made out of
 //    hex (4 1 2 5 11 8 9 12) (64 64 32) simpleGrading (1 1 1)  	//65 it nu 1e-2
 //    hex (5 2 3 6 12 9 10 13) (64 64 32) simpleGrading (1 1 1)  	//65 it nu 1e-2
 
-    hex (0 4 5 6 7 11 12 13) ($resolxy $resolxy $resolz) simpleGrading (1 1 1)  	//65 it nu 1e-2
-    hex (4 1 2 5 11 8 9 12) ($resolxy $resolxy $resolz) simpleGrading (1 1 1)  	//65 it nu 1e-2
-    hex (5 2 3 6 12 9 10 13) ($resolxy $resolxy $resolz) simpleGrading (1 1 1)  	//65 it nu 1e-2
+//    hex (0 4 5 6 7 11 12 13) ($resolxy $resolxy $resolz) simpleGrading (1 1 1)  	//65 it nu 1e-2
+//    hex (4 1 2 5 11 8 9 12) ($resolxy $resolxy $resolz) simpleGrading (1 1 1)  	//65 it nu 1e-2
+//    hex (5 2 3 6 12 9 10 13) ($resolxy $resolxy $resolz) simpleGrading (1 1 1)  	//65 it nu 1e-2
+
+    hex (0 4 5 6 7 11 12 13) ($resolxy $resolxy $resolz) simpleGrading (1 1 ((0.5 0.5 3) (0.5 0.5 0.33)))  	//65 it nu 1e-2
+    hex (4 1 2 5 11 8 9 12) ($resolxy2 $resolxy $resolz) simpleGrading (0.2 1 ((0.5 0.5 3) (0.5 0.5 0.33)))  	//65 it nu 1e-2
+    hex (5 2 3 6 12 9 10 13) ($resolxy2 $resolxy $resolz) simpleGrading (0.2 1 ((0.5 0.5 3) (0.5 0.5 0.33)))  	//65 it nu 1e-2
 
 );
 

@@ -36,7 +36,7 @@ ii=zeros(4*nx*ny,1); jj=ii; vv=ii; iip=1;
 
 for ix=1+1:length(x)-1
     for iy=1+1:length(y)-1
-        dx1=x(ix)-x(ix-1); dx2=x(ix+1)-x(ix); dy1=y(iy)-y(iy-1); dy2=y(iy+1)-x(iy);
+        dx1=x(ix)-x(ix-1); dx2=x(ix+1)-x(ix); dy1=y(iy)-y(iy-1); dy2=y(iy+1)-y(iy);
 ip=iy+(ix-1)*ny;
 ipxp=iy+(ix-1+1)*ny;
 ipxm=iy+(ix-1-1)*ny;

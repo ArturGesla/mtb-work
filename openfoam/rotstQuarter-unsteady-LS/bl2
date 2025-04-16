@@ -1,0 +1,265 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2.2.1                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      blockMeshDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+convertToMeters 1;	//This gives you the scale: 0.001 would mean all units in this file are [mm]
+R 8.75;
+H 1;
+//R 1;
+//H 0.1;
+halfAngle 45;
+halfAngle 22.5;
+
+//- Derived quantities
+radHalfAngle #calc "degToRad($halfAngle)";
+hradHalfAngle #calc "degToRad($halfAngle)/2";
+
+y #calc "$R*sin($radHalfAngle)";
+x #calc "$R*cos($radHalfAngle)";
+my #calc "-$R*sin($radHalfAngle)";
+
+yh #calc "$R*sin($radHalfAngle)/2";
+xh #calc "$R*cos($radHalfAngle)/2";
+myh #calc "-$R*sin($radHalfAngle)/2";
+
+yp #calc "$R*sin($hradHalfAngle)";
+myp #calc "-$R*sin($hradHalfAngle)";
+xp #calc "$R*cos($hradHalfAngle)";
+xpp #calc "$R*cos($radHalfAngle)*5/8";
+
+
+vertices		//list of vertices defining the geometry
+(
+
+    (0 0 0)		//This is point 0. Not 1!
+    ($x $my 0)		//This is point 1
+    ($R 0 0)		//point 2
+    ($x $y 0)		//point 3
+
+($xh $myh  0)
+($xpp 0 0)
+($xh $yh 0)
+
+    (0 0 $H)		//point 4
+    ($x $my $H)		//point 5
+    ($R 0 $H) 	//point 6
+    ($x $y $H)		//point 7
+
+($xh $myh  $H)
+($xpp 0 $H)
+($xh $yh $H)
+
+
+
+);
+
+//resolxy 64;
+//resolz 32;
+resolxy 40;
+resolxy2 100;
+resolz 24;
+
+blocks			//defining the block which the geometry is made out of
+(
+
+//    hex (0 4 5 6 7 11 12 13) (5 5 5) simpleGrading (1 1 1)  	//65 it nu 1e-2
+//    hex (4 1 2 5 11 8 9 12) (5 5 5) simpleGrading (1 1 1)  	//65 it nu 1e-2
+//    hex (5 2 3 6 12 9 10 13) (5 5 5) simpleGrading (1 1 1)  	//65 it nu 1e-2
+
+//    hex (0 4 5 6 7 11 12 13) (32 32 16) simpleGrading (1 1 1)  	//65 it nu 1e-2
+//    hex (4 1 2 5 11 8 9 12) (32 32 16) simpleGrading (1 1 1)  	//65 it nu 1e-2
+//    hex (5 2 3 6 12 9 10 13) (32 32 16) simpleGrading (1 1 1)  	//65 it nu 1e-2
+
+//    hex (0 4 5 6 7 11 12 13) (64 64 32) simpleGrading (1 1 1)  	//65 it nu 1e-2
+//    hex (4 1 2 5 11 8 9 12) (64 64 32) simpleGrading (1 1 1)  	//65 it nu 1e-2
+//    hex (5 2 3 6 12 9 10 13) (64 64 32) simpleGrading (1 1 1)  	//65 it nu 1e-2
+
+//    hex (0 4 5 6 7 11 12 13) ($resolxy $resolxy $resolz) simpleGrading (1 1 1)  	//65 it nu 1e-2
+//    hex (4 1 2 5 11 8 9 12) ($resolxy $resolxy $resolz) simpleGrading (1 1 1)  	//65 it nu 1e-2
+//    hex (5 2 3 6 12 9 10 13) ($resolxy $resolxy $resolz) simpleGrading (1 1 1)  	//65 it nu 1e-2
+
+    hex (0 4 5 6 7 11 12 13) ($resolxy $resolxy $resolz) simpleGrading (1 1 ((0.5 0.5 3) (0.5 0.5 0.33)))  	//65 it nu 1e-2
+    hex (4 1 2 5 11 8 9 12) ($resolxy2 $resolxy $resolz) simpleGrading (0.2 1 ((0.5 0.5 3) (0.5 0.5 0.33)))  	//65 it nu 1e-2
+    hex (5 2 3 6 12 9 10 13) ($resolxy2 $resolxy $resolz) simpleGrading (0.2 1 ((0.5 0.5 3) (0.5 0.5 0.33)))  	//65 it nu 1e-2
+
+);
+
+edges
+(
+//arc 1 2 (0.923879533 -0.382683432 0)
+arc 1 2 ($xp $myp 0)
+arc 2 3 ($xp $yp 0)
+arc 8 9 ($xp $myp $H) //p1 p2 x y z
+arc 9 10 ($xp $yp $H) //p1 p2 x y z
+);
+
+// 6--5
+// /  /
+//7--4
+// 2--1
+// /  /
+//3--0
+boundary
+(
+    shroud1	//choose a name for the boundary
+    {
+//        type cyclic;	//define the type of the boundary
+//	neighbourPatch inlet;
+        type wall;
+
+        faces
+        (
+//            (4 11 12 5)
+            (1 8 9 2)
+        );
+    }
+    inlet1	//choose a name for the boundary
+    {
+        type cyclic;	//define the type of the boundary
+	neighbourPatch outlet1;
+      //  type ;
+//        type wall;
+
+        faces
+        (
+            (0 7 11 4)	//list the faces; vertices should be listed in clockwise direction, as seen from the block
+//            (0 7 8 1)	//list the faces; vertices should be listed in clockwise direction, as seen from the block
+        );
+    }
+    inlet2	//choose a name for the boundary
+    {
+        type cyclic;	//define the type of the boundary
+	neighbourPatch outlet2;
+      //  type ;
+//        type wall;
+
+        faces
+        (
+            (4 11 8 1)	//list the faces; vertices should be listed in clockwise direction, as seen from the block
+        );
+    }
+
+    
+    stator
+    {
+        type wall;
+        faces
+        (
+//            (3 7 4 0)
+            (7 13 12 11)
+
+	);
+    }	   	
+    stator2
+    {
+        type wall;
+        faces
+        (
+//            (3 7 4 0)
+            (11 12 9 8)
+
+	);
+    }	   	
+    stator3
+    {
+        type wall;
+        faces
+        (
+//            (3 7 4 0)
+            (13 10 9 12)
+
+	);
+    }	   	
+
+
+
+
+    rotor
+    {
+	type wall;
+	faces
+	(
+//            (2 1 5 6)
+            (0 4 5 6)
+
+	);
+    }
+    rotor2
+    {
+	type wall;
+	faces
+	(
+//            (2 1 5 6)
+            (4 1 2 5)
+
+	);
+    }
+    rotor3
+    {
+	type wall;
+	faces
+	(
+//            (2 1 5 6)
+            (6 5 2 3)
+
+	);
+    }
+
+
+    outlet1
+    {
+//        type wall;
+        type cyclic;	//define the type of the boundary
+	neighbourPatch inlet1;
+
+        faces
+        (
+//            (1 2 3 0)
+//            (7 6 5 4)
+            (0 6 13 7)
+
+
+        );
+    }
+    outlet2
+    {
+//        type wall;
+        type cyclic;	//define the type of the boundary
+	neighbourPatch inlet2;
+
+        faces
+        (
+//            (1 2 3 0)
+//            (7 6 5 4)
+            (6 3 10 13)
+
+
+        );
+    }
+    shroud2
+    {
+        type wall;
+        faces
+        (
+//            (5 12 13 6)
+            (2 9 10 3)
+
+
+        );
+    }
+);
+
+
+// ************************************************************************* //

@@ -1,0 +1,30 @@
+
+);
+    }
+
+    stator
+    {
+//	type noSlip;
+        type            inletOutlet;
+ inletValue      uniform (0 0 0);
+
+    }
+
+    shroud1
+    {
+        //type            fixedValue;
+       //value           uniform (0 0 0);
+	type slip;
+//	type noSlip;
+//type rotatingWallVelocity;
+//origin (0 0 0);
+//axis (0 0 1);
+//omega 1;
+
+    }
+
+
+
+}
+
+// ************************************************************************* //

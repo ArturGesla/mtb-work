@@ -25,6 +25,7 @@ startTime       0;
 stopAt          endTime;
 
 endTime         200;
+//endTime         8e-2;
 
 deltaT          2e-2;
 //deltaT          1e-4;

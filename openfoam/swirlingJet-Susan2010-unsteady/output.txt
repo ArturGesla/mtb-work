@@ -1,0 +1,34 @@
+/*---------------------------------------------------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2112                                  |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+Build  : _14aeaf8dab-20211220 OPENFOAM=2112 version=v2112
+Arch   : "LSB;label=32;scalar=64"
+Exec   : /ssoft/spack/syrah/v3/opt/spack/linux-rhel9-icelake/gcc-11.3.0/openfoam-2112-svd3ynl5etm4szmgd6uw2uncxfx2rc7l/platforms/linux64GccDPInt32-spack/bin/simpleFoam
+Date   : May 12 2025
+Time   : 14:45:54
+Host   : jst370
+PID    : 3672260
+I/O    : uncollated
+Case   : /scratch/gesla/openfoam-work/swirlingJet-Susan2010-unsteady
+nProcs : 1
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 5, maxFileModificationPolls 20)
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+Create mesh for time = 0
+
+
+SIMPLE: no convergence criteria found. Calculations will run for 0.08 steps.
+
+Reading field p
+
+Reading field U
+
+Reading/calculating face flux field phi
+

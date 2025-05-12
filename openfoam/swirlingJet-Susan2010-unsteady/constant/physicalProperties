@@ -7,6 +7,7 @@
 \*---------------------------------------------------------------------------*/
 FoamFile
 {
+	version 2.0;
     format      ascii;
     class       dictionary;
     location    "constant";
@@ -16,7 +17,8 @@ FoamFile
 
 Ubar            [0 1 -1 0 0 0 0] (0 0 -1);
 
-viscosityModel  constant;
+//viscosityModel  constant; // v11
+transportModel  Newtonian; //v8
 
 //nu              [0 2 -1 0 0 0 0] 1e-05;
 //nu              [0 2 -1 0 0 0 0] 2.5e-2; //steady
